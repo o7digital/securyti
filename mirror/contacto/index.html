@@ -130,11 +130,19 @@
 				img.setAttribute('alt', name || 'SecuryTI');
 			});
 		}
+		function ensureCf7Style(){
+			if(document.getElementById('cf7-hide-errors')){return;}
+			var style=document.createElement('style');
+			style.id='cf7-hide-errors';
+			style.textContent='.wpcf7-response-output{display:none!important;}';
+			document.head.appendChild(style);
+		}
 		function run(){
 			document.querySelectorAll('a[href]').forEach(updateLink);
 			document.querySelectorAll('form[action]').forEach(updateForm);
 			updateShortlink();
 			updateAlts();
+			ensureCf7Style();
 		}
 		if(document.readyState==='loading'){
 			document.addEventListener('DOMContentLoaded', run);
