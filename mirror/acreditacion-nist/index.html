@@ -3,8 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<script>
+	(function(){
+		function canUseWebp(cb){
+			try{
+				var c=document.createElement('canvas');
+				if(c.getContext&&c.getContext('2d')){
+					cb(c.toDataURL('image/webp').indexOf('data:image/webp')===0);
+				}else{cb(false);}
+			}catch(e){cb(false);}
+		}
+		function swapImg(img){
+			if(img.dataset.webpApplied){return;}
+			var origSrc=img.getAttribute('src');
+			var origSrcset=img.getAttribute('srcset');
+			if(origSrc&&/\.(png|jpe?g)(\?|#|$)/i.test(origSrc)){
+				img.dataset.origSrc=origSrc;
+				img.setAttribute('src', origSrc.replace(/\.(png|jpe?g)(?=($|[?#]))/i,'.webp'));
+			}
+			if(origSrcset&&/\.(png|jpe?g)(\s|,|$)/i.test(origSrcset)){
+				img.dataset.origSrcset=origSrcset;
+				img.setAttribute('srcset', origSrcset.replace(/\.(png|jpe?g)(?=(\s|,|$))/gi,'.webp'));
+			}
+			if(img.dataset.origSrc||img.dataset.origSrcset){
+				img.onerror=function(){
+					if(img.dataset.origSrc){img.setAttribute('src', img.dataset.origSrc);}
+					if(img.dataset.origSrcset){img.setAttribute('srcset', img.dataset.origSrcset);}
+					img.onerror=null;
+				};
+				img.dataset.webpApplied='1';
+			}
+		}
+		function swapStyle(el){
+			if(el.dataset.webpStyleApplied){return;}
+			var style=el.getAttribute('style');
+			if(style&&/url\([^)]*\.(png|jpe?g)[^)]*\)/i.test(style)){
+				el.setAttribute('style', style.replace(/\.(png|jpe?g)(?=($|[?#\)]))/gi,'.webp'));
+				el.dataset.webpStyleApplied='1';
+			}
+		}
+		function process(root){
+			if(!root.querySelectorAll){return;}
+			root.querySelectorAll('img').forEach(swapImg);
+			root.querySelectorAll('[style]').forEach(swapStyle);
+		}
+		canUseWebp(function(ok){
+			if(!ok){return;}
+			process(document);
+			var obs=new MutationObserver(function(mutations){
+				mutations.forEach(function(m){
+					if(!m.addedNodes){return;}
+					m.addedNodes.forEach(function(n){
+						if(n.nodeType!==1){return;}
+						if(n.tagName==='IMG'){swapImg(n);}else{process(n);} 
+						if(n.hasAttribute&&n.hasAttribute('style')){swapStyle(n);} 
+					});
+				});
+			});
+			obs.observe(document.documentElement,{childList:true,subtree:true});
+		});
+	})();
+	</script>
+	<script>
+	(function(){
+		function normalizeHref(value){
+			if(!value){return value;}
+			return value
+				.replace(/(\.\.\/)?index\.html%3Fp=25\.html/gi,'contacto/')
+				.replace(/(\.\.\/)?index\.html%3Fp=29\.html/gi,'appointment/')
+				.replace(/(\.\.\/)?index\.html%3Fp=2607\.html/gi,'acreditacion-nist/');
+		}
+		function updateLink(el){
+			var href=el.getAttribute('href');
+			var next=normalizeHref(href);
+			if(next&&next!==href){el.setAttribute('href', next);}
+		}
+		function updateForm(el){
+			var action=el.getAttribute('action');
+			var next=normalizeHref(action);
+			if(next&&next!==action){el.setAttribute('action', next);}
+		}
+		function updateShortlink(){
+			var link=document.querySelector('link[rel="shortlink"]');
+			if(!link){return;}
+			var href=link.getAttribute('href');
+			var next=normalizeHref(href);
+			if(next&&next!==href){link.setAttribute('href', next);}
+		}
+		function updateAlts(){
+			document.querySelectorAll('img').forEach(function(img){
+				var alt=img.getAttribute('alt');
+				if(alt && alt.trim().length){return;}
+				var src=img.getAttribute('src') || '';
+				var name=src.split('/').pop().split('?')[0].split('#')[0];
+				if(name){
+					name=name.replace(/\.(png|jpe?g|webp|svg)$/i,'').replace(/[-_]+/g,' ').trim();
+				}
+				img.setAttribute('alt', name || 'SecuryTI');
+			});
+		}
+		function run(){
+			document.querySelectorAll('a[href]').forEach(updateLink);
+			document.querySelectorAll('form[action]').forEach(updateForm);
+			updateShortlink();
+			updateAlts();
+		}
+		if(document.readyState==='loading'){
+			document.addEventListener('DOMContentLoaded', run);
+		}else{
+			run();
+		}
+	})();
+	</script>
     <link rel="profile" href="https://gmpg.org/xfn/11">
-    <title>Acreditación NIST &#8211; Securyti</title>
+	<title>Acreditación NIST | SecuryTI</title>
+	<meta name="description" content="Acreditación NIST con SecuryTI: evaluación, implementación y acompañamiento para cumplir con marcos NIST." />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="SecuryTI" />
+	<meta property="og:title" content="Acreditación NIST | SecuryTI" />
+	<meta property="og:description" content="Acreditación NIST con SecuryTI: evaluación, implementación y acompañamiento para cumplir con marcos NIST." />
+	<meta property="og:url" content="https://securyti.mx/acreditacion-nist/" />
+	<meta property="og:image" content="https://securyti.mx/wp-content/uploads/2025/11/Securytiboy2-1.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Acreditación NIST | SecuryTI" />
+	<meta name="twitter:description" content="Acreditación NIST con SecuryTI: evaluación, implementación y acompañamiento para cumplir con marcos NIST." />
+	<meta name="twitter:image" content="https://securyti.mx/wp-content/uploads/2025/11/Securytiboy2-1.png" />
+	<script type="application/ld+json">
+	{"@context":"https://schema.org","@type":"Service","name":"Acreditación NIST","serviceType":"Cumplimiento NIST","provider":{"@type":"Organization","name":"SecuryTI","url":"https://securyti.mx/"},"url":"https://securyti.mx/acreditacion-nist/"}
+	</script>
 <meta name='robots' content='max-image-preview:large' />
 	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
 	<link rel='dns-prefetch' href='https://fonts.googleapis.com/' />
@@ -313,7 +439,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 <script type="text/javascript" src="../wp-content/plugins/bravis-addons/assets/js/libs/waypoints.min.js%3Fver=2.0.5" id="waypoints-js"></script>
 <link rel="https://api.w.org/" href="../wp-json/index.html" /><link rel="alternate" title="JSON" type="application/json" href="../wp-json/wp/v2/pages/2607" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php%3Frsd" />
 <meta name="generator" content="WordPress 6.8.3" />
-<link rel="canonical" href="../index.html%3Fp=2607.html" />
+<link rel="canonical" href="https://securyti.mx/acreditacion-nist/" />
 <link rel='shortlink' href='../index.html%3Fp=2607.html' />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="../wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fsecuryti.mx%252Facreditacion-nist%252F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="../wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fsecuryti.mx%252Facreditacion-nist%252F&amp;format=xml" />
