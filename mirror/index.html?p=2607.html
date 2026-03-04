@@ -109,6 +109,12 @@
 				'c1.png':'Equipo de ciberseguridad'
 			};
 			document.querySelectorAll('img').forEach(function(img){
+				if(!img.hasAttribute('loading') && !img.hasAttribute('fetchpriority')){
+					img.setAttribute('loading','lazy');
+				}
+				if(!img.hasAttribute('decoding')){
+					img.setAttribute('decoding','async');
+				}
 				var alt=img.getAttribute('alt');
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
@@ -462,7 +468,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 <link rel="https://api.w.org/" href="wp-json/index.html" /><link rel="alternate" title="JSON" type="application/json" href="wp-json/wp/v2/pages/2607" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc.php%3Frsd" />
 <meta name="generator" content="WordPress 6.8.3" />
 <link rel="canonical" href="https://securyti.mx/acreditacion-nist/" />
-<link rel='shortlink' href='index.html%3Fp=2607.html' />
+<link rel='shortlink' href='acreditacion-nist/' />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fsecuryti.mx%252Facreditacion-nist%252F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fsecuryti.mx%252Facreditacion-nist%252F&amp;format=xml" />
 <meta name="generator" content="Redux 4.5.10" /><link rel="icon" type="image/png" href="wp-content/uploads/2025/11/Securytiboy2-1.png"/><meta name="generator" content="Elementor 3.33.6; features: additional_custom_breakpoints; settings: css_print_method-internal, google_font-enabled, font_display-swap">
@@ -639,33 +645,33 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-4e6d1cde elementor-nav-menu__align-center elementor-nav-menu--stretch elementor-nav-menu__text-align-center elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="4e6d1cde" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 								<nav aria-label="Menu" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
 				<ul id="menu-1-4e6d1cde" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2025"><a href="index.html" class="elementor-item">SecuryTI</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html%3Fp=2607.html#" class="elementor-item elementor-item-anchor">Soluciones</a>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html#" class="elementor-item elementor-item-anchor">Soluciones</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Consultoría Tecnológica</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Formación en Ciberseguridad</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Peritajes e Informes Periciales</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Compliance</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Consultoría Tecnológica</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Formación en Ciberseguridad</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Peritajes e Informes Periciales</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Compliance</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="index.html%3Fp=2607.html" aria-current="page" class="elementor-item elementor-item-active">Acreditación NIST</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="acreditacion-nist/" aria-current="page" class="elementor-item elementor-item-active">Acreditación NIST</a></li>
 </ul>			</nav>
 					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
 			<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open eicon-menu-bar"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>		</div>
 					<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
 				<ul id="menu-2-4e6d1cde" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2025"><a href="index.html" class="elementor-item" tabindex="-1">SecuryTI</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html%3Fp=2607.html#" class="elementor-item elementor-item-anchor" tabindex="-1">Soluciones</a>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html#" class="elementor-item elementor-item-anchor" tabindex="-1">Soluciones</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Consultoría Tecnológica</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Formación en Ciberseguridad</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Peritajes e Informes Periciales</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Compliance</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Consultoría Tecnológica</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Formación en Ciberseguridad</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Peritajes e Informes Periciales</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Compliance</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="index.html%3Fp=2607.html" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Acreditación NIST</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="acreditacion-nist/" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Acreditación NIST</a></li>
 </ul>			</nav>
 						</div>
 				<div class="elementor-element elementor-element-5191df8d elementor-align-right elementor-hidden-phone elementor-widget elementor-widget-button" data-id="5191df8d" data-element_type="widget" data-widget_type="button.default">
-										<a class="elementor-button elementor-button-link elementor-size-md" href="index.html%3Fp=25.html">
+										<a class="elementor-button elementor-button-link elementor-size-md" href="contacto/">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-icon">
 				<i aria-hidden="true" class="fas fa-long-arrow-alt-right"></i>			</span>
@@ -737,33 +743,33 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-4e6d1cde elementor-nav-menu__align-center elementor-nav-menu--stretch elementor-nav-menu__text-align-center elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="4e6d1cde" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 								<nav aria-label="Menu" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
 				<ul id="menu-1-4e6d1cde" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2025"><a href="index.html" class="elementor-item">SecuryTI</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html%3Fp=2607.html#" class="elementor-item elementor-item-anchor">Soluciones</a>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html#" class="elementor-item elementor-item-anchor">Soluciones</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Consultoría Tecnológica</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Formación en Ciberseguridad</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Peritajes e Informes Periciales</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor">Compliance</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Consultoría Tecnológica</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Formación en Ciberseguridad</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Peritajes e Informes Periciales</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Compliance</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="index.html%3Fp=2607.html" aria-current="page" class="elementor-item elementor-item-active">Acreditación NIST</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="acreditacion-nist/" aria-current="page" class="elementor-item elementor-item-active">Acreditación NIST</a></li>
 </ul>			</nav>
 					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
 			<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open eicon-menu-bar"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>		</div>
 					<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
 				<ul id="menu-2-4e6d1cde" class="elementor-nav-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2025"><a href="index.html" class="elementor-item" tabindex="-1">SecuryTI</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html%3Fp=2607.html#" class="elementor-item elementor-item-anchor" tabindex="-1">Soluciones</a>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html#" class="elementor-item elementor-item-anchor" tabindex="-1">Soluciones</a>
 <ul class="sub-menu elementor-nav-menu--dropdown">
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Consultoría Tecnológica</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Formación en Ciberseguridad</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Peritajes e Informes Periciales</a></li>
-	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html%3Fp=2607.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Compliance</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Consultoría Tecnológica</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Formación en Ciberseguridad</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Peritajes e Informes Periciales</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Compliance</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="index.html%3Fp=2607.html" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Acreditación NIST</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2607 current_page_item menu-item-2613"><a href="acreditacion-nist/" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Acreditación NIST</a></li>
 </ul>			</nav>
 						</div>
 				<div class="elementor-element elementor-element-5191df8d elementor-align-right elementor-hidden-phone elementor-widget elementor-widget-button" data-id="5191df8d" data-element_type="widget" data-widget_type="button.default">
-										<a class="elementor-button elementor-button-link elementor-size-md" href="index.html%3Fp=25.html">
+										<a class="elementor-button elementor-button-link elementor-size-md" href="contacto/">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-icon">
 				<i aria-hidden="true" class="fas fa-long-arrow-alt-right"></i>			</span>
@@ -837,8 +843,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-widget-container">
 					<div class="pxl-service-sidebar pxl-service-sidebar1">
 	<div class="pxl-item-inner " data-wow-delay="ms">
-			    		            <div class="pxl-item">
-                    <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				    	    	    <div class="pxl-item">
+			                    <a class="pxl-item-link" href="acreditacion-nist/#">
 	                    <span class="pxl-item-title">
 		                    Acreditación NIST		                </span>
 		                <span class="pxl-item--arrow">
@@ -846,8 +852,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 						</span>
 					</a>
 	            </div>
-		    	            <div class="pxl-item">
-                    <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+		    	    	    <div class="pxl-item">
+	                    <a class="pxl-item-link" href="acreditacion-nist/#">
 	                    <span class="pxl-item-title">
 		                    Consultoría Tecnológica		                </span>
 		                <span class="pxl-item--arrow">
@@ -855,8 +861,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 						</span>
 					</a>
 	            </div>
-		    	            <div class="pxl-item">
-                    <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+		    	    	    <div class="pxl-item">
+	                    <a class="pxl-item-link" href="acreditacion-nist/#">
 	                    <span class="pxl-item-title">
 		                    Formación 		                </span>
 		                <span class="pxl-item--arrow">
@@ -864,8 +870,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 						</span>
 					</a>
 	            </div>
-		    	            <div class="pxl-item">
-                    <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+		    	    	    <div class="pxl-item">
+	                    <a class="pxl-item-link" href="acreditacion-nist/#">
 	                    <span class="pxl-item-title">
 		                    Peritajes		                </span>
 		                <span class="pxl-item--arrow">
@@ -873,8 +879,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 						</span>
 					</a>
 	            </div>
-		    	            <div class="pxl-item">
-                    <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+		    	    	    <div class="pxl-item">
+	                    <a class="pxl-item-link" href="acreditacion-nist/#">
 	                    <span class="pxl-item-title">
 		                    Compliance		                </span>
 		                <span class="pxl-item--arrow">
@@ -1073,7 +1079,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
         
 <div class="wpcf7 no-js" id="wpcf7-f2237-p2607-o1" lang="en-US" dir="ltr" data-wpcf7-id="2237">
 <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
-<form action="index.html%3Fp=2607.html#wpcf7-f2237-p2607-o1" method="post" class="wpcf7-form init" aria-label="Contact form" novalidate="novalidate" data-status="init">
+<form action="acreditacion-nist/#wpcf7-f2237-p2607-o1" method="post" class="wpcf7-form init" aria-label="Contact form" novalidate="novalidate" data-status="init">
 <fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="2237" /><input type="hidden" name="_wpcf7_version" value="6.1.4" /><input type="hidden" name="_wpcf7_locale" value="en_US" /><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f2237-p2607-o1" /><input type="hidden" name="_wpcf7_container_post" value="2607" /><input type="hidden" name="_wpcf7_posted_data_hash" value="" /><input type="hidden" name="_wpcf7_recaptcha_response" value="" />
 </fieldset>
 <div id="appointment-form">
@@ -1148,7 +1154,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-element elementor-element-683eef5f elementor-widget elementor-widget-pxl_button" data-id="683eef5f" data-element_type="widget" data-widget_type="pxl_button.default">
 				<div class="elementor-widget-container">
 					<div id="pxl-pxl_button-683eef5f-7837" class="pxl-button pxl-atc-link wow fadeInLeft" data-wow-delay="300ms">
-    <a href="index.html%3Fp=29.html" class="btn pxl-icon-active btn-default wow fadeInLeft pxl-icon--left" data-wow-delay="300ms" data-onepage-offset="">
+	<a href="appointment/" class="btn pxl-icon-active btn-default wow fadeInLeft pxl-icon--left" data-wow-delay="300ms" data-onepage-offset="">
         
                 
         <span class="pxl--btn-text" data-text="CONTACTA CON NOSOTROS">
@@ -1201,15 +1207,15 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-element elementor-element-83e8854 elementor-widget elementor-widget-pxl_icon" data-id="83e8854" data-element_type="widget" data-widget_type="pxl_icon.default">
 				<div class="elementor-widget-container">
 					    <div class="pxl-icon-list pxl-icon1 style2 " data-wow-delay="ms">
-                                    <a class="elementor-repeater-item-81bc857 " href="index.html%3Fp=2607.html#">
+										<a class="elementor-repeater-item-81bc857 " href="acreditacion-nist/#">
                     <i aria-hidden="true" class="fab fa-facebook-f"></i>                                    </a>
-                                                <a class="elementor-repeater-item-1eb6801 " href="index.html%3Fp=2607.html#">
+													<a class="elementor-repeater-item-1eb6801 " href="acreditacion-nist/#">
                     <i aria-hidden="true" class="fab fa-twitter"></i>                                    </a>
-                                                <a class="elementor-repeater-item-eaa00ff " href="index.html%3Fp=2607.html#">
+													<a class="elementor-repeater-item-eaa00ff " href="acreditacion-nist/#">
                     <i aria-hidden="true" class="fab fa-whatsapp"></i>                                    </a>
-                                                <a class="elementor-repeater-item-de9ab6e " href="index.html%3Fp=2607.html#">
+													<a class="elementor-repeater-item-de9ab6e " href="acreditacion-nist/#">
                     <i aria-hidden="true" class="fab fa-instagram"></i>                                    </a>
-                                                <a class="elementor-repeater-item-f21f248 " href="index.html%3Fp=2607.html#">
+													<a class="elementor-repeater-item-f21f248 " href="acreditacion-nist/#">
                     <i aria-hidden="true" class="fab fa-youtube"></i>                                    </a>
                         </div>
 				</div>
@@ -1233,7 +1239,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-widget-container">
 					    <div class="pxl-list pxl-list1 style2">
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1242,7 +1248,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1251,7 +1257,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1260,7 +1266,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1269,7 +1275,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1299,7 +1305,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-widget-container">
 					    <div class="pxl-list pxl-list1 style2">
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1308,7 +1314,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1317,7 +1323,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1326,7 +1332,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=2607.html#">
+				<a class="pxl-item-link" href="acreditacion-nist/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1466,7 +1472,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-a415526-4356" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=2607.html#">Terms &amp; Conditions</a></p>		
+			<p><a href="acreditacion-nist/#">Terms &amp; Conditions</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1476,7 +1482,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-2fba8ff-1642" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=2607.html#">Privacy Policy</a></p>		
+			<p><a href="acreditacion-nist/#">Privacy Policy</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1501,7 +1507,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-c9ffbfb-4281" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=2607.html#">Terms &amp; Conditions</a></p>		
+			<p><a href="acreditacion-nist/#">Terms &amp; Conditions</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1511,7 +1517,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-ca9b5c5-4060" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=2607.html#">Privacy Policy</a></p>		
+			<p><a href="acreditacion-nist/#">Privacy Policy</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1525,7 +1531,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
             </div>
         </div>
     </footer>                <div class="pxl-scroll-top">
-                    <a class="pxl-scroll-top-link" href="index.html%3Fp=2607.html#">
+				    <a class="pxl-scroll-top-link" href="acreditacion-nist/#">
                         <span>Scroll to top</span>
                     </a>
                     <div class="scrollbar-v">

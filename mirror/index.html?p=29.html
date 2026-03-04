@@ -109,6 +109,12 @@
 				'c1.png':'Equipo de ciberseguridad'
 			};
 			document.querySelectorAll('img').forEach(function(img){
+				if(!img.hasAttribute('loading') && !img.hasAttribute('fetchpriority')){
+					img.setAttribute('loading','lazy');
+				}
+				if(!img.hasAttribute('decoding')){
+					img.setAttribute('decoding','async');
+				}
 				var alt=img.getAttribute('alt');
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
@@ -437,7 +443,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 <link rel="https://api.w.org/" href="wp-json/index.html" /><link rel="alternate" title="JSON" type="application/json" href="wp-json/wp/v2/pages/29" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="xmlrpc.php%3Frsd" />
 <meta name="generator" content="WordPress 6.8.3" />
 <link rel="canonical" href="https://securyti.mx/appointment/" />
-<link rel='shortlink' href='index.html%3Fp=29.html' />
+<link rel='shortlink' href='appointment/' />
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fsecuryti.mx%252Fappointment%252F" />
 <link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="wp-json/oembed/1.0/embed%3Furl=https:%252F%252Fsecuryti.mx%252Fappointment%252F&amp;format=xml" />
 <meta name="generator" content="Redux 4.5.10" /><link rel="icon" type="image/png" href="wp-content/uploads/2025/11/Securytiboy2-1.png"/><meta name="generator" content="Elementor 3.33.6; features: additional_custom_breakpoints; settings: css_print_method-internal, google_font-enabled, font_display-swap">
@@ -570,15 +576,15 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
                             <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" alt="Securyti"/></a>                        </div>
                                                 <nav class="pxl-header-nav">
                             <ul id="menu-menu-sitio" class="pxl-menu-primary clearfix"><li id="menu-item-2025" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2025"><a href="index.html"><span>SecuryTI</span></a></li>
-<li id="menu-item-2030" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html%3Fp=29.html#"><span>Soluciones</span></a>
+<li id="menu-item-2030" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html#"><span>Soluciones</span></a>
 <ul class="sub-menu">
-	<li id="menu-item-2032" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html%3Fp=29.html#"><span>Consultoría Tecnológica</span></a></li>
-	<li id="menu-item-2031" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html%3Fp=29.html#"><span>Formación en Ciberseguridad</span></a></li>
-	<li id="menu-item-2034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html%3Fp=29.html#"><span>Peritajes e Informes Periciales</span></a></li>
-	<li id="menu-item-2033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html%3Fp=29.html#"><span>Compliance</span></a></li>
+	<li id="menu-item-2032" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2032"><a href="index.html#"><span>Consultoría Tecnológica</span></a></li>
+	<li id="menu-item-2031" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2031"><a href="index.html#"><span>Formación en Ciberseguridad</span></a></li>
+	<li id="menu-item-2034" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2034"><a href="index.html#"><span>Peritajes e Informes Periciales</span></a></li>
+	<li id="menu-item-2033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#"><span>Compliance</span></a></li>
 </ul>
 </li>
-<li id="menu-item-2613" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2613"><a href="index.html%3Fp=2607.html"><span>Acreditación NIST</span></a></li>
+<li id="menu-item-2613" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2613"><a href="acreditacion-nist/"><span>Acreditación NIST</span></a></li>
 </ul>                        </nav>
                     </div>
                 </div>
@@ -638,7 +644,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
         
 <div class="wpcf7 no-js" id="wpcf7-f2237-p29-o1" lang="en-US" dir="ltr" data-wpcf7-id="2237">
 <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
-<form action="index.html%3Fp=29.html#wpcf7-f2237-p29-o1" method="post" class="wpcf7-form init" aria-label="Contact form" novalidate="novalidate" data-status="init">
+<form action="appointment/#wpcf7-f2237-p29-o1" method="post" class="wpcf7-form init" aria-label="Contact form" novalidate="novalidate" data-status="init">
 <fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="2237" /><input type="hidden" name="_wpcf7_version" value="6.1.4" /><input type="hidden" name="_wpcf7_locale" value="en_US" /><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f2237-p29-o1" /><input type="hidden" name="_wpcf7_container_post" value="29" /><input type="hidden" name="_wpcf7_posted_data_hash" value="" /><input type="hidden" name="_wpcf7_recaptcha_response" value="" />
 </fieldset>
 <div id="appointment-form">
@@ -707,7 +713,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
         
 <div class="wpcf7 no-js" id="wpcf7-f2237-p29-o2" lang="en-US" dir="ltr" data-wpcf7-id="2237">
 <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
-<form action="index.html%3Fp=29.html#wpcf7-f2237-p29-o2" method="post" class="wpcf7-form init" aria-label="Contact form" novalidate="novalidate" data-status="init">
+<form action="appointment/#wpcf7-f2237-p29-o2" method="post" class="wpcf7-form init" aria-label="Contact form" novalidate="novalidate" data-status="init">
 <fieldset class="hidden-fields-container"><input type="hidden" name="_wpcf7" value="2237" /><input type="hidden" name="_wpcf7_version" value="6.1.4" /><input type="hidden" name="_wpcf7_locale" value="en_US" /><input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f2237-p29-o2" /><input type="hidden" name="_wpcf7_container_post" value="29" /><input type="hidden" name="_wpcf7_posted_data_hash" value="" /><input type="hidden" name="_wpcf7_recaptcha_response" value="" />
 </fieldset>
 <div id="appointment-form">
@@ -804,15 +810,15 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-element elementor-element-83e8854 elementor-widget elementor-widget-pxl_icon" data-id="83e8854" data-element_type="widget" data-widget_type="pxl_icon.default">
 				<div class="elementor-widget-container">
 					    <div class="pxl-icon-list pxl-icon1 style2 " data-wow-delay="ms">
-                                    <a class="elementor-repeater-item-81bc857 " href="index.html%3Fp=29.html#">
+										<a class="elementor-repeater-item-81bc857 " href="appointment/#">
                     <i aria-hidden="true" class="fab fa-facebook-f"></i>                                    </a>
-                                                <a class="elementor-repeater-item-1eb6801 " href="index.html%3Fp=29.html#">
+													<a class="elementor-repeater-item-1eb6801 " href="appointment/#">
                     <i aria-hidden="true" class="fab fa-twitter"></i>                                    </a>
-                                                <a class="elementor-repeater-item-eaa00ff " href="index.html%3Fp=29.html#">
+													<a class="elementor-repeater-item-eaa00ff " href="appointment/#">
                     <i aria-hidden="true" class="fab fa-whatsapp"></i>                                    </a>
-                                                <a class="elementor-repeater-item-de9ab6e " href="index.html%3Fp=29.html#">
+													<a class="elementor-repeater-item-de9ab6e " href="appointment/#">
                     <i aria-hidden="true" class="fab fa-instagram"></i>                                    </a>
-                                                <a class="elementor-repeater-item-f21f248 " href="index.html%3Fp=29.html#">
+													<a class="elementor-repeater-item-f21f248 " href="appointment/#">
                     <i aria-hidden="true" class="fab fa-youtube"></i>                                    </a>
                         </div>
 				</div>
@@ -836,7 +842,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-widget-container">
 					    <div class="pxl-list pxl-list1 style2">
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -845,7 +851,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -854,7 +860,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -863,7 +869,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -872,7 +878,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -902,7 +908,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 				<div class="elementor-widget-container">
 					    <div class="pxl-list pxl-list1 style2">
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -911,7 +917,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -920,7 +926,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -929,7 +935,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
                 </a>
             </div>
                     <div class="pxl--item " data-wow-delay="ms">
-                <a class="pxl-item-link" href="index.html%3Fp=29.html#">
+				<a class="pxl-item-link" href="appointment/#">
                                             <div class="pxl-item--icon">
                                                     </div>
                                         <div class="pxl-item--text el-empty">
@@ -1069,7 +1075,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-a415526-7782" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=29.html#">Terms &amp; Conditions</a></p>		
+			<p><a href="appointment/#">Terms &amp; Conditions</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1079,7 +1085,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-2fba8ff-8041" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=29.html#">Privacy Policy</a></p>		
+			<p><a href="appointment/#">Privacy Policy</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1104,7 +1110,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-c9ffbfb-4738" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=29.html#">Terms &amp; Conditions</a></p>		
+			<p><a href="appointment/#">Terms &amp; Conditions</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1114,7 +1120,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 					<div id="pxl_text_editor-ca9b5c5-1549" class="pxl-image-wg" duration="1">
 	<div class="pxl-text-editor">
 		<div class="pxl-item--inner " data-wow-delay="ms">
-			<p><a href="index.html%3Fp=29.html#">Privacy Policy</a></p>		
+			<p><a href="appointment/#">Privacy Policy</a></p>		
 		</div>
 	</div>
 </div>				</div>
@@ -1128,7 +1134,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
             </div>
         </div>
     </footer>                <div class="pxl-scroll-top">
-                    <a class="pxl-scroll-top-link" href="index.html%3Fp=29.html#">
+				    <a class="pxl-scroll-top-link" href="appointment/#">
                         <span>Scroll to top</span>
                     </a>
                     <div class="scrollbar-v">

@@ -109,6 +109,12 @@
 				'c1.png':'Equipo de ciberseguridad'
 			};
 			document.querySelectorAll('img').forEach(function(img){
+				if(!img.hasAttribute('loading') && !img.hasAttribute('fetchpriority')){
+					img.setAttribute('loading','lazy');
+				}
+				if(!img.hasAttribute('decoding')){
+					img.setAttribute('decoding','async');
+				}
 				var alt=img.getAttribute('alt');
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
