@@ -91,11 +91,33 @@
 			if(next&&next!==href){link.setAttribute('href', next);}
 		}
 		function updateAlts(){
+			var altMap={
+				'securyti-logo2_bco-1024x337.png':'Logo SecuryTI',
+				'securyti-logo2_bco-scaled.png':'Logo SecuryTI',
+				'quality1.png':'Excelencia en ciberseguridad',
+				'quality2.png':'Compromiso con la calidad',
+				'quality3.png':'Estándar de seguridad',
+				'quality4.png':'Sello de confianza',
+				'quality5.png':'Certificación de calidad',
+				'quality6.png':'Garantía de servicio',
+				'cyber-security.png':'Seguridad cibernética',
+				'encryption.png':'Cifrado de datos',
+				'fingerprint.png':'Identidad y acceso',
+				'monitoring.png':'Monitoreo continuo',
+				'cloud-storage.png':'Seguridad en la nube',
+				'settings.png':'Configuración de seguridad',
+				'c1.png':'Equipo de ciberseguridad'
+			};
 			document.querySelectorAll('img').forEach(function(img){
 				var alt=img.getAttribute('alt');
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
-				var name=src.split('/').pop().split('?')[0].split('#')[0];
+				var filename=src.split('/').pop().split('?')[0].split('#')[0];
+				if(altMap[filename]){
+					img.setAttribute('alt', altMap[filename]);
+					return;
+				}
+				var name=filename;
 				if(name){
 					name=name.replace(/\.(png|jpe?g|webp|svg)$/i,'').replace(/[-_]+/g,' ').trim();
 				}

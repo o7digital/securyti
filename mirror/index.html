@@ -91,11 +91,33 @@
 			if(next&&next!==href){link.setAttribute('href', next);}
 		}
 		function updateAlts(){
+			var altMap={
+				'securyti-logo2_bco-1024x337.png':'Logo SecuryTI',
+				'securyti-logo2_bco-scaled.png':'Logo SecuryTI',
+				'quality1.png':'Excelencia en ciberseguridad',
+				'quality2.png':'Compromiso con la calidad',
+				'quality3.png':'Estándar de seguridad',
+				'quality4.png':'Sello de confianza',
+				'quality5.png':'Certificación de calidad',
+				'quality6.png':'Garantía de servicio',
+				'cyber-security.png':'Seguridad cibernética',
+				'encryption.png':'Cifrado de datos',
+				'fingerprint.png':'Identidad y acceso',
+				'monitoring.png':'Monitoreo continuo',
+				'cloud-storage.png':'Seguridad en la nube',
+				'settings.png':'Configuración de seguridad',
+				'c1.png':'Equipo de ciberseguridad'
+			};
 			document.querySelectorAll('img').forEach(function(img){
 				var alt=img.getAttribute('alt');
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
-				var name=src.split('/').pop().split('?')[0].split('#')[0];
+				var filename=src.split('/').pop().split('?')[0].split('#')[0];
+				if(altMap[filename]){
+					img.setAttribute('alt', altMap[filename]);
+					return;
+				}
+				var name=filename;
 				if(name){
 					name=name.replace(/\.(png|jpe?g|webp|svg)$/i,'').replace(/[-_]+/g,' ').trim();
 				}
@@ -422,7 +444,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#" class="elementor-sub-item elementor-item-anchor">Compliance</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2613"><a href="index.html%3Fp=2607.html" class="elementor-item">Acreditación NIST</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2613"><a href="acreditacion-nist/" class="elementor-item">Acreditación NIST</a></li>
 </ul>			</nav>
 					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
 			<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open eicon-menu-bar"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>		</div>
@@ -436,11 +458,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2033"><a href="index.html#" class="elementor-sub-item elementor-item-anchor" tabindex="-1">Compliance</a></li>
 </ul>
 </li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2613"><a href="index.html%3Fp=2607.html" class="elementor-item" tabindex="-1">Acreditación NIST</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2613"><a href="acreditacion-nist/" class="elementor-item" tabindex="-1">Acreditación NIST</a></li>
 </ul>			</nav>
 						</div>
 				<div class="elementor-element elementor-element-5191df8d elementor-align-right elementor-hidden-phone elementor-widget elementor-widget-button" data-id="5191df8d" data-element_type="widget" data-widget_type="button.default">
-										<a class="elementor-button elementor-button-link elementor-size-md" href="index.html%3Fp=25.html">
+										<a class="elementor-button elementor-button-link elementor-size-md" href="contacto/">
 						<span class="elementor-button-content-wrapper">
 						<span class="elementor-button-icon">
 				<i aria-hidden="true" class="fas fa-long-arrow-alt-right"></i>			</span>
@@ -532,7 +554,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-e02a2e3 elementor-align-center elementor-widget elementor-widget-pxl_button" data-id="e02a2e3" data-element_type="widget" data-widget_type="pxl_button.default">
 				<div class="elementor-widget-container">
 					<div id="pxl-pxl_button-e02a2e3-4448" class="pxl-button pxl-atc-link wow fadeInUp" data-wow-delay="600ms">
-    <a href="index.html%3Fp=29.html" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="600ms" data-onepage-offset="">
+	<a href="appointment/" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="600ms" data-onepage-offset="">
         
                 
         <span class="pxl--btn-text" data-text="CONTACTA CON NOSOTROS">
@@ -635,7 +657,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-c500ba4 elementor-widget elementor-widget-pxl_button" data-id="c500ba4" data-element_type="widget" data-widget_type="pxl_button.default">
 				<div class="elementor-widget-container">
 					<div id="pxl-pxl_button-c500ba4-1096" class="pxl-button pxl-atc-link wow fadeInLeft" data-wow-delay="300ms">
-    <a href="index.html%3Fp=29.html" class="btn pxl-icon-active btn-default wow fadeInLeft pxl-icon--left" data-wow-delay="300ms" data-onepage-offset="">
+	<a href="appointment/" class="btn pxl-icon-active btn-default wow fadeInLeft pxl-icon--left" data-wow-delay="300ms" data-onepage-offset="">
         
                 
         <span class="pxl--btn-text" data-text="CONTACTA CON NOSOTROS">
@@ -716,7 +738,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-849afa5 elementor-align-center elementor-widget elementor-widget-pxl_button" data-id="849afa5" data-element_type="widget" data-widget_type="pxl_button.default">
 				<div class="elementor-widget-container">
 					<div id="pxl-pxl_button-849afa5-6096" class="pxl-button pxl-atc-link wow fadeInUp" data-wow-delay="500ms">
-    <a href="index.html%3Fp=2607.html" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="500ms" data-onepage-offset="">
+	<a href="acreditacion-nist/" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="500ms" data-onepage-offset="">
         
                 
         <span class="pxl--btn-text" data-text="CONTRATAR SERVICIOS">
@@ -848,7 +870,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-cbe1671 elementor-widget elementor-widget-pxl_button" data-id="cbe1671" data-element_type="widget" data-widget_type="pxl_button.default">
 				<div class="elementor-widget-container">
 					<div id="pxl-pxl_button-cbe1671-4181" class="pxl-button pxl-atc-link wow fadeInUp" data-wow-delay="500ms">
-    <a href="index.html%3Fp=25.html" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="500ms" data-onepage-offset="">
+	<a href="contacto/" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="500ms" data-onepage-offset="">
         
                 
         <span class="pxl--btn-text" data-text="CONTRATAR SERVICIOS">
@@ -1460,7 +1482,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 				<div class="elementor-element elementor-element-af47316 elementor-widget elementor-widget-pxl_button" data-id="af47316" data-element_type="widget" data-widget_type="pxl_button.default">
 				<div class="elementor-widget-container">
 					<div id="pxl-pxl_button-af47316-3118" class="pxl-button pxl-atc-link wow fadeInUp" data-wow-delay="600ms">
-    <a href="index.html%3Fp=25.html" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="600ms" data-onepage-offset="">
+	<a href="contacto/" class="btn pxl-icon-active btn-default wow fadeInUp pxl-icon--left" data-wow-delay="600ms" data-onepage-offset="">
         
                 
         <span class="pxl--btn-text" data-text="CONTACTA CON NOSOTROS">
