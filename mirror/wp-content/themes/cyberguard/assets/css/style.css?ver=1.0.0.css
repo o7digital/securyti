@@ -35708,3 +35708,69 @@ body.rtl .btn--readmore:hover .btn-readmore--icon, body.rtl .btn--readmore:hover
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
+
+/* White header override for static Vercel deployment */
+#pxl-header-elementor .px-header--fixed,
+#pxl-header-elementor .px-header--fixed.smaller,
+#pxl-header-elementor .pxl-header-elementor-sticky.pxl-header-fixed,
+#pxl-header-elementor .elementor-2422 .elementor-element.elementor-element-7704c96:not(.elementor-motion-effects-element-type-background),
+#pxl-header-elementor .elementor-2422 .elementor-element.elementor-element-7704c96 > .elementor-motion-effects-container > .elementor-motion-effects-layer,
+#pxl-header-elementor .elementor-2422 .elementor-element.elementor-element-55343285:not(.elementor-motion-effects-element-type-background),
+#pxl-header-elementor .elementor-2422 .elementor-element.elementor-element-55343285 > .elementor-motion-effects-container > .elementor-motion-effects-layer,
+#pxl-header-elementor #pxl-header-mobile,
+#pxl-header-default,
+#pxl-header-default .pxl-header-main {
+  background: #fff !important;
+  background-color: #fff !important;
+  -webkit-backdrop-filter: none !important;
+  -o-backdrop-filter: none !important;
+  -moz-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+#pxl-header-elementor .elementor-2422 .elementor-widget-nav-menu .elementor-nav-menu--main .elementor-item,
+#pxl-header-elementor .elementor-2422 .elementor-widget-nav-menu .elementor-nav-menu--dropdown a,
+#pxl-header-elementor .elementor-2422 .elementor-widget-icon-list .elementor-icon-list-text,
+#pxl-header-elementor .elementor-2422 .elementor-widget-icon-list .elementor-icon-list-icon i,
+#pxl-header-elementor .elementor-2422 .elementor-widget-icon-list .elementor-icon-list-icon svg,
+#pxl-header-default .pxl-menu-primary > li > a,
+#pxl-header-default .pxl-menu-primary > li > a .caseicon-angle-arrow-down {
+  color: #16163f !important;
+  fill: #16163f !important;
+}
+
+#pxl-header-elementor .elementor-2422 .elementor-widget-nav-menu .elementor-nav-menu--main .elementor-item:hover,
+#pxl-header-elementor .elementor-2422 .elementor-widget-nav-menu .elementor-nav-menu--main .elementor-item.elementor-item-active,
+#pxl-header-elementor .elementor-2422 .elementor-widget-nav-menu .elementor-nav-menu--main .elementor-item:focus,
+#pxl-header-default .pxl-menu-primary > li > a:hover,
+#pxl-header-default .pxl-menu-primary > li.current_page_item > a,
+#pxl-header-default .pxl-menu-primary > li.current-menu-item > a,
+#pxl-header-default .pxl-menu-primary > li.current_page_ancestor > a,
+#pxl-header-default .pxl-menu-primary > li.current-menu-ancestor > a {
+  color: #16163f !important;
+  fill: #16163f !important;
+}
+
+#pxl-header-elementor .elementor-2422 .elementor-widget-image img,
+#pxl-header-elementor #pxl-header-mobile .pxl-header-branding img,
+#pxl-header-elementor #pxl-header-mobile .pxl-logo-mobile img,
+#pxl-header-default .pxl-header-branding img {
+  filter: brightness(0) saturate(100%) !important;
+}
+
+@media screen and (max-width: 1200px) {
+  #pxl-header-elementor #pxl-nav-mobile .pxl-nav-mobile-button:before,
+  #pxl-header-elementor #pxl-nav-mobile .pxl-nav-mobile-button:after,
+  #pxl-header-elementor #pxl-nav-mobile .pxl-nav-mobile-button span {
+    background-color: #16163f !important;
+  }
+
+  #pxl-header-elementor #pxl-header-mobile .pxl-header-menu {
+    background-color: #fff !important;
+  }
+
+  #pxl-header-elementor #pxl-header-mobile .pxl-menu-primary li.menu-item > a {
+    color: #16163f !important;
+    border-bottom-color: rgba(22, 22, 63, 0.12) !important;
+  }
+}
