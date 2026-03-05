@@ -137,12 +137,24 @@
 			style.textContent='.wpcf7-response-output{display:none!important;}';
 			document.head.appendChild(style);
 		}
+		function ensureLangSwitch(){
+			if(document.getElementById('lang-switch')){return;}
+			var style=document.createElement('style');
+			style.id='lang-switch-style';
+			style.textContent='#lang-switch{position:fixed;top:14px;left:14px;z-index:9999;font-family:inherit;font-size:12px;letter-spacing:.02em}#lang-switch a{display:inline-block;margin-right:6px;padding:6px 8px;border-radius:6px;background:#0b1f3a;color:#fff;text-decoration:none;opacity:.9}#lang-switch a.active{background:#ffffff;color:#0b1f3a;border:1px solid #0b1f3a}';
+			document.head.appendChild(style);
+			var wrap=document.createElement('div');
+			wrap.id='lang-switch';
+			wrap.innerHTML='<a class="active" href="/">ES</a><a href="/en/">EN</a><a href="/fr/">FR</a>';
+			document.body.appendChild(wrap);
+		}
 		function run(){
 			document.querySelectorAll('a[href]').forEach(updateLink);
 			document.querySelectorAll('form[action]').forEach(updateForm);
 			updateShortlink();
 			updateAlts();
 			ensureCf7Style();
+			ensureLangSwitch();
 		}
 		if(document.readyState==='loading'){
 			document.addEventListener('DOMContentLoaded', run);
