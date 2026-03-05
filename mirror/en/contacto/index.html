@@ -82,7 +82,27 @@
 			var action=el.getAttribute('action');
 			var next=normalizeHref(action);
 			if(next&&next!==action){el.setAttribute('action', next);}
-		}
+			if(!el.classList.contains('wpcf7-form')){return;}
+			el.setAttribute('action','https://formspree.io/f/mvzwpovj');
+			el.setAttribute('method','POST');
+			var path=window.location.pathname||'/';
+			var lang='es';
+			if(path.indexOf('/en/')===0){lang='en';}
+			else if(path.indexOf('/fr/')===0){lang='fr';}
+			function ensureHidden(name,value){
+				var input=el.querySelector('input[name="'+name+'"]');
+				if(!input){
+					input=document.createElement('input');
+					input.type='hidden';
+					input.name=name;
+					el.appendChild(input);
+				}
+				input.value=value;
+			}
+			ensureHidden('_language',lang);
+			ensureHidden('_source_page',window.location.href);
+			ensureHidden('_subject','SecuryTI form ['+lang.toUpperCase()+']');
+			}
 		function updateShortlink(){
 			var link=document.querySelector('link[rel="shortlink"]');
 			if(!link){return;}
