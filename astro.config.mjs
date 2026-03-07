@@ -1,7 +1,0 @@
-import { defineConfig } from 'astro/config';
-
-export default defineConfig({
-  output: 'static',
-  publicDir: './mirror',
-  trailingSlash: 'always',
-});
