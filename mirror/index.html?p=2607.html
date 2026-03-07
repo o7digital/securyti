@@ -3,68 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<script>
-	(function(){
-		function canUseWebp(cb){
-			try{
-				var c=document.createElement('canvas');
-				if(c.getContext&&c.getContext('2d')){
-					cb(c.toDataURL('image/webp').indexOf('data:image/webp')===0);
-				}else{cb(false);}
-			}catch(e){cb(false);}
-		}
-		function swapImg(img){
-			if(img.dataset.webpApplied){return;}
-			var origSrc=img.getAttribute('src');
-			var origSrcset=img.getAttribute('srcset');
-			if(origSrc&&/\.(png|jpe?g)(\?|#|$)/i.test(origSrc)){
-				img.dataset.origSrc=origSrc;
-				img.setAttribute('src', origSrc.replace(/\.(png|jpe?g)(?=($|[?#]))/i,'.webp'));
-			}
-			if(origSrcset&&/\.(png|jpe?g)(\s|,|$)/i.test(origSrcset)){
-				img.dataset.origSrcset=origSrcset;
-				img.setAttribute('srcset', origSrcset.replace(/\.(png|jpe?g)(?=(\s|,|$))/gi,'.webp'));
-			}
-			if(img.dataset.origSrc||img.dataset.origSrcset){
-				img.onerror=function(){
-					if(img.dataset.origSrc){img.setAttribute('src', img.dataset.origSrc);}
-					if(img.dataset.origSrcset){img.setAttribute('srcset', img.dataset.origSrcset);}
-					img.onerror=null;
-				};
-				img.dataset.webpApplied='1';
-			}
-		}
-		function swapStyle(el){
-			if(el.dataset.webpStyleApplied){return;}
-			var style=el.getAttribute('style');
-			if(style&&/url\([^)]*\.(png|jpe?g)[^)]*\)/i.test(style)){
-				el.setAttribute('style', style.replace(/\.(png|jpe?g)(?=($|[?#\)]))/gi,'.webp'));
-				el.dataset.webpStyleApplied='1';
-			}
-		}
-		function process(root){
-			if(!root.querySelectorAll){return;}
-			root.querySelectorAll('img').forEach(swapImg);
-			root.querySelectorAll('[style]').forEach(swapStyle);
-		}
-		canUseWebp(function(ok){
-			if(!ok){return;}
-			process(document);
-			var obs=new MutationObserver(function(mutations){
-				mutations.forEach(function(m){
-					if(!m.addedNodes){return;}
-					m.addedNodes.forEach(function(n){
-						if(n.nodeType!==1){return;}
-						if(n.tagName==='IMG'){swapImg(n);}else{process(n);} 
-						if(n.hasAttribute&&n.hasAttribute('style')){swapStyle(n);} 
-					});
-				});
-			});
-			obs.observe(document.documentElement,{childList:true,subtree:true});
-		});
-	})();
-	</script>
-	<script>
+<script>
 	(function(){
 		function normalizeHref(value){
 			if(!value){return value;}
@@ -139,11 +78,13 @@
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
 				var filename=src.split('/').pop().split('?')[0].split('#')[0];
-				if(altMap[filename]){
-					img.setAttribute('alt', altMap[filename]);
+				var baseName=filename.replace(/\.(png|jpe?g|webp|svg)$/i,'');
+				var mappedAlt=altMap[filename] || altMap[baseName + '.png'] || altMap[baseName + '.jpg'] || altMap[baseName + '.jpeg'] || altMap[baseName + '.webp'] || altMap[baseName + '.svg'];
+				if(mappedAlt){
+					img.setAttribute('alt', mappedAlt);
 					return;
 				}
-				var name=filename;
+				var name=baseName;
 				if(name){
 					name=name.replace(/\.(png|jpe?g|webp|svg)$/i,'').replace(/[-_]+/g,' ').trim();
 				}
@@ -597,7 +538,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 
 
 		</style>
-		<style id="pxl_theme_options-dynamic-css" title="dynamic-css" class="redux-options-output">#pxl-page-title-default{background-repeat:no-repeat;background-position:center top;background-image:url('wp-content/uploads/2025/11/concepto-de-seguridad-cibernetica-en-el-arte-digital-scaled.jpg');background-size:cover;}body{font-family:"IBM Plex Mono";font-weight:normal;font-style:normal;}</style><style id="pxl-page-dynamic-css" data-type="redux-output-css">#pxl-page-title-default{background-repeat:no-repeat;background-position:center top;background-image:url('wp-content/uploads/2025/11/ilustracion-3d-de-fondo-oscuro-de-seguridad-y-proteccion-en-linea-scaled.jpg');background-size:cover;}#pxl-wapper #pxl-main{padding-top:0px;padding-bottom:0px;}</style></head>
+		<style id="pxl_theme_options-dynamic-css" title="dynamic-css" class="redux-options-output">#pxl-page-title-default{background-repeat:no-repeat;background-position:center top;background-image:url('wp-content/uploads/2025/11/concepto-de-seguridad-cibernetica-en-el-arte-digital-scaled.webp');background-size:cover;}body{font-family:"IBM Plex Mono";font-weight:normal;font-style:normal;}</style><style id="pxl-page-dynamic-css" data-type="redux-output-css">#pxl-page-title-default{background-repeat:no-repeat;background-position:center top;background-image:url('wp-content/uploads/2025/11/ilustracion-3d-de-fondo-oscuro-de-seguridad-y-proteccion-en-linea-scaled.webp');background-size:cover;}#pxl-wapper #pxl-main{padding-top:0px;padding-bottom:0px;}</style></head>
 <body class="wp-singular page-template-default page page-id-2607 wp-theme-cyberguard wp-child-theme-cyberguard-child   pxl-redux-page  heading-default-font   pxl-font-default  bd-px-header--fixed  site-color-gradient   woocommerce-layout-grid elementor-default elementor-kit-8 elementor-page elementor-page-2607">
         <div id="pxl-wapper" class="pxl-wapper">
                         <div id="pxl-loadding" class="pxl-loader pxl-loader-gradient  style-default">
@@ -668,7 +609,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 		<div class="elementor-element elementor-element-55343285 e-flex e-con-boxed pxl-column-none pxl-row-scroll-none pxl-zoom-point-false pxl-section-overflow-visible pxl-section-fix-none pxl-full-content-with-space-none pxl-bg-color-none pxl-section-overlay-none e-con e-child " data-id="55343285" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">			<div class="e-con-inner">
 				<div class="elementor-element elementor-element-24032e4a elementor-widget elementor-widget-image" data-id="24032e4a" data-element_type="widget" data-widget_type="image.default">
 																<a href="index.html">
-							<img fetchpriority="high" width="1024" height="337" src="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.png" class="attachment-large size-large wp-image-2387" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.png 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.png 300w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.png 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.png 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.png 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.png 1200w" sizes="(max-width: 1024px) 100vw, 1024px" />								</a>
+							<img fetchpriority="high" width="1024" height="337" src="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.webp" class="attachment-large size-large wp-image-2387" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.webp 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.webp 300w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.webp 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.webp 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.webp 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.webp 1200w" sizes="(max-width: 1024px) 100vw, 1024px" />								</a>
 															</div>
 				<div class="elementor-element elementor-element-4e6d1cde elementor-nav-menu__align-center elementor-nav-menu--stretch elementor-nav-menu__text-align-center elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="4e6d1cde" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 								<nav aria-label="Menu" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
@@ -766,7 +707,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 		<div class="elementor-element elementor-element-55343285 e-flex e-con-boxed pxl-column-none pxl-row-scroll-none pxl-zoom-point-false pxl-section-overflow-visible pxl-section-fix-none pxl-full-content-with-space-none pxl-bg-color-none pxl-section-overlay-none e-con e-child " data-id="55343285" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">			<div class="e-con-inner">
 				<div class="elementor-element elementor-element-24032e4a elementor-widget elementor-widget-image" data-id="24032e4a" data-element_type="widget" data-widget_type="image.default">
 																<a href="index.html">
-							<img fetchpriority="high" width="1024" height="337" src="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.png" class="attachment-large size-large wp-image-2387" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.png 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.png 300w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.png 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.png 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.png 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.png 1200w" sizes="(max-width: 1024px) 100vw, 1024px" />								</a>
+							<img fetchpriority="high" width="1024" height="337" src="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.webp" class="attachment-large size-large wp-image-2387" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.webp 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.webp 300w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.webp 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.webp 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.webp 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.webp 1200w" sizes="(max-width: 1024px) 100vw, 1024px" />								</a>
 															</div>
 				<div class="elementor-element elementor-element-4e6d1cde elementor-nav-menu__align-center elementor-nav-menu--stretch elementor-nav-menu__text-align-center elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="4e6d1cde" data-element_type="widget" data-settings="{&quot;full_width&quot;:&quot;stretch&quot;,&quot;layout&quot;:&quot;horizontal&quot;,&quot;submenu_icon&quot;:{&quot;value&quot;:&quot;&lt;i class=\&quot;fas fa-caret-down\&quot;&gt;&lt;\/i&gt;&quot;,&quot;library&quot;:&quot;fa-solid&quot;},&quot;toggle&quot;:&quot;burger&quot;}" data-widget_type="nav-menu.default">
 								<nav aria-label="Menu" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
@@ -819,7 +760,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
                     <div class="row">
                                                     <div class="pxl-header-mobile-default">
                                 <div class="pxl-header-branding">
-                                    <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" alt="Securyti"/></a>                                </div>
+                                    <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp" alt="Securyti"/></a>                                </div>
                                 <div id="pxl-nav-mobile">
                                     <div class="pxl-nav-mobile-button pxl-anchor-divider pxl-cursor--cta">
                                         <span class="pxl-icon-line pxl-icon-line1"></span>
@@ -832,7 +773,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
                             <div class="pxl-header-menu-scroll">
                                 <div class="pxl-menu-close pxl-hide-xl pxl-close"></div>
                                 <div class="pxl-logo-mobile pxl-hide-xl">
-                                    <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" alt="Securyti"/></a>                                </div>
+                                    <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp" alt="Securyti"/></a>                                </div>
                                                                 <nav class="pxl-header-nav">
                                                                     </nav>
                             </div>
@@ -926,7 +867,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 					<div id="pxl_image-57fe1b4f-2120" class="pxl-image-single  style-default " data-wow-delay="ms" >
     <div class="pxl-item--inner " data-wow-delay="120ms">
         
-                                <div class="pxl-item--bg bg-image " data-wow-delay="ms" style="background-image: url(wp-content/uploads/2025/11/ilustracion-3d-de-fondo-oscuro-de-seguridad-y-proteccion-en-linea-scaled.jpg);"></div>
+                                <div class="pxl-item--bg bg-image " data-wow-delay="ms" style="background-image: url(wp-content/uploads/2025/11/ilustracion-3d-de-fondo-oscuro-de-seguridad-y-proteccion-en-linea-scaled.webp);"></div>
                                 </div>
 </div>				</div>
 				</div>
@@ -1089,7 +1030,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
     <div class="pxl-item--inner " data-wow-delay="120ms">
         
                                 <div class="pxl-item--image " data-wow-delay="ms" data-parallax-value="">
-                                                    <img decoding="async" class="no-lazyload " src="wp-content/uploads/2025/10/logo-big-white-576x576.png" width="576" height="576" alt="logo-big-white" title="logo-big-white" />                                            </div>
+                                                    <img decoding="async" class="no-lazyload " src="wp-content/uploads/2025/10/logo-big-white-576x576.webp" width="576" height="576" alt="logo-big-white" title="logo-big-white" />                                            </div>
                                 </div>
 </div>				</div>
 				</div>
@@ -1219,7 +1160,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 		<div class="elementor-element elementor-element-180d6dc e-con-full e-flex pxl-column-none pxl-row-scroll-none pxl-zoom-point-false pxl-section-overflow-visible pxl-section-fix-none pxl-full-content-with-space-none pxl-bg-color-none pxl-section-overlay-none e-con e-child " data-id="180d6dc" data-element_type="container">		<div class="elementor-element elementor-element-c9c0d1f elementor-widget elementor-widget-pxl_logo" data-id="c9c0d1f" data-element_type="widget" data-widget_type="pxl_logo.default">
 				<div class="elementor-widget-container">
 					    <div class="pxl-logo " data-wow-delay="ms">
-        <a href="https://onecode-media.com/securyti/">            <img width="2560" height="843" src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" class="attachment-full" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png 2560w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.png 300w, wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.png 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.png 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.png 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.png 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.png 1200w" sizes="(max-width: 2560px) 100vw, 2560px" />        </a>    </div>
+        <a href="https://onecode-media.com/securyti/">            <img width="2560" height="843" src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp" class="attachment-full" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp 2560w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.webp 300w, wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.webp 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.webp 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.webp 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.webp 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.webp 1200w" sizes="(max-width: 2560px) 100vw, 2560px" />        </a>    </div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-4c7627d elementor-widget elementor-widget-pxl_text_editor" data-id="4c7627d" data-element_type="widget" data-widget_type="pxl_text_editor.default">

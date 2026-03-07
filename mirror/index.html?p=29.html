@@ -3,68 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<script>
-	(function(){
-		function canUseWebp(cb){
-			try{
-				var c=document.createElement('canvas');
-				if(c.getContext&&c.getContext('2d')){
-					cb(c.toDataURL('image/webp').indexOf('data:image/webp')===0);
-				}else{cb(false);}
-			}catch(e){cb(false);}
-		}
-		function swapImg(img){
-			if(img.dataset.webpApplied){return;}
-			var origSrc=img.getAttribute('src');
-			var origSrcset=img.getAttribute('srcset');
-			if(origSrc&&/\.(png|jpe?g)(\?|#|$)/i.test(origSrc)){
-				img.dataset.origSrc=origSrc;
-				img.setAttribute('src', origSrc.replace(/\.(png|jpe?g)(?=($|[?#]))/i,'.webp'));
-			}
-			if(origSrcset&&/\.(png|jpe?g)(\s|,|$)/i.test(origSrcset)){
-				img.dataset.origSrcset=origSrcset;
-				img.setAttribute('srcset', origSrcset.replace(/\.(png|jpe?g)(?=(\s|,|$))/gi,'.webp'));
-			}
-			if(img.dataset.origSrc||img.dataset.origSrcset){
-				img.onerror=function(){
-					if(img.dataset.origSrc){img.setAttribute('src', img.dataset.origSrc);}
-					if(img.dataset.origSrcset){img.setAttribute('srcset', img.dataset.origSrcset);}
-					img.onerror=null;
-				};
-				img.dataset.webpApplied='1';
-			}
-		}
-		function swapStyle(el){
-			if(el.dataset.webpStyleApplied){return;}
-			var style=el.getAttribute('style');
-			if(style&&/url\([^)]*\.(png|jpe?g)[^)]*\)/i.test(style)){
-				el.setAttribute('style', style.replace(/\.(png|jpe?g)(?=($|[?#\)]))/gi,'.webp'));
-				el.dataset.webpStyleApplied='1';
-			}
-		}
-		function process(root){
-			if(!root.querySelectorAll){return;}
-			root.querySelectorAll('img').forEach(swapImg);
-			root.querySelectorAll('[style]').forEach(swapStyle);
-		}
-		canUseWebp(function(ok){
-			if(!ok){return;}
-			process(document);
-			var obs=new MutationObserver(function(mutations){
-				mutations.forEach(function(m){
-					if(!m.addedNodes){return;}
-					m.addedNodes.forEach(function(n){
-						if(n.nodeType!==1){return;}
-						if(n.tagName==='IMG'){swapImg(n);}else{process(n);} 
-						if(n.hasAttribute&&n.hasAttribute('style')){swapStyle(n);} 
-					});
-				});
-			});
-			obs.observe(document.documentElement,{childList:true,subtree:true});
-		});
-	})();
-	</script>
-	<script>
+<script>
 	(function(){
 		function normalizeHref(value){
 			if(!value){return value;}
@@ -139,11 +78,13 @@
 				if(alt && alt.trim().length){return;}
 				var src=img.getAttribute('src') || '';
 				var filename=src.split('/').pop().split('?')[0].split('#')[0];
-				if(altMap[filename]){
-					img.setAttribute('alt', altMap[filename]);
+				var baseName=filename.replace(/\.(png|jpe?g|webp|svg)$/i,'');
+				var mappedAlt=altMap[filename] || altMap[baseName + '.png'] || altMap[baseName + '.jpg'] || altMap[baseName + '.jpeg'] || altMap[baseName + '.webp'] || altMap[baseName + '.svg'];
+				if(mappedAlt){
+					img.setAttribute('alt', mappedAlt);
 					return;
 				}
-				var name=filename;
+				var name=baseName;
 				if(name){
 					name=name.replace(/\.(png|jpe?g|webp|svg)$/i,'').replace(/[-_]+/g,' ').trim();
 				}
@@ -232,7 +173,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 <link rel='stylesheet' id='elementor-frontend-css' href='wp-content/uploads/elementor/css/custom-frontend.min.css%3Fver=1772590352.css' type='text/css' media='all' />
 <style id='elementor-frontend-inline-css' type='text/css'>
 .elementor-kit-8{--e-global-color-primary:#6EC1E4;--e-global-color-secondary:#54595F;--e-global-color-text:#7A7A7A;--e-global-color-accent:#61CE70;--e-global-typography-primary-font-family:"Roboto";--e-global-typography-primary-font-weight:600;--e-global-typography-secondary-font-family:"Roboto Slab";--e-global-typography-secondary-font-weight:400;--e-global-typography-text-font-family:"Roboto";--e-global-typography-text-font-weight:400;--e-global-typography-accent-font-family:"Roboto";--e-global-typography-accent-font-weight:500;}.elementor-kit-8 e-page-transition{background-color:#FFBC7D;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1280px;}.e-con{--container-max-width:1280px;--container-default-padding-top:0px;--container-default-padding-right:0px;--container-default-padding-bottom:0px;--container-default-padding-left:0px;}.elementor-widget:not(:last-child){--kit-widget-spacing:0px;}.elementor-element{--widgets-spacing:0px 0px;--widgets-spacing-row:0px;--widgets-spacing-column:0px;}{}h1.entry-title{display:var(--page-title-display);}@media(max-width:1024px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}
-.elementor-29 .elementor-element.elementor-element-6bbc5c6{--display:flex;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--gap:0px 0px;--row-gap:0px;--column-gap:0px;--overlay-opacity:1;--padding-top:192px;--padding-bottom:100px;--padding-left:15px;--padding-right:15px;}.elementor-29 .elementor-element.elementor-element-6bbc5c6:not(.elementor-motion-effects-element-type-background), .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#1B1B1B;}.elementor-29 .elementor-element.elementor-element-6bbc5c6::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-background-video-container::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .e-con-inner > .elementor-background-video-container::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-background-slideshow::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .e-con-inner > .elementor-background-slideshow::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-motion-effects-container > .elementor-motion-effects-layer::before{background-color:transparent;--background-overlay:'';background-image:linear-gradient(0deg, #3B3B3EBF 0%, #3B3B3EBF 50%);}.elementor-29 .elementor-element.elementor-element-6bbc5c6 .pxl-section-bg-parallax{background-image:url( wp-content/uploads/2025/10/team-bg1.jpg );background-position:top center;background-size:cover;left:1;}.elementor-29 .elementor-element.elementor-element-6bbc5c6 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-6bbc5c6 .pxl-divider-border-line .pxl-item-line-height{height:0%;}.elementor-29 .elementor-element.elementor-element-9bc5479{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--border-radius:10px 10px 10px 10px;--padding-top:22px;--padding-bottom:40px;--padding-left:40px;--padding-right:40px;}.elementor-29 .elementor-element.elementor-element-9bc5479:not(.elementor-motion-effects-element-type-background), .elementor-29 .elementor-element.elementor-element-9bc5479 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#F3F3F4;}.elementor-29 .elementor-element.elementor-element-9bc5479 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-9bc5479 .pxl-divider-border-line .pxl-item-line-height{height:0%;}.elementor-29 .elementor-element.elementor-element-fac3018{--display:flex;--flex-direction:row;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--align-items:center;--gap:20px 20px;--row-gap:20px;--column-gap:20px;}.elementor-29 .elementor-element.elementor-element-fac3018 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-fac3018 .pxl-divider-border-line .pxl-item-line-height{height:0%;}.elementor-29 .elementor-element.elementor-element-60b54b2 .pxl-icon-list a{color:#0FE885;font-size:48px;}.elementor-29 .elementor-element.elementor-element-f7708bd .pxl-text-editor{color:#111013;font-size:48px;font-weight:600;line-height:1.2em;letter-spacing:-0.015px;}.elementor-29 .elementor-element.elementor-element-38a6255 > .elementor-widget-container{margin:0px 0px 20px 0px;}.elementor-29 .elementor-element.elementor-element-29abb48{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--padding-top:192px;--padding-bottom:100px;--padding-left:15px;--padding-right:15px;}.elementor-29 .elementor-element.elementor-element-29abb48:not(.elementor-motion-effects-element-type-background), .elementor-29 .elementor-element.elementor-element-29abb48 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#1B1B1B;}.elementor-29 .elementor-element.elementor-element-29abb48 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-29abb48 .pxl-divider-border-line .pxl-item-line-height{height:0%;}@media(min-width:768px){.elementor-29 .elementor-element.elementor-element-6bbc5c6{--content-width:628px;}.elementor-29 .elementor-element.elementor-element-9bc5479{--width:100%;}}@media(max-width:1200px){.elementor-29 .elementor-element.elementor-element-6bbc5c6{--padding-top:100px;--padding-bottom:100px;--padding-left:15px;--padding-right:15px;}}@media(max-width:767px){.elementor-29 .elementor-element.elementor-element-9bc5479{--padding-top:22px;--padding-bottom:40px;--padding-left:20px;--padding-right:20px;}.elementor-29 .elementor-element.elementor-element-fac3018{--gap:5px 5px;--row-gap:5px;--column-gap:5px;}.elementor-29 .elementor-element.elementor-element-60b54b2 > .elementor-widget-container{margin:0px 0px 0px 0px;}.elementor-29 .elementor-element.elementor-element-60b54b2 .pxl-icon-list a{font-size:40px;}.elementor-29 .elementor-element.elementor-element-f7708bd .pxl-text-editor{font-size:35px;}}/* Start custom CSS for pxl_contact_form, class: .elementor-element-47e356c *//* ============================
+.elementor-29 .elementor-element.elementor-element-6bbc5c6{--display:flex;--flex-direction:row;--container-widget-width:initial;--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--gap:0px 0px;--row-gap:0px;--column-gap:0px;--overlay-opacity:1;--padding-top:192px;--padding-bottom:100px;--padding-left:15px;--padding-right:15px;}.elementor-29 .elementor-element.elementor-element-6bbc5c6:not(.elementor-motion-effects-element-type-background), .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#1B1B1B;}.elementor-29 .elementor-element.elementor-element-6bbc5c6::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-background-video-container::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .e-con-inner > .elementor-background-video-container::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-background-slideshow::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .e-con-inner > .elementor-background-slideshow::before, .elementor-29 .elementor-element.elementor-element-6bbc5c6 > .elementor-motion-effects-container > .elementor-motion-effects-layer::before{background-color:transparent;--background-overlay:'';background-image:linear-gradient(0deg, #3B3B3EBF 0%, #3B3B3EBF 50%);}.elementor-29 .elementor-element.elementor-element-6bbc5c6 .pxl-section-bg-parallax{background-image:url(wp-content/uploads/2025/10/team-bg1.webp);background-position:top center;background-size:cover;left:1;}.elementor-29 .elementor-element.elementor-element-6bbc5c6 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-6bbc5c6 .pxl-divider-border-line .pxl-item-line-height{height:0%;}.elementor-29 .elementor-element.elementor-element-9bc5479{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--border-radius:10px 10px 10px 10px;--padding-top:22px;--padding-bottom:40px;--padding-left:40px;--padding-right:40px;}.elementor-29 .elementor-element.elementor-element-9bc5479:not(.elementor-motion-effects-element-type-background), .elementor-29 .elementor-element.elementor-element-9bc5479 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#F3F3F4;}.elementor-29 .elementor-element.elementor-element-9bc5479 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-9bc5479 .pxl-divider-border-line .pxl-item-line-height{height:0%;}.elementor-29 .elementor-element.elementor-element-fac3018{--display:flex;--flex-direction:row;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--container-widget-height:100%;--container-widget-flex-grow:1;--container-widget-align-self:stretch;--flex-wrap-mobile:wrap;--align-items:center;--gap:20px 20px;--row-gap:20px;--column-gap:20px;}.elementor-29 .elementor-element.elementor-element-fac3018 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-fac3018 .pxl-divider-border-line .pxl-item-line-height{height:0%;}.elementor-29 .elementor-element.elementor-element-60b54b2 .pxl-icon-list a{color:#0FE885;font-size:48px;}.elementor-29 .elementor-element.elementor-element-f7708bd .pxl-text-editor{color:#111013;font-size:48px;font-weight:600;line-height:1.2em;letter-spacing:-0.015px;}.elementor-29 .elementor-element.elementor-element-38a6255 > .elementor-widget-container{margin:0px 0px 20px 0px;}.elementor-29 .elementor-element.elementor-element-29abb48{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--padding-top:192px;--padding-bottom:100px;--padding-left:15px;--padding-right:15px;}.elementor-29 .elementor-element.elementor-element-29abb48:not(.elementor-motion-effects-element-type-background), .elementor-29 .elementor-element.elementor-element-29abb48 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#1B1B1B;}.elementor-29 .elementor-element.elementor-element-29abb48 .pxl-divider-border-line .pxl-item-line-width{width:0%;}.elementor-29 .elementor-element.elementor-element-29abb48 .pxl-divider-border-line .pxl-item-line-height{height:0%;}@media(min-width:768px){.elementor-29 .elementor-element.elementor-element-6bbc5c6{--content-width:628px;}.elementor-29 .elementor-element.elementor-element-9bc5479{--width:100%;}}@media(max-width:1200px){.elementor-29 .elementor-element.elementor-element-6bbc5c6{--padding-top:100px;--padding-bottom:100px;--padding-left:15px;--padding-right:15px;}}@media(max-width:767px){.elementor-29 .elementor-element.elementor-element-9bc5479{--padding-top:22px;--padding-bottom:40px;--padding-left:20px;--padding-right:20px;}.elementor-29 .elementor-element.elementor-element-fac3018{--gap:5px 5px;--row-gap:5px;--column-gap:5px;}.elementor-29 .elementor-element.elementor-element-60b54b2 > .elementor-widget-container{margin:0px 0px 0px 0px;}.elementor-29 .elementor-element.elementor-element-60b54b2 .pxl-icon-list a{font-size:40px;}.elementor-29 .elementor-element.elementor-element-f7708bd .pxl-text-editor{font-size:35px;}}/* Start custom CSS for pxl_contact_form, class: .elementor-element-47e356c *//* ============================
    ESTILO GLOBAL DEL FORMULARIO
    Igual que en /contact-us/
    ============================ */
@@ -572,7 +513,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 
 
 		</style>
-		<style id="pxl_theme_options-dynamic-css" title="dynamic-css" class="redux-options-output">#pxl-page-title-default{background-repeat:no-repeat;background-position:center top;background-image:url('wp-content/uploads/2025/11/concepto-de-seguridad-cibernetica-en-el-arte-digital-scaled.jpg');background-size:cover;}body{font-family:"IBM Plex Mono";font-weight:normal;font-style:normal;}</style><style id="pxl-page-dynamic-css" data-type="redux-output-css">#pxl-wapper #pxl-main{padding-top:0px;padding-bottom:0px;}</style></head>
+		<style id="pxl_theme_options-dynamic-css" title="dynamic-css" class="redux-options-output">#pxl-page-title-default{background-repeat:no-repeat;background-position:center top;background-image:url('wp-content/uploads/2025/11/concepto-de-seguridad-cibernetica-en-el-arte-digital-scaled.webp');background-size:cover;}body{font-family:"IBM Plex Mono";font-weight:normal;font-style:normal;}</style><style id="pxl-page-dynamic-css" data-type="redux-output-css">#pxl-wapper #pxl-main{padding-top:0px;padding-bottom:0px;}</style></head>
 <body class="wp-singular page-template-default page page-id-29 wp-theme-cyberguard wp-child-theme-cyberguard-child   pxl-redux-page  heading-default-font   pxl-font-default  site-color-gradient   woocommerce-layout-grid elementor-default elementor-kit-8 elementor-page elementor-page-29">
         <div id="pxl-wapper" class="pxl-wapper">
                         <div id="pxl-loadding" class="pxl-loader pxl-loader-gradient  style-default">
@@ -596,12 +537,12 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
         <div class="container">
             <div class="row">
                 <div class="pxl-header-branding">
-                    <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" alt="Securyti"/></a>                </div>
+                    <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp" alt="Securyti"/></a>                </div>
                 <div class="pxl-header-menu">
                     <div class="pxl-header-menu-scroll">
                         <div class="pxl-menu-close pxl-hide-xl pxl-close"></div>
                         <div class="pxl-logo-mobile pxl-hide-xl">
-                            <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" alt="Securyti"/></a>                        </div>
+                            <a href="index.html" title="Securyti" rel="home"><img src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp" alt="Securyti"/></a>                        </div>
                                                 <nav class="pxl-header-nav">
                             <ul id="menu-menu-sitio" class="pxl-menu-primary clearfix"><li id="menu-item-2025" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2025"><a href="index.html"><span>SecuryTI</span></a></li>
 <li id="menu-item-2030" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2030"><a href="index.html#"><span>Soluciones</span></a>
@@ -822,7 +763,7 @@ Déjanos tus datos y nuestro equipo se pondrá en contacto contigo
 		<div class="elementor-element elementor-element-180d6dc e-con-full e-flex pxl-column-none pxl-row-scroll-none pxl-zoom-point-false pxl-section-overflow-visible pxl-section-fix-none pxl-full-content-with-space-none pxl-bg-color-none pxl-section-overlay-none e-con e-child " data-id="180d6dc" data-element_type="container">		<div class="elementor-element elementor-element-c9c0d1f elementor-widget elementor-widget-pxl_logo" data-id="c9c0d1f" data-element_type="widget" data-widget_type="pxl_logo.default">
 				<div class="elementor-widget-container">
 					    <div class="pxl-logo " data-wow-delay="ms">
-        <a href="https://onecode-media.com/securyti/">            <img width="2560" height="843" src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png" class="attachment-full" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.png 2560w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.png 300w, wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.png 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.png 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.png 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.png 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.png 1200w" sizes="(max-width: 2560px) 100vw, 2560px" />        </a>    </div>
+        <a href="https://onecode-media.com/securyti/">            <img width="2560" height="843" src="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp" class="attachment-full" alt="" srcset="wp-content/uploads/2025/11/securyti-logo2_bco-scaled.webp 2560w, wp-content/uploads/2025/11/securyti-logo2_bco-300x99.webp 300w, wp-content/uploads/2025/11/securyti-logo2_bco-1024x337.webp 1024w, wp-content/uploads/2025/11/securyti-logo2_bco-768x253.webp 768w, wp-content/uploads/2025/11/securyti-logo2_bco-1536x506.webp 1536w, wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.webp 2048w, wp-content/uploads/2025/11/securyti-logo2_bco-1200x395.webp 1200w" sizes="(max-width: 2560px) 100vw, 2560px" />        </a>    </div>
 				</div>
 				</div>
 				<div class="elementor-element elementor-element-4c7627d elementor-widget elementor-widget-pxl_text_editor" data-id="4c7627d" data-element_type="widget" data-widget_type="pxl_text_editor.default">
