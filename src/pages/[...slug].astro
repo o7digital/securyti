@@ -1,0 +1,18 @@
+---
+import MirrorDocument from '../layouts/MirrorDocument.astro';
+import { loadMirrorRoute, pageEntries } from '../lib/mirror-pages.js';
+
+export function getStaticPaths() {
+  return pageEntries
+    .filter((entry) => entry.route !== '/')
+    .map((entry) => ({
+      params: { slug: entry.route.replace(/^\/|\/$/g, '') },
+      props: { route: entry.route },
+    }));
+}
+
+const { route } = Astro.props;
+const documentProps = loadMirrorRoute(route);
+---
+
+<MirrorDocument {...documentProps} />
