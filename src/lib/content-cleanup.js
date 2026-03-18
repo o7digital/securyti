@@ -309,6 +309,22 @@ function rewriteBrokenHashLinks(locale, html) {
   );
 }
 
+function stripTermsPlaceholders(html) {
+  return html
+    .replace(
+      /<div class="pxl--item "\s+data-wow-delay="ms">\s*<a\b[\s\S]*?<span>(?:Condiciones de uso|Terminos y condiciones|Conditions generales)<\/span>[\s\S]*?<\/a>\s*<\/div>/gi,
+      '',
+    )
+    .replace(
+      /<p>\s*<a(?:\s+[^>]*)?>\s*(?:Terms(?:\s|&amp;)+Conditions|Terminos y condiciones|Conditions generales)\s*<\/a>\s*<\/p>/gi,
+      '',
+    )
+    .replace(
+      /<div class="elementor-element [^"]*elementor-widget elementor-widget-pxl_text_editor"[^>]*>\s*<div class="elementor-widget-container">\s*<div id="pxl_text_editor-[^"]+" class="pxl-image-wg" duration="1">\s*<div class="pxl-text-editor">\s*<div class="pxl-item--inner "\s+data-wow-delay="ms">\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*<\/div>/gi,
+      '',
+    );
+}
+
 function stripLegacyLangSwitch(html) {
   return html
     .replace(/<style>\s*#lang-switch[\s\S]*?<\/style>\s*/gi, '')
@@ -330,6 +346,7 @@ export function cleanupMirrorBodyHtml(route, html) {
   cleanedHtml = applyReplacements(cleanedHtml, LOCALE_REPLACEMENTS[locale] ?? []);
   cleanedHtml = rewriteLegacyAbsoluteUrls(locale, cleanedHtml);
   cleanedHtml = rewriteBrokenHashLinks(locale, cleanedHtml);
+  cleanedHtml = stripTermsPlaceholders(cleanedHtml);
   cleanedHtml = stripLegacyLangSwitch(cleanedHtml);
 
   return cleanedHtml;
