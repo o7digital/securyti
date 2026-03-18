@@ -46,7 +46,7 @@ const backgroundVideoLoopFallback = `
       #lang-switch a.active{background:#ffffff;color:#0b1f3a;border:1px solid #0b1f3a}
     </style>
   </head>
-  <body class={bodyClass || undefined}>
+  <body id="page-top" class={bodyClass || undefined}>
     <nav id="lang-switch" aria-label="Language switcher">
       {languageLinks.map((link) => (
         <a class={link.isActive ? 'active' : undefined} href={link.href}>

@@ -1,4 +1,4 @@
-import { getRouteContext } from './site.js';
+import { getLocalizedRoute, getRouteContext } from './site.js';
 
 const CONTACT_EMAIL = 'contacto@securyti.mx';
 const CONTACT_PHONE = '+52 1 55 6350 2870';
@@ -125,6 +125,134 @@ function applyReplacements(html, replacements) {
   );
 }
 
+function normalizeLinkText(value) {
+  return value
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&#038;|&amp;/gi, '&')
+    .replace(/&#160;|&nbsp;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function buildAnchor(attributes, innerHtml, href) {
+  const cleanedAttributes = attributes.replace(/\s+/g, ' ').trim();
+  const tokens = [];
+
+  if (cleanedAttributes) {
+    tokens.push(cleanedAttributes);
+  }
+
+  if (href) {
+    tokens.push(`href="${href}"`);
+  }
+
+  return `<a${tokens.length ? ` ${tokens.join(' ')}` : ''}>${innerHtml}</a>`;
+}
+
+function escapeForwardSlashes(value) {
+  return value.replace(/\//g, '\\/');
+}
+
+function rewriteLegacyAbsoluteUrls(locale, html) {
+  const homeRoute = getLocalizedRoute('/', locale);
+  const appointmentRoute = getLocalizedRoute('/appointment/', locale);
+  const escapedHomeRoute = escapeForwardSlashes(homeRoute);
+  const escapedAppointmentRoute = escapeForwardSlashes(appointmentRoute);
+
+  return html
+    .replace(/https:\/\/onecode-media\.com\/securyti\/wp-content\//g, '/wp-content/')
+    .replace(/https:\/\/onecode-media\.com\/securyti\/wp-includes\//g, '/wp-includes/')
+    .replace(
+      /https:\\\/\\\/onecode-media\.com\\\/securyti\\\/wp-content\\\//g,
+      '\\/wp-content\\/',
+    )
+    .replace(
+      /https:\\\/\\\/onecode-media\.com\\\/securyti\\\/wp-includes\\\//g,
+      '\\/wp-includes\\/',
+    )
+    .replace(/https:\/\/onecode-media\.com\/securyti\/appointment\//g, appointmentRoute)
+    .replace(
+      /https:\\\/\\\/onecode-media\.com\\\/securyti\\\/appointment\\\//g,
+      escapedAppointmentRoute,
+    )
+    .replace(/https:\/\/onecode-media\.com\/securyti\//g, homeRoute)
+    .replace(/https:\\\/\\\/onecode-media\.com\\\/securyti\\\//g, escapedHomeRoute);
+}
+
+function resolveAnchorHref(locale, attributes, text) {
+  const privacyRoute = getLocalizedRoute('/aviso-de-privacidad/', locale);
+  const contactRoute = getLocalizedRoute('/contacto/', locale);
+  const nistRoute = getLocalizedRoute('/acreditacion-nist/', locale);
+
+  if (attributes.includes('pxl-scroll-top-link')) {
+    return '#page-top';
+  }
+
+  if (
+    text.includes('politica de privacidad') ||
+    text.includes('privacy policy') ||
+    text.includes('politique de confidentialite') ||
+    text.includes('politica de cookies') ||
+    text.includes('cookie policy') ||
+    text.includes('politique de cookies')
+  ) {
+    return privacyRoute;
+  }
+
+  if (
+    text.includes('cumplimiento') ||
+    text.includes('compliance') ||
+    text.includes('conformite') ||
+    text.includes('certificaciones') ||
+    text.includes('certification')
+  ) {
+    return nistRoute;
+  }
+
+  if (
+    attributes.includes('elementor-item') ||
+    attributes.includes('elementor-sub-item') ||
+    attributes.includes('btn pxl-icon-active btn-default')
+  ) {
+    return contactRoute;
+  }
+
+  if (
+    text.includes('auditoria') ||
+    text.includes('consultoria') ||
+    text.includes('consulting') ||
+    text.includes('conseil') ||
+    text.includes('training') ||
+    text.includes('formacion') ||
+    text.includes('formation') ||
+    text.includes('peritaje') ||
+    text.includes('forensics') ||
+    text.includes("expertise") ||
+    text.includes('security information') ||
+    text.includes('seguridad de la informacion')
+  ) {
+    return contactRoute;
+  }
+
+  return null;
+}
+
+function rewriteBrokenHashLinks(locale, html) {
+  return html.replace(
+    /<a\b([^>]*)href="index\.html#"([^>]*)>([\s\S]*?)<\/a>/gi,
+    (match, beforeAttributes = '', afterAttributes = '', innerHtml = '') => {
+      const attributes = `${beforeAttributes} ${afterAttributes}`.trim();
+      const text = normalizeLinkText(innerHtml);
+      const href = resolveAnchorHref(locale, attributes, text);
+
+      return buildAnchor(attributes, innerHtml, href);
+    },
+  );
+}
+
 function stripLegacyLangSwitch(html) {
   return html
     .replace(/<style>\s*#lang-switch[\s\S]*?<\/style>\s*/gi, '')
@@ -144,6 +272,8 @@ export function cleanupMirrorBodyHtml(route, html) {
 
   cleanedHtml = applyReplacements(cleanedHtml, UNIVERSAL_REPLACEMENTS);
   cleanedHtml = applyReplacements(cleanedHtml, LOCALE_REPLACEMENTS[locale] ?? []);
+  cleanedHtml = rewriteLegacyAbsoluteUrls(locale, cleanedHtml);
+  cleanedHtml = rewriteBrokenHashLinks(locale, cleanedHtml);
   cleanedHtml = stripLegacyLangSwitch(cleanedHtml);
 
   return cleanedHtml;
