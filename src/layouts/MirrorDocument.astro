@@ -1,5 +1,31 @@
 ---
 const { bodyClass, bodyHtml, headHtml, lang } = Astro.props;
+
+const backgroundVideoLoopFallback = `
+(() => {
+  const restartVideo = (video) => {
+    video.currentTime = 0;
+    const playPromise = video.play();
+
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  };
+
+  const attachLoopFallback = (video) => {
+    if (!(video instanceof HTMLVideoElement)) {
+      return;
+    }
+
+    video.loop = true;
+    video.addEventListener('ended', () => restartVideo(video));
+  };
+
+  document
+    .querySelectorAll('.elementor-background-video-hosted')
+    .forEach(attachLoopFallback);
+})();
+`;
 ---
 
 <!DOCTYPE html>
@@ -9,5 +35,6 @@ const { bodyClass, bodyHtml, headHtml, lang } = Astro.props;
   </head>
   <body class={bodyClass || undefined}>
     <Fragment set:html={bodyHtml} />
+    <script is:inline set:html={backgroundVideoLoopFallback} />
   </body>
 </html>
