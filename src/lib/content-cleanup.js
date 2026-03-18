@@ -70,6 +70,9 @@ const LOCALE_REPLACEMENTS = {
     [/Office Location/g, 'Office'],
     [/Call Us Directly/g, 'Phone'],
     [/Send a Message/g, 'Email'],
+    [/Soluciones/g, 'Solutions'],
+    [/Transparencia/g, 'Transparency'],
+    [/CONTRATAR SERVICIOS/g, 'EXPLORE SERVICES'],
     [
       /Whether you have a question, a suggestion, or just want to say hello, this is the place to do it\. Please fill out the form below with your details and message, and we&#8217;ll get back to you as soon as possible\./g,
       'Share your needs with us and our team will reach out to guide your next cybersecurity step.',
@@ -86,19 +89,26 @@ const LOCALE_REPLACEMENTS = {
     [/Office Location/g, 'Bureau'],
     [/Call Us Directly/g, 'Telephone'],
     [/Send a Message/g, 'Email'],
+    [/Soluciones/g, 'Solutions'],
+    [/Transparencia/g, 'Transparence'],
+    [/Cybersecurity Experts/g, 'Experts en cybersécurité'],
+    [/CONTRATAR SERVICIOS/g, 'DÉCOUVRIR NOS SERVICES'],
     [
       /Whether you have a question, a suggestion, or just want to say hello, this is the place to do it\. Please fill out the form below with your details and message, and we&#8217;ll get back to you as soon as possible\./g,
-      'Partagez votre besoin et notre equipe vous contactera pour vous guider sur la suite de votre projet cybersecurite.',
+      'Partagez votre besoin et notre équipe vous contactera pour vous guider sur la suite de votre projet cybersécurité.',
     ],
-    [/Prevention is cheaper than a breach/g, 'La prevention coute moins cher qu une breche'],
+    [/Prevention is cheaper than a breach/g, "La prévention coûte moins cher qu'une brèche"],
     [/Politica de cookies/g, 'Politique de cookies'],
-    [/Política de seguridad d el ainformación/g, "Politique de securite de l'information"],
+    [/Política de seguridad d el ainformación/g, "Politique de sécurité de l'information"],
     [/Servcios/g, 'Services'],
-    [/\bCompliance\b/g, 'Conformite'],
-    [/Privacy Policy/g, 'Politique de confidentialite'],
+    [/\bCompliance\b/g, 'Conformité'],
+    [/Conformite/g, 'Conformité'],
+    [/Privacy Policy/g, 'Politique de confidentialité'],
+    [/Politique de confidentialite/g, 'Politique de confidentialité'],
     [/Terms & Conditions/g, 'Conditions generales'],
-    [/Need 24\/7 Protection From Cyber Attacks\?/g, 'Besoin d une protection continue contre les cyberattaques ?'],
+    [/Need 24\/7 Protection From Cyber Attacks\?/g, "Besoin d'une protection continue contre les cyberattaques ?"],
     [/Start For Free/g, 'Prendre rendez-vous'],
+    [/Scroll to top/g, 'Haut de page'],
   ],
 };
 
@@ -267,7 +277,9 @@ function resolveAnchorHref(locale, href, attributes, text) {
     legacyMappedRoute === contactRoute ||
     attributes.includes('elementor-item') ||
     attributes.includes('elementor-sub-item') ||
-    attributes.includes('btn pxl-icon-active btn-default')
+    attributes.includes('btn pxl-icon-active btn-default') ||
+    text.includes('soluciones') ||
+    text.includes('solutions')
   ) {
     return contactRoute;
   }
