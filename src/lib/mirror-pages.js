@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { cleanupMirrorBodyHtml } from './content-cleanup.js';
 import { sanitizeAssetUrlReferences } from './mirror-assets.js';
 import { buildSanitizedHeadHtml } from './seo.js';
 
@@ -70,7 +71,7 @@ function parseMirrorDocument(route, html) {
 
   return {
     bodyClass: getAttributeValue(bodyMatch[1] ?? '', 'class'),
-    bodyHtml: sanitizeAssetUrlReferences(bodyMatch[2]),
+    bodyHtml: cleanupMirrorBodyHtml(route, sanitizeAssetUrlReferences(bodyMatch[2])),
     headHtml: buildSanitizedHeadHtml(route, sanitizeAssetUrlReferences(headHtml)),
     lang: getAttributeValue(htmlAttributes, 'lang'),
   };
