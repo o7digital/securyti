@@ -224,6 +224,9 @@ function resolveAnchorHref(locale, href, attributes, text) {
   const contactRoute = getLocalizedRoute('/contacto/', locale);
   const appointmentRoute = getLocalizedRoute('/appointment/', locale);
   const nistRoute = getLocalizedRoute('/acreditacion-nist/', locale);
+  const consultingRoute = '/consultoria-tecnologica/';
+  const trainingRoute = '/formacion-en-ciberseguridad/';
+  const expertRoute = '/peritajes-e-informes-periciales/';
 
   if (attributes.includes('pxl-scroll-top-link')) {
     return '#page-top';
@@ -271,6 +274,18 @@ function resolveAnchorHref(locale, href, attributes, text) {
     ])
   ) {
     return nistRoute;
+  }
+
+  if (locale === 'es' && text.includes('consultoria tecnologica')) {
+    return consultingRoute;
+  }
+
+  if (locale === 'es' && text.includes('formacion en ciberseguridad')) {
+    return trainingRoute;
+  }
+
+  if (locale === 'es' && text.includes('peritajes e informes periciales')) {
+    return expertRoute;
   }
 
   if (

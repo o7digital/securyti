@@ -1,0 +1,270 @@
+---
+const {
+  title,
+  description,
+  canonicalUrl,
+  ogImage,
+  siteName,
+  serviceType,
+  heroTitle,
+  summary,
+  intro,
+  problemsTitle,
+  problems,
+  processTitle,
+  process,
+  deliverablesTitle,
+  deliverables,
+  faq,
+  relatedPages,
+  homeHref,
+  contactHref,
+  appointmentHref,
+} = Astro.props;
+
+const faqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
+const serviceStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: title,
+  description,
+  url: canonicalUrl,
+  serviceType,
+  areaServed: 'CDMX, México',
+  provider: {
+    '@type': 'Organization',
+    name: siteName,
+    url: 'https://securyti.mx/',
+    logo: ogImage,
+  },
+};
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={siteName} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(serviceStructuredData)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)} />
+    <style is:inline>
+      :root{
+        --bg:#071611;
+        --bg-soft:#0d241c;
+        --panel:rgba(10,35,27,.82);
+        --panel-strong:rgba(7,25,18,.94);
+        --line:rgba(130,255,198,.18);
+        --text:#effcf6;
+        --muted:#bad9ce;
+        --accent:#54d88a;
+        --accent-strong:#8dffc0;
+        --shadow:0 24px 70px rgba(0,0,0,.28);
+        --radius:24px;
+      }
+      *{box-sizing:border-box}
+      body{
+        margin:0;
+        color:var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(84,216,138,.18), transparent 32%),
+          radial-gradient(circle at top right, rgba(34,138,110,.16), transparent 24%),
+          linear-gradient(180deg, #081a14 0%, #071611 100%);
+        font-family:"Avenir Next","Segoe UI",sans-serif;
+      }
+      a{color:inherit;text-decoration:none}
+      .wrap{width:min(1120px, calc(100% - 32px));margin:0 auto}
+      .topbar{padding:28px 0 14px}
+      .topbar-inner{
+        display:flex;align-items:center;justify-content:space-between;gap:20px;
+        padding:18px 22px;border:1px solid var(--line);border-radius:20px;background:var(--panel);
+        backdrop-filter:blur(12px);box-shadow:var(--shadow)
+      }
+      .brand{font-weight:800;letter-spacing:.03em}
+      .nav{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+      .nav a:hover{color:var(--text)}
+      .hero{padding:26px 0 34px}
+      .hero-card{
+        position:relative;overflow:hidden;padding:44px;border-radius:32px;border:1px solid var(--line);
+        background:linear-gradient(135deg, rgba(12,38,29,.92), rgba(8,24,18,.96));box-shadow:var(--shadow)
+      }
+      .hero-card::before{
+        content:"";position:absolute;inset:auto -12% -38% auto;width:340px;height:340px;border-radius:50%;
+        background:radial-gradient(circle, rgba(84,216,138,.28), transparent 68%);pointer-events:none
+      }
+      .eyebrow{
+        display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;
+        background:rgba(84,216,138,.1);border:1px solid rgba(84,216,138,.22);color:var(--accent-strong);
+        text-transform:uppercase;letter-spacing:.08em;font-size:12px;font-weight:700
+      }
+      h1{
+        max-width:960px;margin:18px 0 16px;font-size:clamp(2.3rem, 6vw, 4.6rem);
+        line-height:1;letter-spacing:-.04em
+      }
+      .lede,.intro,.step-copy,.faq-copy,.footer-copy{color:var(--muted);line-height:1.75}
+      .lede{max-width:760px;font-size:1.08rem}
+      .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+      .btn{
+        display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:999px;
+        font-weight:700;border:1px solid transparent;transition:.18s ease transform,.18s ease border-color
+      }
+      .btn:hover{transform:translateY(-1px)}
+      .btn-primary{background:var(--accent);color:#062215}
+      .btn-secondary{border-color:var(--line);background:rgba(255,255,255,.03)}
+      .section{padding:18px 0 34px}
+      .grid{display:grid;gap:18px}
+      .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .card{
+        padding:24px;border-radius:var(--radius);border:1px solid var(--line);
+        background:var(--panel);box-shadow:var(--shadow)
+      }
+      .kicker{
+        margin:0 0 10px;color:var(--accent-strong);font-size:13px;font-weight:700;letter-spacing:.08em;
+        text-transform:uppercase
+      }
+      h2,h3{margin:0 0 14px}
+      .list{margin:0;padding-left:18px;color:var(--muted);line-height:1.7}
+      .list li+li{margin-top:10px}
+      .step-title{font-size:1.08rem}
+      details{
+        border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:18px 20px
+      }
+      details+details{margin-top:12px}
+      summary{cursor:pointer;font-weight:700}
+      details p{margin:12px 0 0;color:var(--muted);line-height:1.7}
+      .related-links{display:grid;gap:12px}
+      .related-link{
+        display:block;padding:18px 20px;border-radius:18px;border:1px solid var(--line);
+        background:rgba(255,255,255,.03)
+      }
+      .related-link:hover{border-color:rgba(141,255,192,.4)}
+      .footer{padding:20px 0 54px;color:var(--muted);font-size:14px}
+      @media (max-width:880px){
+        .grid-3,.grid-2{grid-template-columns:1fr}
+        .hero-card{padding:30px 22px}
+        .topbar-inner{flex-direction:column;align-items:flex-start}
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <a class="brand" href={homeHref}>SecuryTI</a>
+        <nav class="nav" aria-label="Navegación principal">
+          <a href={homeHref}>Inicio</a>
+          <a href={contactHref}>Contacto</a>
+          <a href={appointmentHref}>Agenda una cita</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap hero-card">
+          <div class="eyebrow">{serviceType}</div>
+          <h1>{heroTitle}</h1>
+          <p class="lede">{summary}</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href={contactHref}>Hablar con SecuryTI</a>
+            <a class="btn btn-secondary" href={appointmentHref}>Agendar una llamada</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap grid grid-2">
+          <div class="card">
+            <p class="kicker">Contexto</p>
+            <h2>{problemsTitle}</h2>
+            <p class="intro">{intro}</p>
+            <ul class="list">
+              {problems.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div class="card">
+            <p class="kicker">Entregables</p>
+            <h2>{deliverablesTitle}</h2>
+            <ul class="list">
+              {deliverables.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="card">
+            <p class="kicker">Metodología</p>
+            <h2>{processTitle}</h2>
+            <div class="grid grid-3">
+              {process.map((item) => (
+                <article>
+                  <h3 class="step-title">{item.title}</h3>
+                  <p class="step-copy">{item.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap grid grid-2">
+          <div>
+            <p class="kicker">Preguntas frecuentes</p>
+            <h2>FAQ</h2>
+            {faq.map((item) => (
+              <details>
+                <summary>{item.question}</summary>
+                <p class="faq-copy">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+          <div class="card">
+            <p class="kicker">Siguiente paso</p>
+            <h2>Servicios relacionados</h2>
+            <div class="related-links">
+              {relatedPages.map((page) => (
+                <a class="related-link" href={page.href}>{page.title}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-copy">
+        SecuryTI. Servicio orientado a empresas en CDMX y México.
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,5 +1,6 @@
 import { pageEntries } from '../lib/mirror-pages.js';
 import { getPageSeo } from '../lib/site.js';
+import { SPANISH_SERVICE_ROUTES, getSpanishServicePage } from '../lib/spanish-service-pages.js';
 
 export const prerender = true;
 
@@ -32,6 +33,15 @@ export function GET() {
         '  <url>',
         `    <loc>${escapeXml(seo.canonicalUrl)}</loc>`,
         alternates,
+        '  </url>',
+      ].join('\n');
+    }),
+    ...SPANISH_SERVICE_ROUTES.map((route) => {
+      const page = getSpanishServicePage(route);
+
+      return [
+        '  <url>',
+        `    <loc>${escapeXml(page.canonicalUrl)}</loc>`,
         '  </url>',
       ].join('\n');
     }),

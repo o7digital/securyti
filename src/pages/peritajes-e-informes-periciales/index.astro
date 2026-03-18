@@ -1,0 +1,8 @@
+---
+import SpanishServicePage from '../../layouts/SpanishServicePage.astro';
+import { getSpanishServicePage } from '../../lib/spanish-service-pages.js';
+
+const page = getSpanishServicePage('/peritajes-e-informes-periciales/');
+---
+
+<SpanishServicePage {...page} />
