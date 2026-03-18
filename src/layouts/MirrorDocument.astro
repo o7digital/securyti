@@ -1,5 +1,13 @@
 ---
-const { bodyClass, bodyHtml, headHtml, lang } = Astro.props;
+import { LOCALE_CONFIG, getLocalizedRoute, getRouteContext } from '../lib/site.js';
+
+const { bodyClass, bodyHtml, headHtml, lang, route } = Astro.props;
+const { key, locale } = getRouteContext(route ?? '/');
+const languageLinks = Object.keys(LOCALE_CONFIG).map((linkLocale) => ({
+  href: getLocalizedRoute(key, linkLocale),
+  isActive: linkLocale === locale,
+  label: linkLocale.toUpperCase(),
+}));
 
 const backgroundVideoLoopFallback = `
 (() => {
@@ -32,8 +40,20 @@ const backgroundVideoLoopFallback = `
 <html lang={lang || undefined}>
   <head>
     <Fragment set:html={headHtml} />
+    <style is:inline>
+      #lang-switch{position:fixed;top:14px;left:14px;z-index:9999;font-family:inherit;font-size:12px;letter-spacing:.02em}
+      #lang-switch a{display:inline-block;margin-right:6px;padding:6px 8px;border-radius:6px;background:#0b1f3a;color:#fff;text-decoration:none;opacity:.9}
+      #lang-switch a.active{background:#ffffff;color:#0b1f3a;border:1px solid #0b1f3a}
+    </style>
   </head>
   <body class={bodyClass || undefined}>
+    <nav id="lang-switch" aria-label="Language switcher">
+      {languageLinks.map((link) => (
+        <a class={link.isActive ? 'active' : undefined} href={link.href}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
     <Fragment set:html={bodyHtml} />
     <script is:inline set:html={backgroundVideoLoopFallback} />
   </body>

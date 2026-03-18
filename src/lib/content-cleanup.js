@@ -125,6 +125,12 @@ function applyReplacements(html, replacements) {
   );
 }
 
+function stripLegacyLangSwitch(html) {
+  return html
+    .replace(/<style>\s*#lang-switch[\s\S]*?<\/style>\s*/gi, '')
+    .replace(/<div id="lang-switch">[\s\S]*?<\/div>\s*/gi, '');
+}
+
 export function cleanupMirrorBodyHtml(route, html) {
   const { locale } = getRouteContext(route);
 
@@ -138,6 +144,7 @@ export function cleanupMirrorBodyHtml(route, html) {
 
   cleanedHtml = applyReplacements(cleanedHtml, UNIVERSAL_REPLACEMENTS);
   cleanedHtml = applyReplacements(cleanedHtml, LOCALE_REPLACEMENTS[locale] ?? []);
+  cleanedHtml = stripLegacyLangSwitch(cleanedHtml);
 
   return cleanedHtml;
 }

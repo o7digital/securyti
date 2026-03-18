@@ -74,6 +74,7 @@ function parseMirrorDocument(route, html) {
     bodyHtml: cleanupMirrorBodyHtml(route, sanitizeAssetUrlReferences(bodyMatch[2])),
     headHtml: buildSanitizedHeadHtml(route, sanitizeAssetUrlReferences(headHtml)),
     lang: getAttributeValue(htmlAttributes, 'lang'),
+    route,
   };
 }
 
