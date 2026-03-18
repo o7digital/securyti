@@ -22,6 +22,8 @@ const {
   appointmentHref,
 } = Astro.props;
 
+const googleAnalyticsId = 'G-37YYDXYJNH';
+
 const faqStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -50,11 +52,20 @@ const serviceStructuredData = {
     logo: ogImage,
   },
 };
+
+const googleAnalyticsBootstrap = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');
+`;
 ---
 
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+    <script is:inline set:html={googleAnalyticsBootstrap} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>

@@ -3,6 +3,7 @@ import { LOCALE_CONFIG, getLocalizedRoute, getRouteContext } from '../lib/site.j
 
 const { bodyClass, bodyHtml, headHtml, lang, route } = Astro.props;
 const { key, locale } = getRouteContext(route ?? '/');
+const googleAnalyticsId = 'G-37YYDXYJNH';
 const languageLinks = Object.keys(LOCALE_CONFIG).map((linkLocale) => ({
   href: getLocalizedRoute(key, linkLocale),
   isActive: linkLocale === locale,
@@ -34,11 +35,20 @@ const backgroundVideoLoopFallback = `
     .forEach(attachLoopFallback);
 })();
 `;
+
+const googleAnalyticsBootstrap = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');
+`;
 ---
 
 <!DOCTYPE html>
 <html lang={lang || undefined}>
   <head>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+    <script is:inline set:html={googleAnalyticsBootstrap} />
     <Fragment set:html={headHtml} />
     <style is:inline>
       #lang-switch{position:fixed;top:14px;left:14px;z-index:9999;font-family:inherit;font-size:12px;letter-spacing:.02em}
