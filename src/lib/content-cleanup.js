@@ -156,6 +156,33 @@ function escapeForwardSlashes(value) {
   return value.replace(/\//g, '\\/');
 }
 
+function includesAnyText(text, variants) {
+  return variants.some((variant) => text.includes(variant));
+}
+
+function isLegacyBrokenHref(href) {
+  return [
+    /^(?:\.\.\/)?#$/i,
+    /^(?:\.\.\/)?index\.html#$/i,
+    /^(?:\.\.\/)?(?:contacto|appointment|acreditacion-nist)\/#$/i,
+    /^(?:\.\.\/)?index\.html%3Fp=(?:25|29|2607)\.html#?$/i,
+  ].some((pattern) => pattern.test(href));
+}
+
+function getLegacyMappedRoute(locale, href) {
+  const routeMap = [
+    [/^(?:\.\.\/)?index\.html%3Fp=25\.html#?$/i, '/contacto/'],
+    [/^(?:\.\.\/)?index\.html%3Fp=29\.html#?$/i, '/appointment/'],
+    [/^(?:\.\.\/)?index\.html%3Fp=2607\.html#?$/i, '/acreditacion-nist/'],
+    [/^(?:\.\.\/)?contacto\/#$/i, '/contacto/'],
+    [/^(?:\.\.\/)?appointment\/#$/i, '/appointment/'],
+    [/^(?:\.\.\/)?acreditacion-nist\/#$/i, '/acreditacion-nist/'],
+  ];
+
+  const match = routeMap.find(([pattern]) => pattern.test(href));
+  return match ? getLocalizedRoute(match[1], locale) : null;
+}
+
 function rewriteLegacyAbsoluteUrls(locale, html) {
   const homeRoute = getLocalizedRoute('/', locale);
   const appointmentRoute = getLocalizedRoute('/appointment/', locale);
@@ -182,9 +209,10 @@ function rewriteLegacyAbsoluteUrls(locale, html) {
     .replace(/https:\\\/\\\/onecode-media\.com\\\/securyti\\\//g, escapedHomeRoute);
 }
 
-function resolveAnchorHref(locale, attributes, text) {
+function resolveAnchorHref(locale, href, attributes, text) {
   const privacyRoute = getLocalizedRoute('/aviso-de-privacidad/', locale);
   const contactRoute = getLocalizedRoute('/contacto/', locale);
+  const appointmentRoute = getLocalizedRoute('/appointment/', locale);
   const nistRoute = getLocalizedRoute('/acreditacion-nist/', locale);
 
   if (attributes.includes('pxl-scroll-top-link')) {
@@ -192,27 +220,51 @@ function resolveAnchorHref(locale, attributes, text) {
   }
 
   if (
-    text.includes('politica de privacidad') ||
-    text.includes('privacy policy') ||
-    text.includes('politique de confidentialite') ||
-    text.includes('politica de cookies') ||
-    text.includes('cookie policy') ||
-    text.includes('politique de cookies')
+    includesAnyText(text, [
+      'politica de privacidad',
+      'privacy policy',
+      'politique de confidentialite',
+      'politica de cookies',
+      'cookie policy',
+      'politique de cookies',
+    ])
   ) {
     return privacyRoute;
   }
 
   if (
-    text.includes('cumplimiento') ||
-    text.includes('compliance') ||
-    text.includes('conformite') ||
-    text.includes('certificaciones') ||
-    text.includes('certification')
+    includesAnyText(text, [
+      'terms & conditions',
+      'terms and conditions',
+      'condiciones de uso',
+      'terminos y condiciones',
+      'conditions generales',
+    ])
+  ) {
+    return null;
+  }
+
+  const legacyMappedRoute = getLegacyMappedRoute(locale, href);
+
+  if (legacyMappedRoute === appointmentRoute) {
+    return appointmentRoute;
+  }
+
+  if (
+    legacyMappedRoute === nistRoute ||
+    includesAnyText(text, [
+      'cumplimiento',
+      'compliance',
+      'conformite',
+      'certificaciones',
+      'certification',
+    ])
   ) {
     return nistRoute;
   }
 
   if (
+    legacyMappedRoute === contactRoute ||
     attributes.includes('elementor-item') ||
     attributes.includes('elementor-sub-item') ||
     attributes.includes('btn pxl-icon-active btn-default')
@@ -242,13 +294,17 @@ function resolveAnchorHref(locale, attributes, text) {
 
 function rewriteBrokenHashLinks(locale, html) {
   return html.replace(
-    /<a\b([^>]*)href="index\.html#"([^>]*)>([\s\S]*?)<\/a>/gi,
-    (match, beforeAttributes = '', afterAttributes = '', innerHtml = '') => {
+    /<a\b([^>]*)href="([^"]*)"([^>]*)>([\s\S]*?)<\/a>/gi,
+    (match, beforeAttributes = '', href = '', afterAttributes = '', innerHtml = '') => {
+      if (!isLegacyBrokenHref(href)) {
+        return match;
+      }
+
       const attributes = `${beforeAttributes} ${afterAttributes}`.trim();
       const text = normalizeLinkText(innerHtml);
-      const href = resolveAnchorHref(locale, attributes, text);
+      const resolvedHref = resolveAnchorHref(locale, href, attributes, text);
 
-      return buildAnchor(attributes, innerHtml, href);
+      return buildAnchor(attributes, innerHtml, resolvedHref);
     },
   );
 }
