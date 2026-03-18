@@ -17,6 +17,8 @@ const REMOVAL_PATTERNS = [
   /<link\b[^>]+type=(['"])application\/json\+oembed\1[^>]*>\s*/gi,
   /<link\b[^>]+type=(['"])text\/xml\+oembed\1[^>]*>\s*/gi,
   /<meta\b[^>]+name=(['"])generator\1[^>]*>\s*/gi,
+  /<style\b[^>]+id=(['"])classic-theme-styles-inline-css\1[^>]*>[\s\S]*?<\/style>\s*/gi,
+  /<style\b[^>]+id=(['"])global-styles-inline-css\1[^>]*>[\s\S]*?<\/style>\s*/gi,
   /<style\b[^>]+id=(['"])wp-emoji-styles-inline-css\1[^>]*>[\s\S]*?<\/style>\s*/gi,
   /<script\b[^>]*>[\s\S]*?window\._wpemojiSettings[\s\S]*?<\/script>\s*/gi,
 ];
@@ -169,8 +171,52 @@ function stripWordPressHeadTags(headHtml) {
     .trim();
 }
 
-export function buildSanitizedHeadHtml(route, headHtml) {
-  const sanitizedHeadHtml = stripWordPressHeadTags(headHtml);
+function dedupeGoogleFontLinks(headHtml) {
+  const seen = new Set();
+
+  return headHtml.replace(/<link\b[^>]+href=(['"])(https:\/\/fonts\.googleapis\.com[^'"]+)\1[^>]*>\s*/gi, (match, _quote, href) => {
+    const normalizedHref = href
+      .replace(/&#0?38;|&amp;/gi, '&')
+      .replace(/\+/g, ' ')
+      .replace(/%20/gi, ' ')
+      .replace(/([?&])ver=[^&]+/gi, '$1')
+      .replace(/[?&]$/, '');
+    const rel = match.match(/\brel=(['"])([^'"]+)\1/i)?.[2] ?? '';
+    const key = `${rel.toLowerCase()}|${normalizedHref.toLowerCase()}`;
+
+    if (seen.has(key)) {
+      return '';
+    }
+
+    seen.add(key);
+    return match;
+  });
+}
+
+function hasContactFormMarkup(bodyHtml) {
+  return /class=(['"])[^'"]*\bwpcf7\b[^'"]*\1|<form\b[^>]*\bwpcf7-form\b/i.test(bodyHtml);
+}
+
+function stripUnusedHeadAssets(headHtml, bodyHtml) {
+  const hasContactForm = hasContactFormMarkup(bodyHtml);
+
+  let cleanedHeadHtml = headHtml
+    .replace(/<link\b[^>]+id=(['"])hostinger-reach-subscription-block-css\1[^>]*>\s*/gi, '')
+    .replace(/<link\b[^>]+id=(['"])elementor-gf-urbanist-css\1[^>]*>\s*/gi, '')
+    .replace(/<link\b[^>]+id=(['"])elementor-gf-ibmplexmono-css\1[^>]*>\s*/gi, '');
+
+  if (!hasContactForm) {
+    cleanedHeadHtml = cleanedHeadHtml.replace(
+      /<link\b[^>]+id=(['"])contact-form-7-css\1[^>]*>\s*/gi,
+      '',
+    );
+  }
+
+  return dedupeGoogleFontLinks(cleanedHeadHtml);
+}
+
+export function buildSanitizedHeadHtml(route, headHtml, bodyHtml = '') {
+  const sanitizedHeadHtml = stripUnusedHeadAssets(stripWordPressHeadTags(headHtml), bodyHtml);
   const seoTags = buildSeoTags(route);
 
   return [sanitizedHeadHtml, seoTags].filter(Boolean).join('\n');

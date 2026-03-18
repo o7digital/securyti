@@ -358,6 +358,39 @@ function stripLegacyLangSwitch(html) {
     .replace(/<div id="lang-switch">[\s\S]*?<\/div>\s*/gi, '');
 }
 
+function stripCursorMarkup(html) {
+  return html
+    .replace(/<div class="pxl-cursor pxl-js-cursor[\s\S]*?<\/div>\s*<\/div>\s*/gi, '')
+    .replace(/<div class="pxl-cursor-section"><\/div>\s*/gi, '');
+}
+
+function stripUnusedBodyAssets(html) {
+  const hasContactForm =
+    /class=(['"])[^'"]*\bwpcf7\b[^'"]*\1|<form\b[^>]*\bwpcf7-form\b/i.test(html);
+
+  let cleanedHtml = html
+    .replace(/<script\b[^>]+id=(['"])hostinger-reach-subscription-block-view-js-extra\1[^>]*>[\s\S]*?<\/script>\s*/gi, '')
+    .replace(/<script\b[^>]+id=(['"])hostinger-reach-subscription-block-view-js\1[^>]*><\/script>\s*/gi, '')
+    .replace(/<script\b[^>]+src=(['"])[^'"]*\/woocommerce\/js\/woocommerce\.js[^'"]*\1[^>]*><\/script>\s*/gi, '')
+    .replace(/<script\b[^>]+src=(['"])[^'"]*\/cursor\.js[^'"]*\1[^>]*><\/script>\s*/gi, '');
+
+  if (!hasContactForm) {
+    cleanedHtml = cleanedHtml
+      .replace(/<script\b[^>]+id=(['"])wp-hooks-js\1[^>]*><\/script>\s*/gi, '')
+      .replace(/<script\b[^>]+id=(['"])wp-i18n-js\1[^>]*><\/script>\s*/gi, '')
+      .replace(/<script\b[^>]+id=(['"])wp-i18n-js-after\1[^>]*>[\s\S]*?<\/script>\s*/gi, '')
+      .replace(/<script\b[^>]+id=(['"])swv-js\1[^>]*><\/script>\s*/gi, '')
+      .replace(/<script\b[^>]+id=(['"])contact-form-7-js-translations\1[^>]*>[\s\S]*?<\/script>\s*/gi, '')
+      .replace(/<script\b[^>]+id=(['"])contact-form-7-js-before\1[^>]*>[\s\S]*?<\/script>\s*/gi, '')
+      .replace(/<script\b[^>]+id=(['"])contact-form-7-js\1[^>]*><\/script>\s*/gi, '');
+  }
+
+  return cleanedHtml.replace(
+    /<video\b([^>]*)\bpreload="auto"([^>]*)>/gi,
+    '<video$1 preload="metadata"$2>',
+  );
+}
+
 export function cleanupMirrorBodyHtml(route, html) {
   const { locale } = getRouteContext(route);
 
@@ -375,6 +408,8 @@ export function cleanupMirrorBodyHtml(route, html) {
   cleanedHtml = rewriteBrokenHashLinks(locale, cleanedHtml);
   cleanedHtml = stripTermsPlaceholders(cleanedHtml);
   cleanedHtml = stripLegacyLangSwitch(cleanedHtml);
+  cleanedHtml = stripCursorMarkup(cleanedHtml);
+  cleanedHtml = stripUnusedBodyAssets(cleanedHtml);
 
   return cleanedHtml;
 }

@@ -36,6 +36,41 @@ const backgroundVideoLoopFallback = `
 })();
 `;
 
+const languageSwitchNavigation = `
+const navigateFromSwitchTarget = function (target) {
+  const href = target && target.dataset ? target.dataset.langHref : '';
+
+  if (!href) {
+    return;
+  }
+
+  window.location.assign(href);
+};
+
+document.addEventListener('pointerdown', function (event) {
+  const target = event.target;
+  const control = target && typeof target.closest === 'function'
+    ? target.closest('#lang-switch [data-lang-href]')
+    : null;
+
+  if (!control) {
+    return;
+  }
+
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+  navigateFromSwitchTarget(control);
+}, true);
+`;
+
+const languageSwitchInlineHandler =
+  "if(!(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)){event.preventDefault();event.stopPropagation();window.location.assign(this.dataset.langHref);return false;}";
+
 const googleAnalyticsBootstrap = `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -50,18 +85,32 @@ gtag('config', '${googleAnalyticsId}');
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
     <script is:inline set:html={googleAnalyticsBootstrap} />
     <Fragment set:html={headHtml} />
+    <script is:inline set:html={languageSwitchNavigation} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    {languageLinks
+      .filter((link) => !link.isActive)
+      .map((link) => <link rel="prefetch" href={link.href} as="document" />)}
     <style is:inline>
-      #lang-switch{position:fixed;top:14px;left:14px;z-index:9999;font-family:inherit;font-size:12px;letter-spacing:.02em}
-      #lang-switch a{display:inline-block;margin-right:6px;padding:6px 8px;border-radius:6px;background:#0b1f3a;color:#fff;text-decoration:none;opacity:.9}
-      #lang-switch a.active{background:#ffffff;color:#0b1f3a;border:1px solid #0b1f3a}
+      #pxl-loadding{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+      #lang-switch{position:fixed;top:14px;left:14px;z-index:2147483647;font-family:inherit;font-size:12px;letter-spacing:.02em;pointer-events:auto;display:flex;gap:8px;align-items:center}
+      #lang-switch button{display:inline-flex;align-items:center;justify-content:center;min-width:42px;min-height:34px;padding:8px 10px;border:0;border-radius:8px;background:#0b1f3a;color:#fff;font:inherit;line-height:1;text-decoration:none;opacity:.96;pointer-events:auto;touch-action:manipulation;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+      #lang-switch button.active{background:#ffffff;color:#0b1f3a;border:1px solid #0b1f3a}
     </style>
   </head>
   <body id="page-top" class={bodyClass || undefined}>
     <nav id="lang-switch" aria-label="Language switcher">
       {languageLinks.map((link) => (
-        <a class={link.isActive ? 'active' : undefined} href={link.href}>
+        <button
+          class={link.isActive ? 'active' : undefined}
+          type="button"
+          data-lang-href={link.href}
+          aria-pressed={link.isActive ? 'true' : 'false'}
+          onpointerdown={languageSwitchInlineHandler}
+          onclick={languageSwitchInlineHandler}
+        >
           {link.label}
-        </a>
+        </button>
       ))}
     </nav>
     <Fragment set:html={bodyHtml} />
