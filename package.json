@@ -1,0 +1,17 @@
+{
+  "name": "securyti",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:assets": "node scripts/sync-public-assets.mjs",
+    "predev": "npm run sync:assets",
+    "prebuild": "npm run sync:assets",
+    "dev": "astro dev",
+    "build": "astro build",
+    "postbuild": "node scripts/postbuild-cleanup.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.2.0"
+  }
+}

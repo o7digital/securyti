@@ -1,0 +1,8 @@
+---
+import MirrorDocument from '../layouts/MirrorDocument.astro';
+import { loadMirrorRoute } from '../lib/mirror-pages.js';
+
+const documentProps = loadMirrorRoute('/');
+---
+
+<MirrorDocument {...documentProps} />

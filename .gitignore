@@ -1,5 +1,7 @@
 .vercel
 .DS_Store
 .astro/
+.astro-public/
 dist/
 node_modules/
+public/
