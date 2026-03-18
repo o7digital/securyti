@@ -358,10 +358,6 @@ function stripLegacyLangSwitch(html) {
     .replace(/<div id="lang-switch">[\s\S]*?<\/div>\s*/gi, '');
 }
 
-function stripLoaderMarkup(html) {
-  return html.replace(/<div id="pxl-loadding"[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/gi, '');
-}
-
 function stripCursorMarkup(html) {
   return html
     .replace(/<div class="pxl-cursor pxl-js-cursor[\s\S]*?<\/div>\s*<\/div>\s*/gi, '')
@@ -412,7 +408,6 @@ export function cleanupMirrorBodyHtml(route, html) {
   cleanedHtml = rewriteBrokenHashLinks(locale, cleanedHtml);
   cleanedHtml = stripTermsPlaceholders(cleanedHtml);
   cleanedHtml = stripLegacyLangSwitch(cleanedHtml);
-  cleanedHtml = stripLoaderMarkup(cleanedHtml);
   cleanedHtml = stripCursorMarkup(cleanedHtml);
   cleanedHtml = stripUnusedBodyAssets(cleanedHtml);
 

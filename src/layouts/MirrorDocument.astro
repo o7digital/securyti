@@ -34,6 +34,36 @@ const backgroundVideoLoopFallback = `
     .forEach(attachLoopFallback);
 })();
 `;
+
+const languageSwitchNavigation = `
+(() => {
+  const nav = document.getElementById('lang-switch');
+
+  if (!nav) {
+    return;
+  }
+
+  nav.addEventListener(
+    'click',
+    (event) => {
+      const link = event.target.closest('a[href]');
+
+      if (!link) {
+        return;
+      }
+
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      window.location.assign(link.href);
+    },
+    { capture: true },
+  );
+})();
+`;
 ---
 
 <!DOCTYPE html>
@@ -46,8 +76,9 @@ const backgroundVideoLoopFallback = `
       .filter((link) => !link.isActive)
       .map((link) => <link rel="prefetch" href={link.href} as="document" />)}
     <style is:inline>
-      #lang-switch{position:fixed;top:14px;left:14px;z-index:9999;font-family:inherit;font-size:12px;letter-spacing:.02em}
-      #lang-switch a{display:inline-block;margin-right:6px;padding:6px 8px;border-radius:6px;background:#0b1f3a;color:#fff;text-decoration:none;opacity:.9}
+      #pxl-loadding{display:none!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+      #lang-switch{position:fixed;top:14px;left:14px;z-index:2147483647;font-family:inherit;font-size:12px;letter-spacing:.02em;pointer-events:auto}
+      #lang-switch a{display:inline-block;margin-right:6px;padding:6px 8px;border-radius:6px;background:#0b1f3a;color:#fff;text-decoration:none;opacity:.9;pointer-events:auto;touch-action:manipulation;cursor:pointer;user-select:none}
       #lang-switch a.active{background:#ffffff;color:#0b1f3a;border:1px solid #0b1f3a}
     </style>
   </head>
@@ -60,6 +91,7 @@ const backgroundVideoLoopFallback = `
       ))}
     </nav>
     <Fragment set:html={bodyHtml} />
+    <script is:inline set:html={languageSwitchNavigation} />
     <script is:inline set:html={backgroundVideoLoopFallback} />
   </body>
 </html>
