@@ -69,10 +69,13 @@ function parseMirrorDocument(route, html) {
     throw new Error('Unable to parse mirrored HTML document.');
   }
 
+  const sanitizedBodyHtml = sanitizeAssetUrlReferences(bodyMatch[2]);
+  const cleanedBodyHtml = cleanupMirrorBodyHtml(route, sanitizedBodyHtml);
+
   return {
     bodyClass: getAttributeValue(bodyMatch[1] ?? '', 'class'),
-    bodyHtml: cleanupMirrorBodyHtml(route, sanitizeAssetUrlReferences(bodyMatch[2])),
-    headHtml: buildSanitizedHeadHtml(route, sanitizeAssetUrlReferences(headHtml)),
+    bodyHtml: cleanedBodyHtml,
+    headHtml: buildSanitizedHeadHtml(route, sanitizeAssetUrlReferences(headHtml), cleanedBodyHtml),
     lang: getAttributeValue(htmlAttributes, 'lang'),
     route,
   };

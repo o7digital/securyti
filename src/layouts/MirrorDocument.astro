@@ -40,6 +40,11 @@ const backgroundVideoLoopFallback = `
 <html lang={lang || undefined}>
   <head>
     <Fragment set:html={headHtml} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    {languageLinks
+      .filter((link) => !link.isActive)
+      .map((link) => <link rel="prefetch" href={link.href} as="document" />)}
     <style is:inline>
       #lang-switch{position:fixed;top:14px;left:14px;z-index:9999;font-family:inherit;font-size:12px;letter-spacing:.02em}
       #lang-switch a{display:inline-block;margin-right:6px;padding:6px 8px;border-radius:6px;background:#0b1f3a;color:#fff;text-decoration:none;opacity:.9}
