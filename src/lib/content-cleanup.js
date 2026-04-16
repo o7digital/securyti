@@ -385,8 +385,16 @@ function stripUnusedBodyAssets(html) {
       .replace(/<script\b[^>]+id=(['"])contact-form-7-js\1[^>]*><\/script>\s*/gi, '');
   }
 
+  cleanedHtml = cleanedHtml.replace(/<video\b[^>]*\belementor-background-video-hosted\b[^>]*>/gi, (match) => {
+    if (/\bpreload=(['"])[^'"]*\1/i.test(match)) {
+      return match.replace(/\bpreload=(['"])[^'"]*\1/i, 'preload="auto"');
+    }
+
+    return match.replace(/>$/, ' preload="auto">');
+  });
+
   return cleanedHtml.replace(
-    /<video\b([^>]*)\bpreload="auto"([^>]*)>/gi,
+    /<video\b(?![^>]*\belementor-background-video-hosted\b)([^>]*)\bpreload="auto"([^>]*)>/gi,
     '<video$1 preload="metadata"$2>',
   );
 }

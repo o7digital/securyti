@@ -10,10 +10,30 @@ const languageLinks = Object.keys(LOCALE_CONFIG).map((linkLocale) => ({
   label: linkLocale.toUpperCase(),
 }));
 
-const backgroundVideoLoopFallback = `
+const backgroundVideoPlaybackGuard = `
 (() => {
-  const restartVideo = (video) => {
-    video.currentTime = 0;
+  const videos = Array.from(document.querySelectorAll('.elementor-background-video-hosted'));
+
+  if (!videos.length) {
+    return;
+  }
+
+  const playVideo = (video) => {
+    if (!(video instanceof HTMLVideoElement)) {
+      return;
+    }
+
+    video.defaultMuted = true;
+    video.muted = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.loop = true;
+    video.preload = 'auto';
+
+    if (video.readyState === 0 && (video.currentSrc || video.getAttribute('src'))) {
+      video.load();
+    }
+
     const playPromise = video.play();
 
     if (playPromise && typeof playPromise.catch === 'function') {
@@ -21,18 +41,45 @@ const backgroundVideoLoopFallback = `
     }
   };
 
-  const attachLoopFallback = (video) => {
-    if (!(video instanceof HTMLVideoElement)) {
+  const syncVideos = () => {
+    videos.forEach(playVideo);
+  };
+
+  videos.forEach((video) => {
+    if (!(video instanceof HTMLVideoElement) || video.dataset.videoGuardReady === 'true') {
       return;
     }
 
-    video.loop = true;
-    video.addEventListener('ended', () => restartVideo(video));
-  };
+    video.dataset.videoGuardReady = 'true';
 
-  document
-    .querySelectorAll('.elementor-background-video-hosted')
-    .forEach(attachLoopFallback);
+    ['loadedmetadata', 'canplay', 'canplaythrough', 'stalled', 'suspend', 'pause'].forEach((eventName) => {
+      video.addEventListener(eventName, () => playVideo(video));
+    });
+
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      playVideo(video);
+    });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      syncVideos();
+    }
+  });
+
+  window.addEventListener('pageshow', syncVideos);
+  window.addEventListener('load', syncVideos, { once: true });
+
+  if (document.readyState === 'complete') {
+    syncVideos();
+  } else {
+    document.addEventListener('DOMContentLoaded', syncVideos, { once: true });
+  }
+
+  requestAnimationFrame(syncVideos);
+  setTimeout(syncVideos, 250);
+  setTimeout(syncVideos, 1000);
 })();
 `;
 
@@ -114,6 +161,6 @@ gtag('config', '${googleAnalyticsId}');
       ))}
     </nav>
     <Fragment set:html={bodyHtml} />
-    <script is:inline set:html={backgroundVideoLoopFallback} />
+    <script is:inline set:html={backgroundVideoPlaybackGuard} />
   </body>
 </html>
