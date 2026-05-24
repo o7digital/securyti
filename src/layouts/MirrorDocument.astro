@@ -1,4 +1,5 @@
 ---
+import OliviaChat from '../components/OliviaChat.astro';
 import { LOCALE_CONFIG, getLocalizedRoute, getRouteContext } from '../lib/site.js';
 
 const { bodyClass, bodyHtml, headHtml, lang, route } = Astro.props;
@@ -161,6 +162,7 @@ gtag('config', '${googleAnalyticsId}');
       ))}
     </nav>
     <Fragment set:html={bodyHtml} />
+    <OliviaChat />
     <script is:inline set:html={backgroundVideoPlaybackGuard} />
   </body>
 </html>

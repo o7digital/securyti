@@ -1,0 +1,491 @@
+---
+const siteCode = 'securyti';
+---
+
+<div id="olivia-chat" data-site-code={siteCode}></div>
+
+<style is:inline>
+  #olivia-chat {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 2147483646;
+    font-family: "Inter", "Arial", sans-serif;
+  }
+
+  #olivia-chat * {
+    box-sizing: border-box;
+  }
+
+  .olivia-panel {
+    width: min(390px, calc(100vw - 28px));
+    height: min(650px, calc(100vh - 110px));
+    margin-bottom: 14px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(0, 230, 255, 0.28);
+    border-radius: 18px;
+    background: #06111f;
+    color: #fff;
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
+  }
+
+  .olivia-panel.is-open {
+    display: flex;
+  }
+
+  .olivia-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px;
+    background:
+      linear-gradient(135deg, rgba(0, 230, 255, 0.18), rgba(36, 84, 255, 0.14)),
+      #081827;
+    border-bottom: 1px solid rgba(0, 230, 255, 0.2);
+  }
+
+  .olivia-title {
+    margin: 0;
+    color: #67e8f9;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .olivia-status {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 13px;
+  }
+
+  .olivia-close,
+  .olivia-toggle,
+  .olivia-teaser,
+  .olivia-lead button,
+  .olivia-composer button {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .olivia-close {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba(103, 232, 249, 0.18);
+    color: #fff;
+    font-weight: 900;
+  }
+
+  .olivia-messages {
+    flex: 1;
+    min-height: 180px;
+    overflow-y: auto;
+    padding: 16px;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      #07111f;
+    background-size: 100% 42px;
+  }
+
+  .olivia-message {
+    width: fit-content;
+    max-width: 88%;
+    margin: 0 0 10px;
+    padding: 11px 13px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+
+  .olivia-message.assistant {
+    background: rgba(255, 255, 255, 0.09);
+    color: #f8fafc;
+  }
+
+  .olivia-message.user {
+    margin-left: auto;
+    background: #67e8f9;
+    color: #05111d;
+  }
+
+  .olivia-lead {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    padding: 14px;
+    background: #0a1728;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .olivia-lead p,
+  .olivia-lead button {
+    grid-column: 1 / -1;
+  }
+
+  .olivia-lead p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .olivia-lead input,
+  .olivia-composer input {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid rgba(103, 232, 249, 0.2);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .olivia-lead input {
+    padding: 11px;
+  }
+
+  .olivia-lead input::placeholder,
+  .olivia-composer input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .olivia-lead button,
+  .olivia-composer button,
+  .olivia-toggle {
+    background: #67e8f9;
+    color: #05111d;
+    font-weight: 900;
+  }
+
+  .olivia-lead button {
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+
+  .olivia-composer {
+    display: grid;
+    grid-template-columns: 1fr 52px;
+    gap: 9px;
+    padding: 14px;
+    background: #06111f;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .olivia-composer input {
+    padding: 12px 13px;
+  }
+
+  .olivia-composer button {
+    border-radius: 12px;
+    font-size: 20px;
+  }
+
+  .olivia-composer button:disabled,
+  .olivia-lead button:disabled,
+  .olivia-composer input:disabled {
+    opacity: 0.58;
+    cursor: not-allowed;
+  }
+
+  .olivia-closed {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .olivia-teaser {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid rgba(103, 232, 249, 0.28);
+    border-radius: 999px;
+    background: #06111f;
+    color: #fff;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+  }
+
+  .olivia-avatar {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #67e8f9;
+    color: #05111d;
+    font-weight: 900;
+  }
+
+  .olivia-toggle {
+    min-width: 68px;
+    height: 68px;
+    padding: 0 14px;
+    border-radius: 999px;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.42);
+  }
+
+  @media (max-width: 560px) {
+    #olivia-chat {
+      right: 14px;
+      bottom: 14px;
+    }
+
+    .olivia-lead {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const root = document.getElementById('olivia-chat');
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+
+    const siteCode = root.dataset.siteCode || 'securyti';
+    const leadEndpoint = 'https://www.o7digital.com/api/o7-lead';
+    const chatEndpoint = 'https://www.o7digital.com/api/o7-chat';
+
+    const copy = {
+      es: {
+        title: 'Olivia',
+        status: 'Asistente SecuryTI',
+        online: 'En linea',
+        teaser: 'Necesitas ayuda?',
+        open: 'Abrir chat',
+        close: 'Cerrar chat',
+        welcome: 'Hola, soy Olivia. En que puedo ayudarte?',
+        leadIntro: 'Deja tus datos para que un asesor de SecuryTI pueda contactarte.',
+        firstName: 'Nombre',
+        lastName: 'Apellido',
+        email: 'Email',
+        phone: 'Telefono',
+        submitLead: 'Enviar datos',
+        leadThanks: 'Gracias. Tus datos fueron enviados y un asesor te contactara pronto.',
+        placeholder: 'Escribe tu pregunta...',
+        send: 'Enviar',
+        error: 'No pude enviar el mensaje. Intenta de nuevo o contacta directamente a SecuryTI.',
+      },
+      en: {
+        title: 'Olivia',
+        status: 'SecuryTI Assistant',
+        online: 'Online',
+        teaser: 'Need help?',
+        open: 'Open chat',
+        close: 'Close chat',
+        welcome: 'Hello, I am Olivia. How can I help you?',
+        leadIntro: 'Leave your details so a SecuryTI advisor can contact you.',
+        firstName: 'First name',
+        lastName: 'Last name',
+        email: 'Email',
+        phone: 'Phone',
+        submitLead: 'Send details',
+        leadThanks: 'Thanks. Your details were sent and an advisor will contact you soon.',
+        placeholder: 'Write your question...',
+        send: 'Send',
+        error: 'I could not send the message. Please try again or contact SecuryTI directly.',
+      },
+      fr: {
+        title: 'Olivia',
+        status: 'Assistante SecuryTI',
+        online: 'En ligne',
+        teaser: "Besoin d'aide ?",
+        open: 'Ouvrir le chat',
+        close: 'Fermer le chat',
+        welcome: 'Bonjour, je suis Olivia. Comment puis-je vous aider ?',
+        leadIntro: "Laissez vos coordonnees pour qu'un conseiller SecuryTI puisse vous contacter.",
+        firstName: 'Prenom',
+        lastName: 'Nom',
+        email: 'Email',
+        phone: 'Telephone',
+        submitLead: 'Envoyer',
+        leadThanks: 'Merci. Vos coordonnees ont ete envoyees et un conseiller vous contactera rapidement.',
+        placeholder: 'Ecrivez votre question...',
+        send: 'Envoyer',
+        error: "Je n'ai pas pu envoyer le message. Reessayez ou contactez directement SecuryTI.",
+      },
+    };
+
+    const getLanguage = () => {
+      const lang = (document.documentElement.lang || '').toLowerCase();
+      const path = window.location.pathname;
+      if (lang.startsWith('fr') || path.startsWith('/fr')) return 'fr';
+      if (lang.startsWith('en') || path.startsWith('/en')) return 'en';
+      return 'es';
+    };
+
+    const detectMessageLanguage = (message, fallbackLanguage) => {
+      const value = (message || '').toLowerCase();
+      if (/\b(hola|gracias|quiero|precio|precios|tarifa|tarifas|ciberseguridad|auditoria|seguridad|peritaje|nist|consultoria|formacion|telefono)\b/.test(value)) return 'es';
+      if (/\b(bonjour|merci|prix|tarif|devis|cybersecurite|audit|securite|expertise|nist|conseil|formation|telephone)\b/.test(value)) return 'fr';
+      if (/\b(hello|thanks|price|prices|quote|cybersecurity|audit|security|forensics|nist|consulting|training|phone)\b/.test(value)) return 'en';
+      return fallbackLanguage;
+    };
+
+    const lang = getLanguage();
+    const t = copy[lang] || copy.es;
+    let isOpen = false;
+    let isLoading = false;
+    let leadSent = false;
+    let messages = [{ role: 'assistant', content: t.welcome }];
+    let lead = { firstName: '', lastName: '', email: '', phone: '' };
+
+    const transcript = () => messages.map((message) => `${message.role}: ${message.content}`).join('\n');
+
+    const renderMessages = () => messages.map((message) => (
+      `<div class="olivia-message ${message.role}">${escapeHtml(message.content)}</div>`
+    )).join('') + (isLoading ? '<div class="olivia-message assistant">...</div>' : '');
+
+    const escapeHtml = (value) => String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+    const render = () => {
+      root.innerHTML = `
+        <section class="olivia-panel ${isOpen ? 'is-open' : ''}" aria-label="${escapeHtml(t.status)}">
+          <header class="olivia-header">
+            <div>
+              <p class="olivia-title">${escapeHtml(t.title)}</p>
+              <p class="olivia-status">${escapeHtml(t.status)} · ${escapeHtml(t.online)}</p>
+            </div>
+            <button type="button" class="olivia-close" aria-label="${escapeHtml(t.close)}">x</button>
+          </header>
+          <div class="olivia-messages">${renderMessages()}</div>
+          ${leadSent ? '' : `
+            <form class="olivia-lead">
+              <p>${escapeHtml(t.leadIntro)}</p>
+              <input required name="firstName" placeholder="${escapeHtml(t.firstName)}" value="${escapeHtml(lead.firstName)}" />
+              <input required name="lastName" placeholder="${escapeHtml(t.lastName)}" value="${escapeHtml(lead.lastName)}" />
+              <input required type="email" name="email" placeholder="${escapeHtml(t.email)}" value="${escapeHtml(lead.email)}" />
+              <input required type="tel" name="phone" placeholder="${escapeHtml(t.phone)}" value="${escapeHtml(lead.phone)}" />
+              <button type="submit" ${isLoading ? 'disabled' : ''}>${escapeHtml(t.submitLead)}</button>
+            </form>
+          `}
+          <div class="olivia-composer">
+            <input class="olivia-input" value="" ${!leadSent || isLoading ? 'disabled' : ''} placeholder="${escapeHtml(t.placeholder)}" />
+            <button type="button" class="olivia-send" ${!leadSent || isLoading ? 'disabled' : ''} aria-label="${escapeHtml(t.send)}">&gt;</button>
+          </div>
+        </section>
+        <div class="olivia-closed">
+          ${isOpen ? '' : `
+            <button type="button" class="olivia-teaser">
+              <span class="olivia-avatar">O</span>
+              <span>${escapeHtml(t.teaser)}</span>
+            </button>
+          `}
+          <button type="button" class="olivia-toggle" aria-label="${escapeHtml(isOpen ? t.close : t.open)}">${isOpen ? 'x' : 'Olivia'}</button>
+        </div>
+      `;
+      bindEvents();
+      const messagesNode = root.querySelector('.olivia-messages');
+      if (messagesNode) messagesNode.scrollTop = messagesNode.scrollHeight;
+    };
+
+    const saveLeadFields = () => {
+      const form = root.querySelector('.olivia-lead');
+      if (!form) return;
+      lead = {
+        firstName: form.firstName?.value || lead.firstName,
+        lastName: form.lastName?.value || lead.lastName,
+        email: form.email?.value || lead.email,
+        phone: form.phone?.value || lead.phone,
+      };
+    };
+
+    const submitLead = async (event) => {
+      event.preventDefault();
+      if (isLoading) return;
+      saveLeadFields();
+      if (!lead.firstName.trim() || !lead.lastName.trim() || !lead.email.trim() || !lead.phone.trim()) return;
+
+      isLoading = true;
+      render();
+      try {
+        const response = await fetch(leadEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: lead.firstName.trim(),
+            lastName: lead.lastName.trim(),
+            email: lead.email.trim(),
+            phone: lead.phone.trim(),
+            source: 'Chat Olivia SecuryTI',
+            language: lang,
+            siteCode,
+            message: `Lead Chat Olivia SecuryTI (${lang}, ${siteCode})\n\n${transcript()}`,
+          }),
+        });
+        if (!response.ok) throw new Error('Lead delivery failed');
+        leadSent = true;
+        messages.push({ role: 'assistant', content: t.leadThanks });
+      } catch (_error) {
+        messages.push({ role: 'assistant', content: t.error });
+      } finally {
+        isLoading = false;
+        render();
+      }
+    };
+
+    const sendMessage = async () => {
+      const input = root.querySelector('.olivia-input');
+      const message = input?.value?.trim() || '';
+      if (!message || isLoading || !leadSent) return;
+      const messageLanguage = detectMessageLanguage(message, lang);
+
+      messages.push({ role: 'user', content: message });
+      isLoading = true;
+      render();
+      try {
+        const response = await fetch(chatEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, language: messageLanguage, siteCode }),
+        });
+        const data = await response.json();
+        messages.push({ role: 'assistant', content: data.reply || t.error });
+      } catch (_error) {
+        messages.push({ role: 'assistant', content: t.error });
+      } finally {
+        isLoading = false;
+        render();
+      }
+    };
+
+    const bindEvents = () => {
+      root.querySelector('.olivia-toggle')?.addEventListener('click', () => {
+        isOpen = !isOpen;
+        render();
+      });
+      root.querySelector('.olivia-teaser')?.addEventListener('click', () => {
+        isOpen = true;
+        render();
+      });
+      root.querySelector('.olivia-close')?.addEventListener('click', () => {
+        isOpen = false;
+        render();
+      });
+      root.querySelector('.olivia-lead')?.addEventListener('submit', submitLead);
+      root.querySelectorAll('.olivia-lead input').forEach((input) => {
+        input.addEventListener('input', saveLeadFields);
+      });
+      root.querySelector('.olivia-send')?.addEventListener('click', sendMessage);
+      root.querySelector('.olivia-input')?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') sendMessage();
+      });
+    };
+
+    render();
+  })();
+</script>
