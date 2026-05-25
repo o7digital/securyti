@@ -1,0 +1,20 @@
+---
+const { block = {} } = Astro.props;
+
+const title = block.title || '';
+const text = block.text || '';
+const buttonText = block.button_text || '';
+const buttonLink = block.button_link || '#';
+---
+
+<section class="cms-block cms-cta" data-block-type="cta">
+  <div class="cms-wrap">
+    {title && <h2>{title}</h2>}
+    {text && <p>{text}</p>}
+    {buttonText && (
+      <p>
+        <a href={buttonLink}>{buttonText}</a>
+      </p>
+    )}
+  </div>
+</section>

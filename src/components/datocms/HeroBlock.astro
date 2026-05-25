@@ -1,0 +1,22 @@
+---
+const { block = {} } = Astro.props;
+
+const title = block.title || '';
+const subtitle = block.subtitle || '';
+const image = block.image || null;
+const buttonText = block.button_text || '';
+const buttonLink = block.button_link || '#';
+---
+
+<section class="cms-block cms-hero" data-block-type="hero">
+  <div class="cms-wrap">
+    {title && <h2>{title}</h2>}
+    {subtitle && <p>{subtitle}</p>}
+    {buttonText && (
+      <p>
+        <a href={buttonLink}>{buttonText}</a>
+      </p>
+    )}
+    {image?.url && <img src={image.url} alt={image.alt || title || 'Hero image'} loading="lazy" />}
+  </div>
+</section>

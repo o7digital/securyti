@@ -4,7 +4,7 @@ import { loadMirrorRoute, pageEntries } from '../lib/mirror-pages.js';
 
 export function getStaticPaths() {
   return pageEntries
-    .filter((entry) => entry.route !== '/')
+    .filter((entry) => entry.route !== '/' && entry.route.replace(/^\/|\/$/g, '').includes('/'))
     .map((entry) => ({
       params: { slug: entry.route.replace(/^\/|\/$/g, '') },
       props: { route: entry.route },

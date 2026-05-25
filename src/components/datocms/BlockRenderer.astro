@@ -1,0 +1,23 @@
+---
+import CtaBlock from './CtaBlock.astro';
+import HeroBlock from './HeroBlock.astro';
+import ImageTextBlock from './ImageTextBlock.astro';
+import SectionBlock from './SectionBlock.astro';
+
+const { blocks = [] } = Astro.props;
+---
+
+{blocks.map((block) => {
+  switch (block?.__typename) {
+    case 'HeroBlockRecord':
+      return <HeroBlock block={block} />;
+    case 'SectionBlockRecord':
+      return <SectionBlock block={block} />;
+    case 'CtablockRecord':
+      return <CtaBlock block={block} />;
+    case 'ImageTextBlockRecord':
+      return <ImageTextBlock block={block} />;
+    default:
+      return null;
+  }
+})}

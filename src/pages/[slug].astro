@@ -1,0 +1,103 @@
+---
+import BlockRenderer from '../components/datocms/BlockRenderer.astro';
+import CmsPageShell from '../components/datocms/CmsPageShell.astro';
+import MirrorDocument from '../layouts/MirrorDocument.astro';
+import { getAllPageSlugs, getPageBySlug, isDatoCmsEnabled } from '../lib/datocms.js';
+import { loadMirrorRoute, pageEntries } from '../lib/mirror-pages.js';
+
+export async function getStaticPaths() {
+  const mirrorSingleLevel = pageEntries
+    .filter((entry) => {
+      if (entry.route === '/') {
+        return false;
+      }
+
+      const key = entry.route.replace(/^\/|\/$/g, '');
+      return key && !key.includes('/');
+    })
+    .map((entry) => ({
+      params: { slug: entry.route.replace(/^\/|\/$/g, '') },
+      props: { route: entry.route, source: 'mirror' },
+    }));
+
+  if (!isDatoCmsEnabled()) {
+    return mirrorSingleLevel;
+  }
+
+  try {
+    const slugs = await getAllPageSlugs();
+    const cmsPaths = slugs.map((slug) => ({
+      params: { slug },
+      props: { route: `/${slug}/`, source: 'cms' },
+    }));
+
+    const deduped = new Map();
+    [...mirrorSingleLevel, ...cmsPaths].forEach((entry) => {
+      deduped.set(entry.params.slug, entry);
+    });
+
+    return [...deduped.values()];
+  } catch (_error) {
+    return mirrorSingleLevel;
+  }
+}
+
+const { slug } = Astro.params;
+const route = `/${slug}/`;
+
+let page = null;
+let fallbackDocumentProps = null;
+let notFound = false;
+
+if (isDatoCmsEnabled()) {
+  try {
+    page = await getPageBySlug(slug);
+  } catch (_error) {
+    page = null;
+  }
+}
+
+if (!page) {
+  try {
+    fallbackDocumentProps = loadMirrorRoute(route);
+  } catch (_error) {
+    notFound = true;
+    Astro.response.status = 404;
+  }
+}
+
+---
+
+{notFound ? (
+  <html lang="es">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>404 | SecuryTI</title>
+    </head>
+    <body>
+      <main>
+        <h1>404</h1>
+        <p>Pagina no encontrada.</p>
+      </main>
+    </body>
+  </html>
+) : !page ? (
+  <MirrorDocument {...fallbackDocumentProps} />
+) : (
+  <CmsPageShell
+    title={page?.seo?.title || page.title || 'SecuryTI'}
+    contentHtml={page.content}
+  >
+    {page.title && (
+      <section class="cms-block">
+        <div class="cms-wrap">
+          <h1>{page.title}</h1>
+          {page?.seo?.description && <p>{page.seo.description}</p>}
+        </div>
+      </section>
+    )}
+
+    {page.section?.length > 0 && <BlockRenderer blocks={page.section} />}
+  </CmsPageShell>
+)}
