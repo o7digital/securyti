@@ -331,14 +331,6 @@ const siteCode = 'securyti';
       return fallbackLanguage;
     };
 
-    const getLocalReply = (message) => {
-      const value = (message || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const asksNetworkHelp = /\bred\b/.test(value) && /\b(problema|problemas|seguridad|contactar|contacto|urgente|urge|alguien|ayuda)\b/.test(value);
-      if (!asksNetworkHelp) return '';
-
-      return 'Para problemas con una red, puedes contactar a SecuryTI en contacto@securyti.mx.\n\nEn caso de urgencia, llama al 5538352101.';
-    };
-
     const lang = getLanguage();
     const t = copy[lang] || copy.es;
     let isOpen = false;
@@ -452,26 +444,24 @@ const siteCode = 'securyti';
       const message = input?.value?.trim() || '';
       if (!message || isLoading || !leadSent) return;
       const messageLanguage = detectMessageLanguage(message, lang);
-      const localReply = getLocalReply(message);
 
       messages.push({ role: 'user', content: message });
-      if (localReply) {
-        messages.push({ role: 'assistant', content: localReply });
-        render();
-        return;
-      }
-
       isLoading = true;
       render();
       try {
         const response = await fetch(chatEndpoint, {
           method: 'POST',
+          mode: 'cors',
+          credentials: 'omit',
+          cache: 'no-store',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message, language: messageLanguage, siteCode }),
         });
+        if (!response.ok) throw new Error(`Chat API failed: ${response.status}`);
         const data = await response.json();
         messages.push({ role: 'assistant', content: data.reply || t.error });
-      } catch (_error) {
+      } catch (error) {
+        console.error('Olivia chat error:', error);
         messages.push({ role: 'assistant', content: t.error });
       } finally {
         isLoading = false;
