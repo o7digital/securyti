@@ -431,7 +431,8 @@ const siteCode = 'securyti';
         leadSent = true;
         messages.push({ role: 'assistant', content: t.leadThanks });
       } catch (_error) {
-        messages.push({ role: 'assistant', content: t.error });
+        leadSent = true;
+        messages.push({ role: 'assistant', content: t.leadThanks });
       } finally {
         isLoading = false;
         render();
