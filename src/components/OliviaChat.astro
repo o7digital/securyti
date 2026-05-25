@@ -331,6 +331,14 @@ const siteCode = 'securyti';
       return fallbackLanguage;
     };
 
+    const getLocalReply = (message) => {
+      const value = (message || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const asksNetworkHelp = /\bred\b/.test(value) && /\b(problema|problemas|seguridad|contactar|contacto|urgente|urge|alguien|ayuda)\b/.test(value);
+      if (!asksNetworkHelp) return '';
+
+      return 'Para problemas con una red, puedes contactar a SecuryTI en contacto@securyti.mx.\n\nEn caso de urgencia, llama al 5538352101.';
+    };
+
     const lang = getLanguage();
     const t = copy[lang] || copy.es;
     let isOpen = false;
@@ -444,8 +452,15 @@ const siteCode = 'securyti';
       const message = input?.value?.trim() || '';
       if (!message || isLoading || !leadSent) return;
       const messageLanguage = detectMessageLanguage(message, lang);
+      const localReply = getLocalReply(message);
 
       messages.push({ role: 'user', content: message });
+      if (localReply) {
+        messages.push({ role: 'assistant', content: localReply });
+        render();
+        return;
+      }
+
       isLoading = true;
       render();
       try {
