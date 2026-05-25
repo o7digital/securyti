@@ -1,52 +1,8 @@
 ---
-import BlockRenderer from '../components/datocms/BlockRenderer.astro';
-import CmsPageShell from '../components/datocms/CmsPageShell.astro';
 import MirrorDocument from '../layouts/MirrorDocument.astro';
-import { getHome, isDatoCmsEnabled } from '../lib/datocms.js';
 import { loadMirrorRoute } from '../lib/mirror-pages.js';
 
-let home = null;
-
-if (isDatoCmsEnabled()) {
-  try {
-    home = await getHome();
-  } catch (error) {
-    home = null;
-  }
-}
-
-const documentProps = !home ? loadMirrorRoute('/') : null;
+const documentProps = loadMirrorRoute('/');
 ---
 
-{
-  !home ? (
-    <MirrorDocument {...documentProps} />
-  ) : (
-    <CmsPageShell
-      title={home.title || 'SecuryTI'}
-      contentHtml={home.content}
-    >
-      {home.section?.length > 0 ? (
-        <BlockRenderer blocks={home.section} />
-      ) : (
-        <>
-          {(home.hero_title || home.hero_subtitle || home.hero_image?.url) && (
-            <section class="cms-block cms-hero-fallback">
-              <div class="cms-wrap">
-                {home.hero_title && <h1>{home.hero_title}</h1>}
-                {home.hero_subtitle && <p>{home.hero_subtitle}</p>}
-                {home.hero_image?.url && (
-                  <img
-                    src={home.hero_image.url}
-                    alt={home.hero_image.alt || home.hero_title || 'Hero image'}
-                    loading="lazy"
-                  />
-                )}
-              </div>
-            </section>
-          )}
-        </>
-      )}
-    </CmsPageShell>
-  )
-}
+<MirrorDocument {...documentProps} />

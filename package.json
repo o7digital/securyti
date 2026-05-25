@@ -12,7 +12,6 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@datocms/cda-client": "^0.2.10",
     "astro": "^5.2.0"
   }
 }
