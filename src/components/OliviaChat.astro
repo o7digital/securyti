@@ -331,6 +331,44 @@ const siteCode = 'securyti';
       return fallbackLanguage;
     };
 
+    const normalizeMessage = (value) => String(value || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
+    const getLocalReply = (message, language) => {
+      const value = normalizeMessage(message);
+      const asksForContact = [
+        /\bcontact(o|ar|arme|arlos)?\b/,
+        /\bcorreo\b/,
+        /\bemail\b/,
+        /\bmail\b/,
+        /\btelefono\b/,
+        /\btel\b/,
+        /\bphone\b/,
+        /\bllamar\b/,
+        /\bhablar\b/,
+        /\basesor(a)?\b/,
+        /\bcon quien\b/,
+        /\bquien puedo\b/,
+        /\bwho can i\b/,
+        /\btalk to\b/,
+        /\bspeak to\b/,
+        /\bparler\b/,
+        /\bcontacter\b/,
+      ].some((pattern) => pattern.test(value));
+
+      if (!asksForContact) return null;
+
+      const replies = {
+        es: 'Puedes contactar a SecuryTI aqui:\n\nEmail: contacto@securyti.mx\nTelefono: 5538352101',
+        en: 'You can contact SecuryTI here:\n\nEmail: contacto@securyti.mx\nPhone: 5538352101',
+        fr: 'Vous pouvez contacter SecuryTI ici :\n\nEmail : contacto@securyti.mx\nTelephone : 5538352101',
+      };
+
+      return replies[language] || replies.es;
+    };
+
     const lang = getLanguage();
     const t = copy[lang] || copy.es;
     let isOpen = false;
@@ -444,8 +482,15 @@ const siteCode = 'securyti';
       const message = input?.value?.trim() || '';
       if (!message || isLoading || !leadSent) return;
       const messageLanguage = detectMessageLanguage(message, lang);
+      const localReply = getLocalReply(message, messageLanguage);
 
       messages.push({ role: 'user', content: message });
+      if (localReply) {
+        messages.push({ role: 'assistant', content: localReply });
+        render();
+        return;
+      }
+
       isLoading = true;
       render();
       try {
