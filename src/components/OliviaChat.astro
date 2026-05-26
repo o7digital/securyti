@@ -253,7 +253,7 @@ const siteCode = 'securyti';
 
     const siteCode = root.dataset.siteCode || 'securyti';
     const leadEndpoint = 'https://www.o7digital.com/api/o7-lead';
-    const chatEndpoint = 'https://www.o7digital.com/api/o7-chat';
+    const chatEndpoint = 'https://ai-concierge-production-4e92.up.railway.app/chat';
 
     const copy = {
       es: {
@@ -455,7 +455,15 @@ const siteCode = 'securyti';
           credentials: 'omit',
           cache: 'no-store',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message, language: messageLanguage, siteCode }),
+          body: JSON.stringify({
+            clientId: siteCode,
+            message,
+            metadata: {
+              language: messageLanguage,
+              siteCode,
+              lead,
+            },
+          }),
         });
         if (!response.ok) throw new Error(`Chat API failed: ${response.status}`);
         const data = await response.json();
