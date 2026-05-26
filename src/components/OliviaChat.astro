@@ -338,6 +338,26 @@ const siteCode = 'securyti';
 
     const getLocalReply = (message, language) => {
       const value = normalizeMessage(message);
+      const isThanksOrClose = [
+        /\b(ok|okay|vale|perfecto|listo|bien)\b.*\b(gracias|merci|thanks|thank you)\b/,
+        /\b(gracias|muchas gracias|mil gracias)\b/,
+        /\bmerci\b/,
+        /\bthanks\b/,
+        /\bthank you\b/,
+        /\bde acuerdo\b/,
+        /\besta bien\b/,
+      ].some((pattern) => pattern.test(value));
+
+      if (isThanksOrClose) {
+        const replies = {
+          es: 'De nada. Cualquier cosa, estoy aqui para ayudarte.',
+          en: 'You are welcome. If you need anything else, I am here to help.',
+          fr: 'Avec plaisir. Si vous avez besoin dautre chose, je suis la pour vous aider.',
+        };
+
+        return replies[language] || replies.es;
+      }
+
       const asksForContact = [
         /\bcontact(o|ar|arme|arlos)?\b/,
         /\bcorreo\b/,
