@@ -181,11 +181,11 @@ import OliviaChat from '../components/OliviaChat.astro';
 
     <section id="academia">
       <div class="wrap">
-        <div class="section-head"><h2>Academia SecuryTI: cursos con IA, webinars y seguimiento.</h2><p>Propuesta recomendada: usar HeyGen para cápsulas de video profesionales y Google Meet para sesiones ejecutivas pequeñas. Para eventos grandes o cursos pagados recurrentes, Zoom Webinars o una plataforma LMS puede ser mejor.</p></div>
+        <div class="section-head"><h2>Academia SecuryTI: cursos de ciberseguridad para equipos.</h2><p>Formación práctica para reducir errores humanos: phishing, contraseñas, MFA, manejo de datos, ransomware y respuesta inicial ante incidentes.</p></div>
         <div class="platform">
-          <div class="platform-card"><span class="tag">Videos IA</span><strong>HeyGen</strong><p>Creación de cápsulas con avatar, narración, subtítulos y versiones por idioma para cursos internos.</p></div>
-          <div class="platform-card"><span class="tag">Webinars</span><strong>Google Meet</strong><p>Ideal para sesiones privadas con clientes, preguntas en vivo, calendario y grabación dentro de Google Workspace.</p></div>
-          <div class="platform-card"><span class="tag">Escalable</span><strong>LMS / Zoom</strong><p>Para vender cursos recurrentes: registro, asistencia, certificados, módulos, evaluaciones y reportes.</p></div>
+          <div class="platform-card"><span class="tag">Conciencia cyber</span><strong>Phishing y fraude digital</strong><p>Cómo detectar correos falsos, enlaces maliciosos, suplantación de identidad, ingeniería social y estafas por WhatsApp o llamadas.</p></div>
+          <div class="platform-card"><span class="tag">Accesos seguros</span><strong>Contraseñas, MFA y dispositivos</strong><p>Buenas prácticas para proteger cuentas, usar autenticación multifactor, evitar reutilización de claves y asegurar laptops y móviles.</p></div>
+          <div class="platform-card"><span class="tag">Operación segura</span><strong>Datos, ransomware e incidentes</strong><p>Manejo de información sensible, señales de ransomware, qué hacer ante una sospecha y cómo reportar rápido sin empeorar el impacto.</p></div>
         </div>
       </div>
     </section>
@@ -196,7 +196,7 @@ import OliviaChat from '../components/OliviaChat.astro';
         <div class="pricing">
           <div class="price"><h3>Diagnóstico Express</h3><p>Para PyMEs que quieren saber dónde están paradas.</p><div class="amount">48h</div><ul><li>Entrevista inicial</li><li>Checklist NIST CSF</li><li>Reporte ejecutivo breve</li><li>Prioridades de mejora</li></ul><a class="cta ghost" href="#contacto">Cotizar</a></div>
           <div class="price featured"><h3>Auditoría + Plan</h3><p>La oferta principal para convertir prospectos en clientes.</p><div class="amount">30/60/90</div><ul><li>Auditoría de controles</li><li>Matriz de riesgos</li><li>Roadmap de corrección</li><li>Sesión con dirección</li></ul><a class="cta" href="#contacto">Oferta recomendada</a></div>
-          <div class="price"><h3>Academia Cyber</h3><p>Capacitación continua para equipos y áreas críticas.</p><div class="amount">Cursos</div><ul><li>Cápsulas con HeyGen</li><li>Webinars en vivo</li><li>Material descargable</li><li>Constancias internas</li></ul><a class="cta ghost" href="#contacto">Activar cursos</a></div>
+          <div class="price"><h3>Academia Cyber</h3><p>Capacitación continua para equipos y áreas críticas.</p><div class="amount">Cursos</div><ul><li>Phishing e ingeniería social</li><li>Contraseñas, MFA y accesos</li><li>Manejo seguro de datos</li><li>Ransomware y reporte de incidentes</li></ul><a class="cta ghost" href="#contacto">Activar cursos</a></div>
         </div>
         <form class="quote" id="cotizador" action="https://formspree.io/f/maqzqzoj" method="POST">
           <div>
@@ -240,7 +240,7 @@ import OliviaChat from '../components/OliviaChat.astro';
                 <select id="training" name="training">
                   <option value="0" selected>No por ahora</option>
                   <option value="8500">Webinar ejecutivo</option>
-                  <option value="18000">Webinar + cápsula HeyGen</option>
+                  <option value="18000">Webinar + curso grabado</option>
                 </select>
               </div>
             </div>
@@ -384,7 +384,7 @@ import OliviaChat from '../components/OliviaChat.astro';
       training: {
         '0': 'Sin capacitación adicional',
         '8500': 'Incluye webinar ejecutivo',
-        '18000': 'Incluye webinar y cápsula HeyGen'
+        '18000': 'Incluye webinar y curso grabado'
       }
     };
 
