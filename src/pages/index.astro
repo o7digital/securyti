@@ -49,7 +49,7 @@ import OliviaChat from '../components/OliviaChat.astro';
     .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(22px);background:rgba(3,8,13,.72);border-bottom:1px solid rgba(255,255,255,.08)}
     .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:28px}
     .brand{display:flex;align-items:center;gap:13px;font-weight:900;letter-spacing:.02em}
-    .brandmark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--green),#113d2a);box-shadow:0 0 34px rgba(66,245,158,.35);display:grid;place-items:center;color:#00180C;font-weight:900}
+    .brand-logo{width:148px;height:auto;display:block}
     .navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px}
     .navlinks a:hover{color:white}
     .cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid rgba(66,245,158,.45);background:linear-gradient(135deg,var(--green),var(--green2));color:#00180C;font-weight:900;padding:14px 20px;border-radius:999px;box-shadow:0 16px 44px rgba(66,245,158,.25);transition:.25s transform,.25s box-shadow;white-space:nowrap}
@@ -93,17 +93,24 @@ import OliviaChat from '../components/OliviaChat.astro';
     .range-row{display:flex;gap:12px;align-items:center}.range-row input{accent-color:var(--green);padding:0}.range-value{min-width:78px;text-align:center;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 10px;font-weight:900;background:rgba(255,255,255,.06)}
     .quote-result{border:1px solid rgba(255,255,255,.13);border-radius:24px;background:rgba(0,0,0,.25);padding:24px;display:flex;flex-direction:column;gap:18px}.quote-kicker{color:#B9FFD8;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.quote-total{font-size:clamp(36px,5vw,58px);font-weight:950;letter-spacing:-.06em;line-height:.95}.quote-note{color:var(--muted);font-size:13px;line-height:1.5}.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.quote-metric{border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:14px;background:rgba(255,255,255,.045)}.quote-metric span{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.quote-metric strong{font-size:18px}.quote-result ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;color:#EAFBF4;font-size:14px}.quote-result li:before{content:"✓";color:var(--green);font-weight:900;margin-right:9px}
     .cta-band{border:1px solid rgba(66,245,158,.22);border-radius:38px;padding:48px;background:linear-gradient(135deg,rgba(66,245,158,.16),rgba(76,201,240,.08) 45%,rgba(255,255,255,.05));display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;box-shadow:var(--shadow)}.cta-band h2{margin:0 0 14px;font-size:clamp(32px,4.6vw,56px);line-height:1;letter-spacing:-.055em}.cta-band p{color:#D5E7E0;line-height:1.6;margin:0}.contact-box{background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.12);border-radius:26px;padding:24px}.contact-box div{margin-bottom:14px;color:var(--muted)}.contact-box strong{display:block;color:#fff;margin-bottom:4px}
-    footer{padding:36px 0 52px;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)}
+    .site-footer{padding:68px 0 32px;color:var(--muted);border-top:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(0,0,0,.24))}
+    .footer-grid{display:grid;grid-template-columns:1.25fr .75fr .9fr 1fr;gap:34px;margin-bottom:34px}
+    .footer-logo{width:190px;height:auto;display:block;margin-bottom:18px}.footer-about{line-height:1.65;margin:0 0 20px;max-width:390px}
+    .footer-social{display:flex;gap:10px;align-items:center}.footer-social a{width:40px;height:40px;border:1px solid rgba(255,255,255,.14);border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.055);color:#fff;font-weight:900;font-size:14px}.footer-social a:hover{border-color:rgba(66,245,158,.55);color:#00180C;background:var(--green)}
+    .footer-col h3{margin:0 0 16px;color:#fff;font-size:15px;text-transform:uppercase;letter-spacing:.08em}.footer-col ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}.footer-col a{color:var(--muted)}.footer-col a:hover{color:#fff}.footer-contact{display:grid;gap:13px}.footer-contact span{display:block;color:#fff;font-weight:800;margin-bottom:3px}
+    .footer-bottom{display:flex;justify-content:space-between;gap:20px;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding-top:24px;font-size:13px;line-height:1.55}.footer-keywords{max-width:720px}
     .mobile-menu{display:none}
-    @media(max-width:940px){.navlinks{display:none}.hero-grid,.cards,.quote,.cta-band{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}}
-    @media(max-width:640px){.wrap{width:min(100% - 28px,1180px)}.quote,.card,.price,.cta-band{padding:22px;border-radius:24px}.quote-form,.quote-contact,.quote-grid{grid-template-columns:1fr}.range-row{display:grid;grid-template-columns:1fr auto}}
+    @media(max-width:940px){.navlinks{display:none}.hero-grid,.cards,.quote,.cta-band,.footer-grid{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}.footer-bottom{display:grid}.brand-logo{width:132px}}
+    @media(max-width:640px){.wrap{width:min(100% - 28px,1180px)}.quote,.card,.price,.cta-band{padding:22px;border-radius:24px}.quote-form,.quote-contact,.quote-grid{grid-template-columns:1fr}.range-row{display:grid;grid-template-columns:1fr auto}.footer-social a{width:38px;height:38px}}
   </style>
 </head>
 <body>
   <div class="noise"></div><div class="grid"></div>
   <header class="topbar">
     <div class="wrap nav">
-      <a class="brand" href="#top"><span class="brandmark">S</span><span>SecuryTI</span></a>
+      <a class="brand" href="#top" aria-label="SecuryTI">
+        <img class="brand-logo" src="/securyti-logo2_bco-2048x674.webp" alt="SecuryTI" width="2048" height="674" />
+      </a>
       <nav class="navlinks">
         <a href="#servicios">Servicios</a><a href="#proceso">Proceso</a><a href="#academia">Academia</a><a href="#planes">Paquetes</a>
       </nav>
@@ -295,7 +302,53 @@ import OliviaChat from '../components/OliviaChat.astro';
       </div>
     </section>
   </main>
-  <footer><div class="wrap">© 2026 SecuryTI · Auditoría de Ciberseguridad · Cursos de Ciberseguridad · NIST CSF · CDMX</div></footer>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <img class="footer-logo" src="/securyti-logo2_bco-2048x674.webp" alt="SecuryTI" width="2048" height="674" />
+          <p class="footer-about">En SecuryTI ofrecemos soluciones de ciberseguridad profesionales y de alto nivel. Con monitorización proactiva, diagnóstico ejecutivo y capacitación práctica, ayudamos a proteger tu negocio frente a amenazas digitales.</p>
+          <div class="footer-social" aria-label="Redes sociales">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="X / Twitter">X</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="WhatsApp">W</a>
+            <a href="#" aria-label="Instagram">IG</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Transparencia</h3>
+          <ul>
+            <li><a href="/aviso-de-privacidad/">Aviso de privacidad</a></li>
+            <li><a href="/aviso-de-privacidad/">Politica de privacidad</a></li>
+            <li><a href="https://securyti.mx/" target="_blank" rel="noreferrer">Politica de cookies</a></li>
+            <li><a href="https://securyti.mx/" target="_blank" rel="noreferrer">Politica de seguridad de la informacion</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Servicios</h3>
+          <ul>
+            <li><a href="#servicios">Auditorias de ciberseguridad</a></li>
+            <li><a href="#servicios">Consultoria tecnologica</a></li>
+            <li><a href="#academia">Formacion y concienciacion</a></li>
+            <li><a href="#planes">Diagnostico NIST CSF</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Contacto</h3>
+          <div class="footer-contact">
+            <div><span>Oficina</span>Montes Urales 755, Lomas-Virreyes, Lomas de Chapultepec</div>
+            <div><span>Telefono</span><a href="tel:+5215563502870">+52 1 55 6350 2870</a></div>
+            <div><span>Correo electronico</span><a href="mailto:contacto@securyti.mx">contacto@securyti.mx</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>Copyright 2026 - SecuryTI</div>
+        <div class="footer-keywords">servicios de ciberseguridad empresarial Mexico CDMX · auditorias de ciberseguridad en Mexico · cumplimiento ISO 27001 y NIST · evaluacion y gestion de riesgos tecnologicos · formacion y concienciacion en ciberseguridad</div>
+      </div>
+    </div>
+  </footer>
   <OliviaChat />
   <script>
     const quoteForm = document.querySelector('#cotizador');
