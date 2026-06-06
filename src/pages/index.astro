@@ -83,10 +83,16 @@
     .process{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);border-radius:24px;padding:24px}.num{color:var(--green);font-weight:900;margin-bottom:18px}.step h3{margin:0 0 10px;font-size:19px}.step p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
     .platform{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.platform-card{border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:24px;background:rgba(255,255,255,.05)}.platform-card strong{display:block;font-size:19px;margin-bottom:10px}.platform-card p{color:var(--muted);line-height:1.55;margin:0;font-size:14px}.tag{display:inline-flex;border:1px solid rgba(76,201,240,.28);color:#BDEFFF;background:rgba(76,201,240,.08);border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800;margin-bottom:14px}
     .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}.price{border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:28px;background:rgba(255,255,255,.055);position:relative}.price.featured{border-color:rgba(66,245,158,.45);background:linear-gradient(180deg,rgba(66,245,158,.14),rgba(255,255,255,.055));transform:translateY(-10px)}.price h3{font-size:23px;margin:0 0 9px}.price .amount{font-size:36px;font-weight:950;letter-spacing:-.04em;margin:20px 0 8px}.price p{color:var(--muted);line-height:1.55}.price ul{list-style:none;padding:0;margin:20px 0;display:grid;gap:12px;color:#DFF7EE;font-size:14px}.price li:before{content:"✓";color:var(--green);font-weight:900;margin-right:9px}
+    .quote{margin-top:28px;border:1px solid rgba(66,245,158,.24);border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(66,245,158,.08));padding:28px;display:grid;grid-template-columns:1.05fr .95fr;gap:24px;box-shadow:0 22px 70px rgba(0,0,0,.24)}
+    .quote h3{font-size:30px;letter-spacing:-.04em;margin:0 0 10px}.quote p{color:var(--muted);line-height:1.55;margin:0}
+    .quote-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.field{display:grid;gap:8px}.field.wide{grid-column:1/-1}.field label{color:#DFF7EE;font-size:13px;font-weight:800}.field input,.field select{width:100%;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(3,8,13,.72);color:var(--text);padding:14px 15px;font:inherit;outline:none}.field input:focus,.field select:focus{border-color:rgba(66,245,158,.62);box-shadow:0 0 0 4px rgba(66,245,158,.10)}
+    .range-row{display:flex;gap:12px;align-items:center}.range-row input{accent-color:var(--green);padding:0}.range-value{min-width:78px;text-align:center;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 10px;font-weight:900;background:rgba(255,255,255,.06)}
+    .quote-result{border:1px solid rgba(255,255,255,.13);border-radius:24px;background:rgba(0,0,0,.25);padding:24px;display:flex;flex-direction:column;gap:18px}.quote-kicker{color:#B9FFD8;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.quote-total{font-size:clamp(36px,5vw,58px);font-weight:950;letter-spacing:-.06em;line-height:.95}.quote-note{color:var(--muted);font-size:13px;line-height:1.5}.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.quote-metric{border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:14px;background:rgba(255,255,255,.045)}.quote-metric span{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.quote-metric strong{font-size:18px}.quote-result ul{list-style:none;margin:0;padding:0;display:grid;gap:10px;color:#EAFBF4;font-size:14px}.quote-result li:before{content:"✓";color:var(--green);font-weight:900;margin-right:9px}
     .cta-band{border:1px solid rgba(66,245,158,.22);border-radius:38px;padding:48px;background:linear-gradient(135deg,rgba(66,245,158,.16),rgba(76,201,240,.08) 45%,rgba(255,255,255,.05));display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;box-shadow:var(--shadow)}.cta-band h2{margin:0 0 14px;font-size:clamp(32px,4.6vw,56px);line-height:1;letter-spacing:-.055em}.cta-band p{color:#D5E7E0;line-height:1.6;margin:0}.contact-box{background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.12);border-radius:26px;padding:24px}.contact-box div{margin-bottom:14px;color:var(--muted)}.contact-box strong{display:block;color:#fff;margin-bottom:4px}
     footer{padding:36px 0 52px;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)}
     .mobile-menu{display:none}
-    @media(max-width:940px){.navlinks{display:none}.hero-grid,.cards,.cta-band{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}}
+    @media(max-width:940px){.navlinks{display:none}.hero-grid,.cards,.quote,.cta-band{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}}
+    @media(max-width:640px){.wrap{width:min(100% - 28px,1180px)}.quote,.card,.price,.cta-band{padding:22px;border-radius:24px}.quote-form,.quote-grid{grid-template-columns:1fr}.range-row{display:grid;grid-template-columns:1fr auto}}
   </style>
 </head>
 <body>
@@ -181,6 +187,71 @@
           <div class="price featured"><h3>Auditoría + Plan</h3><p>La oferta principal para convertir prospectos en clientes.</p><div class="amount">30/60/90</div><ul><li>Auditoría de controles</li><li>Matriz de riesgos</li><li>Roadmap de corrección</li><li>Sesión con dirección</li></ul><a class="cta" href="#contacto">Oferta recomendada</a></div>
           <div class="price"><h3>Academia Cyber</h3><p>Capacitación continua para equipos y áreas críticas.</p><div class="amount">Cursos</div><ul><li>Cápsulas con HeyGen</li><li>Webinars en vivo</li><li>Material descargable</li><li>Constancias internas</li></ul><a class="cta ghost" href="#contacto">Activar cursos</a></div>
         </div>
+        <div class="quote" id="cotizador">
+          <div>
+            <span class="tag">Cotizador express</span>
+            <h3>Calcula el diagnóstico por equipos y exposición cyber.</h3>
+            <p>Una referencia rápida para preparar propuesta: ajusta cantidad de endpoints, complejidad y controles actuales. El cierre final se valida en llamada.</p>
+            <form class="quote-form" id="quoteForm">
+              <div class="field wide">
+                <label for="devices">Equipos a revisar</label>
+                <div class="range-row">
+                  <input id="devices" name="devices" type="range" min="5" max="250" step="5" value="40" />
+                  <span class="range-value" id="devicesValue">40</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="exposure">Exposición</label>
+                <select id="exposure" name="exposure">
+                  <option value="1">Baja: oficina y correo</option>
+                  <option value="1.18" selected>Media: nube y VPN</option>
+                  <option value="1.38">Alta: e-commerce / datos sensibles</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="controls">Controles actuales</label>
+                <select id="controls" name="controls">
+                  <option value="1.15">Básicos o sin evidencia</option>
+                  <option value="1" selected>Parciales: MFA / backups</option>
+                  <option value=".9">Maduros: políticas y monitoreo</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="locations">Sedes</label>
+                <select id="locations" name="locations">
+                  <option value="0" selected>1 sede</option>
+                  <option value="4500">2 a 3 sedes</option>
+                  <option value="8500">4+ sedes</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="training">Agregar capacitación</label>
+                <select id="training" name="training">
+                  <option value="0" selected>No por ahora</option>
+                  <option value="8500">Webinar ejecutivo</option>
+                  <option value="18000">Webinar + cápsula HeyGen</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="quote-result" aria-live="polite">
+            <div>
+              <div class="quote-kicker">Diagnóstico Express estimado</div>
+              <div class="quote-total" id="quoteTotal">$38,000 MXN</div>
+              <div class="quote-note" id="quoteNote">Referencia antes de IVA. Puede variar por alcance técnico, accesos y urgencia.</div>
+            </div>
+            <div class="quote-grid">
+              <div class="quote-metric"><span>Entrega</span><strong id="quoteDelivery">48h</strong></div>
+              <div class="quote-metric"><span>Alcance</span><strong id="quoteScope">PyME</strong></div>
+            </div>
+            <ul>
+              <li id="quoteDevices">40 equipos considerados</li>
+              <li id="quoteRisk">Exposición media con controles parciales</li>
+              <li id="quoteAddon">Sin capacitación adicional</li>
+            </ul>
+            <a class="cta" id="quoteMail" href="mailto:contacto@securyti.mx?subject=Cotizaci%C3%B3n%20Diagn%C3%B3stico%20Express">Enviar datos para propuesta</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -194,5 +265,68 @@
     </section>
   </main>
   <footer><div class="wrap">© 2026 SecuryTI · Auditoría de Ciberseguridad · Cursos de Ciberseguridad · NIST CSF · CDMX</div></footer>
+  <script>
+    const quoteForm = document.querySelector('#quoteForm');
+    const devicesValue = document.querySelector('#devicesValue');
+    const quoteTotal = document.querySelector('#quoteTotal');
+    const quoteDelivery = document.querySelector('#quoteDelivery');
+    const quoteScope = document.querySelector('#quoteScope');
+    const quoteDevices = document.querySelector('#quoteDevices');
+    const quoteRisk = document.querySelector('#quoteRisk');
+    const quoteAddon = document.querySelector('#quoteAddon');
+    const quoteMail = document.querySelector('#quoteMail');
+
+    const formatter = new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN',
+      maximumFractionDigits: 0
+    });
+
+    const labels = {
+      exposure: {
+        '1': 'exposición baja',
+        '1.18': 'exposición media',
+        '1.38': 'exposición alta'
+      },
+      controls: {
+        '1.15': 'controles básicos',
+        '1': 'controles parciales',
+        '.9': 'controles maduros'
+      },
+      training: {
+        '0': 'Sin capacitación adicional',
+        '8500': 'Incluye webinar ejecutivo',
+        '18000': 'Incluye webinar y cápsula HeyGen'
+      }
+    };
+
+    function calculateQuote() {
+      const data = new FormData(quoteForm);
+      const devices = Number(data.get('devices'));
+      const exposure = data.get('exposure');
+      const controls = data.get('controls');
+      const locations = Number(data.get('locations'));
+      const training = Number(data.get('training'));
+      const deviceBlock = Math.ceil(devices / 25);
+      const base = 22000 + (deviceBlock * 5200);
+      const total = Math.round(((base * Number(exposure) * Number(controls)) + locations + training) / 500) * 500;
+      const delivery = devices > 120 || exposure === '1.38' ? '72h' : '48h';
+      const scope = devices < 50 ? 'PyME' : devices < 130 ? 'Empresa media' : 'Multiárea';
+      const subject = encodeURIComponent('Cotización Diagnóstico Express');
+      const body = encodeURIComponent(`Hola SecuryTI,\n\nQuiero validar una cotización de Diagnóstico Express.\n\nEquipos: ${devices}\nExposición: ${labels.exposure[exposure]}\nControles actuales: ${labels.controls[controls]}\nCapacitación: ${labels.training[String(training)]}\nEstimado web: ${formatter.format(total)} MXN\nEntrega sugerida: ${delivery}\n\nGracias.`);
+
+      devicesValue.textContent = devices;
+      quoteTotal.textContent = `${formatter.format(total)} MXN`;
+      quoteDelivery.textContent = delivery;
+      quoteScope.textContent = scope;
+      quoteDevices.textContent = `${devices} equipos considerados`;
+      quoteRisk.textContent = `${labels.exposure[exposure]} con ${labels.controls[controls]}`;
+      quoteAddon.textContent = labels.training[String(training)];
+      quoteMail.href = `mailto:contacto@securyti.mx?subject=${subject}&body=${body}`;
+    }
+
+    quoteForm.addEventListener('input', calculateQuote);
+    calculateQuote();
+  </script>
 </body>
 </html>
