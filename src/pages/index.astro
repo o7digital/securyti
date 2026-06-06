@@ -1,8 +1,198 @@
----
-import MirrorDocument from '../layouts/MirrorDocument.astro';
-import { loadMirrorRoute } from '../lib/mirror-pages.js';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecuryTI | Auditoría de Ciberseguridad y Cursos para Empresas</title>
+  <meta name="description" content="Landing page para Auditoría de Ciberseguridad y Cursos de Ciberseguridad empresariales de SecuryTI en México y CDMX." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#050B11;
+      --bg2:#07131D;
+      --panel:rgba(255,255,255,.075);
+      --panel2:rgba(255,255,255,.11);
+      --line:rgba(153,255,214,.18);
+      --text:#F3FFF9;
+      --muted:#A5BDB3;
+      --green:#42F59E;
+      --green2:#00D77F;
+      --cyan:#4CC9F0;
+      --orange:#FFB86B;
+      --danger:#FF5F7A;
+      --shadow:0 28px 90px rgba(0,0,0,.5);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 8% 3%, rgba(66,245,158,.22), transparent 27%),
+        radial-gradient(circle at 86% 8%, rgba(76,201,240,.18), transparent 24%),
+        radial-gradient(circle at 50% 55%, rgba(66,245,158,.08), transparent 38%),
+        linear-gradient(180deg,#03080D 0%, #07131D 46%, #03080D 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .noise{position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="160" height="160" filter="url(%23n)" opacity="0.45"/%3E%3C/svg%3E')}
+    .grid{position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(66,245,158,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(66,245,158,.14) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+    .wrap{width:min(1180px,calc(100% - 42px));margin:0 auto;position:relative}
+    .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(22px);background:rgba(3,8,13,.72);border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+    .brand{display:flex;align-items:center;gap:13px;font-weight:900;letter-spacing:.02em}
+    .brandmark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--green),#113d2a);box-shadow:0 0 34px rgba(66,245,158,.35);display:grid;place-items:center;color:#00180C;font-weight:900}
+    .navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px}
+    .navlinks a:hover{color:white}
+    .cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid rgba(66,245,158,.45);background:linear-gradient(135deg,var(--green),var(--green2));color:#00180C;font-weight:900;padding:14px 20px;border-radius:999px;box-shadow:0 16px 44px rgba(66,245,158,.25);transition:.25s transform,.25s box-shadow;white-space:nowrap}
+    .cta:hover{transform:translateY(-2px);box-shadow:0 20px 60px rgba(66,245,158,.38)}
+    .ghost{background:rgba(255,255,255,.06);color:var(--text);border-color:rgba(255,255,255,.16);box-shadow:none}
+    .hero{padding:86px 0 64px}
+    .hero-grid{display:grid;grid-template-columns:1.03fr .97fr;gap:54px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid rgba(66,245,158,.24);border-radius:999px;background:rgba(66,245,158,.08);color:#B9FFD8;font-size:13px;font-weight:800;margin-bottom:22px}
+    .pulse{width:9px;height:9px;border-radius:999px;background:var(--green);box-shadow:0 0 0 8px rgba(66,245,158,.12)}
+    h1{font-size:clamp(42px,6.4vw,86px);line-height:.95;letter-spacing:-.07em;margin:0 0 26px;font-weight:950}
+    .grad{background:linear-gradient(90deg,#fff 0%,#B9FFD8 43%,#4CC9F0 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:clamp(18px,2vw,22px);line-height:1.55;color:#D1E5DD;max-width:650px;margin:0 0 34px}
+    .actions{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:32px}
+    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:680px}
+    .trust div{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);border-radius:18px;padding:14px 16px;color:var(--muted);font-size:13px}
+    .trust strong{display:block;color:#fff;font-size:22px;margin-bottom:2px}
+    .console{position:relative;border:1px solid rgba(153,255,214,.22);border-radius:34px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));box-shadow:var(--shadow);padding:18px;overflow:hidden}
+    .console:before{content:"";position:absolute;inset:-2px;background:radial-gradient(circle at 50% 0%,rgba(66,245,158,.28),transparent 35%);pointer-events:none}
+    .screen{position:relative;border-radius:24px;background:#071018;border:1px solid rgba(255,255,255,.1);padding:22px;min-height:530px;overflow:hidden}
+    .screenbar{height:34px;display:flex;gap:8px;align-items:center;margin-bottom:20px}
+    .dot{width:11px;height:11px;border-radius:50%;background:#FF5F57}.dot:nth-child(2){background:#FFBD2E}.dot:nth-child(3){background:#28C840}
+    .audit-card{border:1px solid rgba(66,245,158,.18);border-radius:22px;padding:20px;background:rgba(0,0,0,.26);margin-bottom:16px;position:relative;overflow:hidden}
+    .audit-card h3{margin:0 0 12px;font-size:18px}.audit-card p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+    .risk-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;color:#CDE9DE;font-size:13px}.meter{height:9px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:8px}.fill{height:100%;width:78%;background:linear-gradient(90deg,var(--danger),var(--orange),var(--green));border-radius:inherit}
+    .floating{position:absolute;right:20px;bottom:24px;width:230px;border:1px solid rgba(76,201,240,.22);border-radius:22px;padding:18px;background:rgba(6,18,28,.84);backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.38)}
+    .floating span{display:block;color:var(--muted);font-size:12px;margin-bottom:8px}.floating strong{font-size:30px}.floating p{font-size:13px;color:#BBD2C8;line-height:1.45;margin:8px 0 0}
+    section{padding:82px 0}
+    .section-head{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:34px}
+    .section-head h2{font-size:clamp(32px,4.7vw,58px);line-height:1;letter-spacing:-.055em;margin:0;max-width:760px}.section-head p{color:var(--muted);line-height:1.6;max-width:410px;margin:0}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+    .card{border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));border-radius:var(--radius);padding:30px;box-shadow:0 20px 65px rgba(0,0,0,.22);position:relative;overflow:hidden}
+    .card:after{content:"";position:absolute;inset:auto -30% -45% auto;width:260px;height:260px;border-radius:50%;background:rgba(66,245,158,.12);filter:blur(15px)}
+    .icon{width:54px;height:54px;border-radius:18px;background:rgba(66,245,158,.12);border:1px solid rgba(66,245,158,.25);display:grid;place-items:center;font-size:24px;margin-bottom:22px}
+    .card h3{font-size:26px;letter-spacing:-.03em;margin:0 0 12px}.card p{color:#BBD2C8;line-height:1.65;margin:0 0 20px}.list{display:grid;gap:12px;margin-top:18px}.list div{display:flex;gap:10px;color:#EAFBF4;font-size:14px}.check{color:var(--green);font-weight:900}
+    .process{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);border-radius:24px;padding:24px}.num{color:var(--green);font-weight:900;margin-bottom:18px}.step h3{margin:0 0 10px;font-size:19px}.step p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+    .platform{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}.platform-card{border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:24px;background:rgba(255,255,255,.05)}.platform-card strong{display:block;font-size:19px;margin-bottom:10px}.platform-card p{color:var(--muted);line-height:1.55;margin:0;font-size:14px}.tag{display:inline-flex;border:1px solid rgba(76,201,240,.28);color:#BDEFFF;background:rgba(76,201,240,.08);border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800;margin-bottom:14px}
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}.price{border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:28px;background:rgba(255,255,255,.055);position:relative}.price.featured{border-color:rgba(66,245,158,.45);background:linear-gradient(180deg,rgba(66,245,158,.14),rgba(255,255,255,.055));transform:translateY(-10px)}.price h3{font-size:23px;margin:0 0 9px}.price .amount{font-size:36px;font-weight:950;letter-spacing:-.04em;margin:20px 0 8px}.price p{color:var(--muted);line-height:1.55}.price ul{list-style:none;padding:0;margin:20px 0;display:grid;gap:12px;color:#DFF7EE;font-size:14px}.price li:before{content:"✓";color:var(--green);font-weight:900;margin-right:9px}
+    .cta-band{border:1px solid rgba(66,245,158,.22);border-radius:38px;padding:48px;background:linear-gradient(135deg,rgba(66,245,158,.16),rgba(76,201,240,.08) 45%,rgba(255,255,255,.05));display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;box-shadow:var(--shadow)}.cta-band h2{margin:0 0 14px;font-size:clamp(32px,4.6vw,56px);line-height:1;letter-spacing:-.055em}.cta-band p{color:#D5E7E0;line-height:1.6;margin:0}.contact-box{background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.12);border-radius:26px;padding:24px}.contact-box div{margin-bottom:14px;color:var(--muted)}.contact-box strong{display:block;color:#fff;margin-bottom:4px}
+    footer{padding:36px 0 52px;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)}
+    .mobile-menu{display:none}
+    @media(max-width:940px){.navlinks{display:none}.hero-grid,.cards,.cta-band{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}}
+  </style>
+</head>
+<body>
+  <div class="noise"></div><div class="grid"></div>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top"><span class="brandmark">S</span><span>SecuryTI</span></a>
+      <nav class="navlinks">
+        <a href="#servicios">Servicios</a><a href="#proceso">Proceso</a><a href="#academia">Academia</a><a href="#planes">Paquetes</a>
+      </nav>
+      <a class="cta" href="#contacto">Agendar diagnóstico</a>
+    </div>
+  </header>
 
-const documentProps = loadMirrorRoute('/');
----
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> Auditoría + formación para empresas en México</div>
+          <h1>Convierte la ciberseguridad en una <span class="grad">ventaja comercial.</span></h1>
+          <p class="lead">Una landing independiente para captar empresas que necesitan evaluar su riesgo, preparar evidencia de cumplimiento y capacitar a sus equipos contra phishing, ransomware y errores humanos.</p>
+          <div class="actions">
+            <a class="cta" href="#contacto">Solicitar auditoría</a>
+            <a class="cta ghost" href="#academia">Ver cursos</a>
+          </div>
+          <div class="trust">
+            <div><strong>48h</strong>Diagnóstico inicial NIST CSF</div>
+            <div><strong>2</strong>Líneas de negocio claras</div>
+            <div><strong>CDMX</strong>Atención empresarial</div>
+          </div>
+        </div>
+        <div class="console" aria-label="Vista de plataforma de auditoría">
+          <div class="screen">
+            <div class="screenbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="audit-card">
+              <h3>Cybersecurity Readiness Scan</h3>
+              <p>Evaluación rápida de políticas, accesos, endpoints, red, respaldos, respuesta a incidentes y cumplimiento.</p>
+              <div class="risk-row"><span>Madurez actual</span><strong>62%</strong></div><div class="meter"><div class="fill"></div></div>
+            </div>
+            <div class="audit-card">
+              <h3>Riesgos prioritarios detectados</h3>
+              <p>Contraseñas débiles · MFA incompleto · backups sin prueba · baja conciencia ante phishing.</p>
+            </div>
+            <div class="audit-card">
+              <h3>Plan de acción ejecutivo</h3>
+              <p>Reporte para dirección, quick wins por prioridad y roadmap de mejora por 30 / 60 / 90 días.</p>
+            </div>
+            <div class="floating"><span>Oferta recomendada</span><strong>Audit + Training</strong><p>Diagnóstico técnico + capacitación práctica para reducir riesgo humano y operativo.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<MirrorDocument {...documentProps} />
+    <section id="servicios">
+      <div class="wrap">
+        <div class="section-head"><h2>Dos servicios fáciles de vender y fáciles de entender.</h2><p>La página está pensada para que el cliente no se pierda: primero entiende el riesgo, luego elige entre auditoría, cursos o programa completo.</p></div>
+        <div class="cards">
+          <article class="card"><div class="icon">🛡️</div><h3>Auditoría de Ciberseguridad</h3><p>Diagnóstico profesional para identificar vulnerabilidades, evaluar controles actuales y entregar un plan de acción claro para dirección y responsables de TI.</p><div class="list"><div><span class="check">✓</span>Evaluación basada en NIST CSF</div><div><span class="check">✓</span>Revisión de accesos, red, endpoints y respaldos</div><div><span class="check">✓</span>Mapa de riesgos por prioridad</div><div><span class="check">✓</span>Informe ejecutivo y recomendaciones</div></div></article>
+          <article class="card"><div class="icon">🎓</div><h3>Cursos de Ciberseguridad</h3><p>Formación para equipos administrativos, comerciales y técnicos con videos, sesiones en vivo y materiales prácticos para reducir errores humanos.</p><div class="list"><div><span class="check">✓</span>Phishing, contraseñas, MFA y manejo de datos</div><div><span class="check">✓</span>Videos con avatar IA y contenido de marca</div><div><span class="check">✓</span>Webinars en vivo con preguntas y respuestas</div><div><span class="check">✓</span>Constancia interna de participación</div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proceso">
+      <div class="wrap">
+        <div class="section-head"><h2>Un proceso comercial que se puede cerrar rápido.</h2><p>La idea no es vender “tecnología complicada”; es vender tranquilidad, evidencia y capacitación accionable.</p></div>
+        <div class="process">
+          <div class="step"><div class="num">01</div><h3>Entrevista inicial</h3><p>Se entiende el negocio, el tamaño de la empresa, los sistemas críticos y los riesgos principales.</p></div>
+          <div class="step"><div class="num">02</div><h3>Diagnóstico</h3><p>Se revisan controles, accesos, políticas, red, endpoints, correo, backups y respuesta a incidentes.</p></div>
+          <div class="step"><div class="num">03</div><h3>Reporte ejecutivo</h3><p>Se entrega una matriz de riesgos, hallazgos priorizados y acciones recomendadas por urgencia.</p></div>
+          <div class="step"><div class="num">04</div><h3>Capacitación</h3><p>Se activa un programa de cursos y webinars para que el equipo reduzca conductas de riesgo.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="academia">
+      <div class="wrap">
+        <div class="section-head"><h2>Academia SecuryTI: cursos con IA, webinars y seguimiento.</h2><p>Propuesta recomendada: usar HeyGen para cápsulas de video profesionales y Google Meet para sesiones ejecutivas pequeñas. Para eventos grandes o cursos pagados recurrentes, Zoom Webinars o una plataforma LMS puede ser mejor.</p></div>
+        <div class="platform">
+          <div class="platform-card"><span class="tag">Videos IA</span><strong>HeyGen</strong><p>Creación de cápsulas con avatar, narración, subtítulos y versiones por idioma para cursos internos.</p></div>
+          <div class="platform-card"><span class="tag">Webinars</span><strong>Google Meet</strong><p>Ideal para sesiones privadas con clientes, preguntas en vivo, calendario y grabación dentro de Google Workspace.</p></div>
+          <div class="platform-card"><span class="tag">Escalable</span><strong>LMS / Zoom</strong><p>Para vender cursos recurrentes: registro, asistencia, certificados, módulos, evaluaciones y reportes.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="planes">
+      <div class="wrap">
+        <div class="section-head"><h2>Paquetes sugeridos para presentar a Agustín.</h2><p>Los importes quedan abiertos para cotizar, pero la estructura ayuda a vender sin improvisar.</p></div>
+        <div class="pricing">
+          <div class="price"><h3>Diagnóstico Express</h3><p>Para PyMEs que quieren saber dónde están paradas.</p><div class="amount">48h</div><ul><li>Entrevista inicial</li><li>Checklist NIST CSF</li><li>Reporte ejecutivo breve</li><li>Prioridades de mejora</li></ul><a class="cta ghost" href="#contacto">Cotizar</a></div>
+          <div class="price featured"><h3>Auditoría + Plan</h3><p>La oferta principal para convertir prospectos en clientes.</p><div class="amount">30/60/90</div><ul><li>Auditoría de controles</li><li>Matriz de riesgos</li><li>Roadmap de corrección</li><li>Sesión con dirección</li></ul><a class="cta" href="#contacto">Oferta recomendada</a></div>
+          <div class="price"><h3>Academia Cyber</h3><p>Capacitación continua para equipos y áreas críticas.</p><div class="amount">Cursos</div><ul><li>Cápsulas con HeyGen</li><li>Webinars en vivo</li><li>Material descargable</li><li>Constancias internas</li></ul><a class="cta ghost" href="#contacto">Activar cursos</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="wrap">
+        <div class="cta-band">
+          <div><h2>¿Tu empresa está preparada para el próximo ataque?</h2><p>Agenda una llamada con SecuryTI y recibe una ruta clara para evaluar, corregir y capacitar a tu equipo.</p></div>
+          <div class="contact-box"><div><strong>Teléfono</strong>+52 1 55 6350 2870</div><div><strong>Email</strong>contacto@securyti.mx</div><div><strong>Ubicación</strong>Montes Urales 755, Lomas de Chapultepec, CDMX</div><a class="cta" href="mailto:contacto@securyti.mx?subject=Solicitud%20de%20Auditor%C3%ADa%20de%20Ciberseguridad">Solicitar propuesta</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">© 2026 SecuryTI · Auditoría de Ciberseguridad · Cursos de Ciberseguridad · NIST CSF · CDMX</div></footer>
+</body>
+</html>
