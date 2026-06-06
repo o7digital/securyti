@@ -30,9 +30,11 @@ import OliviaChat from '../components/OliviaChat.astro';
       --radius:28px;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;width:100%;overflow-x:hidden}
     body{
       margin:0;
+      width:100%;
+      max-width:100%;
       font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       background:
         radial-gradient(circle at 8% 3%, rgba(66,245,158,.22), transparent 27%),
@@ -43,15 +45,23 @@ import OliviaChat from '../components/OliviaChat.astro';
       overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
+    img{max-width:100%}
     .noise{position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="160" height="160" filter="url(%23n)" opacity="0.45"/%3E%3C/svg%3E')}
     .grid{position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(66,245,158,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(66,245,158,.14) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
     .wrap{width:min(1180px,calc(100% - 42px));margin:0 auto;position:relative}
     .topbar{position:sticky;top:0;z-index:30;backdrop-filter:blur(22px);background:rgba(3,8,13,.72);border-bottom:1px solid rgba(255,255,255,.08)}
-    .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+    .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:28px;position:relative}
     .brand{display:flex;align-items:center;gap:13px;font-weight:900;letter-spacing:.02em}
     .brand-logo{width:148px;height:auto;display:block}
     .navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px}
     .navlinks a:hover{color:white}
+    .menu-toggle{display:none;width:46px;height:46px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(255,255,255,.07);color:#fff;align-items:center;justify-content:center;cursor:pointer}
+    .menu-toggle span{position:relative;display:block;width:20px;height:2px;border-radius:99px;background:currentColor}
+    .menu-toggle span:before,.menu-toggle span:after{content:"";position:absolute;left:0;width:20px;height:2px;border-radius:99px;background:currentColor;transition:.2s transform,.2s top}
+    .menu-toggle span:before{top:-7px}.menu-toggle span:after{top:7px}
+    .topbar.menu-open .menu-toggle span{background:transparent}
+    .topbar.menu-open .menu-toggle span:before{top:0;transform:rotate(45deg)}
+    .topbar.menu-open .menu-toggle span:after{top:0;transform:rotate(-45deg)}
     .cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:1px solid rgba(66,245,158,.45);background:linear-gradient(135deg,var(--green),var(--green2));color:#00180C;font-weight:900;padding:14px 20px;border-radius:999px;box-shadow:0 16px 44px rgba(66,245,158,.25);transition:.25s transform,.25s box-shadow;white-space:nowrap}
     .cta:hover{transform:translateY(-2px);box-shadow:0 20px 60px rgba(66,245,158,.38)}
     .ghost{background:rgba(255,255,255,.06);color:var(--text);border-color:rgba(255,255,255,.16);box-shadow:none}
@@ -78,7 +88,7 @@ import OliviaChat from '../components/OliviaChat.astro';
     .floating span{display:block;color:var(--muted);font-size:12px;margin-bottom:8px}.floating strong{font-size:30px}.floating p{font-size:13px;color:#BBD2C8;line-height:1.45;margin:8px 0 0}
     section{padding:82px 0}
     .section-head{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:34px}
-    .section-head h2{font-size:clamp(32px,4.7vw,58px);line-height:1;letter-spacing:-.055em;margin:0;max-width:760px}.section-head p{color:var(--muted);line-height:1.6;max-width:410px;margin:0}
+    .section-head h2{font-size:clamp(32px,4.7vw,58px);line-height:1;letter-spacing:-.055em;margin:0;max-width:760px;overflow-wrap:anywhere}.section-head p{color:var(--muted);line-height:1.6;max-width:410px;margin:0}
     .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
     .card{border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));border-radius:var(--radius);padding:30px;box-shadow:0 20px 65px rgba(0,0,0,.22);position:relative;overflow:hidden}
     .card:after{content:"";position:absolute;inset:auto -30% -45% auto;width:260px;height:260px;border-radius:50%;background:rgba(66,245,158,.12);filter:blur(15px)}
@@ -100,8 +110,8 @@ import OliviaChat from '../components/OliviaChat.astro';
     .footer-col h3{margin:0 0 16px;color:#fff;font-size:15px;text-transform:uppercase;letter-spacing:.08em}.footer-col ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}.footer-col a{color:var(--muted)}.footer-col a:hover{color:#fff}.footer-contact{display:grid;gap:13px}.footer-contact span{display:block;color:#fff;font-weight:800;margin-bottom:3px}
     .footer-bottom{display:flex;justify-content:space-between;gap:20px;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding-top:24px;font-size:13px;line-height:1.55}.footer-keywords{max-width:720px}
     .mobile-menu{display:none}
-    @media(max-width:940px){.navlinks{display:none}.hero-grid,.cards,.quote,.cta-band,.footer-grid{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}.footer-bottom{display:grid}.brand-logo{width:132px}}
-    @media(max-width:640px){.wrap{width:min(100% - 28px,1180px)}.quote,.card,.price,.cta-band{padding:22px;border-radius:24px}.quote-form,.quote-contact,.quote-grid,.contact-form{grid-template-columns:1fr}.range-row{display:grid;grid-template-columns:1fr auto}.footer-social a{width:38px;height:38px}}
+    @media(max-width:940px){.nav{height:72px;gap:12px}.menu-toggle{display:flex;flex:0 0 auto}.navlinks{display:none;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;gap:0;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(3,8,13,.96);box-shadow:0 24px 70px rgba(0,0,0,.42)}.topbar.menu-open .navlinks{display:flex}.navlinks a{padding:14px 16px;border-radius:12px}.navlinks a:hover{background:rgba(255,255,255,.07)}.nav-cta{display:none}.hero-grid,.cards,.quote,.cta-band,.footer-grid{grid-template-columns:1fr}.trust,.process,.platform,.pricing{grid-template-columns:1fr}.floating{position:relative;right:auto;bottom:auto;width:auto;margin-top:18px}.price.featured{transform:none}.section-head{display:block}.section-head p{margin-top:18px}.hero{padding-top:56px}.footer-bottom{display:grid}.brand-logo{width:132px}}
+    @media(max-width:640px){.wrap{width:min(100% - 28px,1180px)}.brand-logo{width:124px}.hero{padding:44px 0 42px}h1{font-size:clamp(38px,13vw,56px);letter-spacing:-.055em}.lead{font-size:17px}.actions .cta{width:100%}.screen{min-height:0}.console{padding:12px;border-radius:24px}.trust{gap:10px}.quote,.card,.price,.cta-band{padding:22px;border-radius:24px}.quote-form,.quote-contact,.quote-grid,.contact-form{grid-template-columns:1fr}.range-row{display:grid;grid-template-columns:minmax(0,1fr) auto}.footer-social a{width:38px;height:38px}}
   </style>
 </head>
 <body>
@@ -111,10 +121,11 @@ import OliviaChat from '../components/OliviaChat.astro';
       <a class="brand" href="#top" aria-label="SecuryTI">
         <img class="brand-logo" src="/wp-content/uploads/2025/11/securyti-logo2_bco-2048x674.webp" alt="SecuryTI" width="2048" height="674" />
       </a>
-      <nav class="navlinks">
-        <a href="#servicios">Servicios</a><a href="#proceso">Proceso</a><a href="#academia">Academia</a><a href="#planes">Paquetes</a>
+      <nav class="navlinks" id="primary-navigation">
+        <a href="#servicios">Servicios</a><a href="#proceso">Proceso</a><a href="#academia">Academia</a><a href="#planes">Paquetes</a><a href="#contacto">Contacto</a>
       </nav>
-      <a class="cta" href="#contacto">Agendar diagnóstico</a>
+      <a class="cta nav-cta" href="#contacto">Agendar diagnóstico</a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-controls="primary-navigation" aria-expanded="false"><span></span></button>
     </div>
   </header>
 
@@ -389,6 +400,32 @@ import OliviaChat from '../components/OliviaChat.astro';
   </footer>
   <OliviaChat />
   <script>
+    const topbar = document.querySelector('.topbar');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('#primary-navigation');
+
+    function setMenuOpen(isOpen) {
+      topbar.classList.toggle('menu-open', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      setMenuOpen(!topbar.classList.contains('menu-open'));
+    });
+
+    navLinks.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        setMenuOpen(false);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 941px)').matches) {
+        setMenuOpen(false);
+      }
+    });
+
     const quoteForm = document.querySelector('#cotizador');
     const devicesValue = document.querySelector('#devicesValue');
     const quoteTotal = document.querySelector('#quoteTotal');
