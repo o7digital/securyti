@@ -252,6 +252,7 @@ const siteCode = 'securyti';
     root.dataset.ready = 'true';
 
     const siteCode = root.dataset.siteCode || 'securyti';
+    const offline = true;
     const leadEndpoint = 'https://www.o7digital.com/api/o7-lead';
     const chatEndpoint = 'https://ai-concierge-production-4e92.up.railway.app/chat';
 
@@ -394,7 +395,9 @@ const siteCode = 'securyti';
     let isOpen = false;
     let isLoading = false;
     let leadSent = false;
-    let messages = [{ role: 'assistant', content: t.welcome }];
+    let messages = offline
+      ? [{ role: 'assistant', content: 'Offline' }, { role: 'assistant', content: 'Add more credit' }]
+      : [{ role: 'assistant', content: t.welcome }];
     let lead = { firstName: '', lastName: '', email: '', phone: '' };
 
     const transcript = () => messages.map((message) => `${message.role}: ${message.content}`).join('\n');
@@ -416,12 +419,12 @@ const siteCode = 'securyti';
           <header class="olivia-header">
             <div>
               <p class="olivia-title">${escapeHtml(t.title)}</p>
-              <p class="olivia-status">${escapeHtml(t.status)} · ${escapeHtml(t.online)}</p>
+              <p class="olivia-status">${offline ? 'Offline · Add more credit' : `${escapeHtml(t.status)} · ${escapeHtml(t.online)}`}</p>
             </div>
             <button type="button" class="olivia-close" aria-label="${escapeHtml(t.close)}">x</button>
           </header>
           <div class="olivia-messages">${renderMessages()}</div>
-          ${leadSent ? '' : `
+          ${offline || leadSent ? '' : `
             <form class="olivia-lead">
               <p>${escapeHtml(t.leadIntro)}</p>
               <input required name="firstName" placeholder="${escapeHtml(t.firstName)}" value="${escapeHtml(lead.firstName)}" />
@@ -432,15 +435,15 @@ const siteCode = 'securyti';
             </form>
           `}
           <div class="olivia-composer">
-            <input class="olivia-input" value="" ${!leadSent || isLoading ? 'disabled' : ''} placeholder="${escapeHtml(t.placeholder)}" />
-            <button type="button" class="olivia-send" ${!leadSent || isLoading ? 'disabled' : ''} aria-label="${escapeHtml(t.send)}">&gt;</button>
+            <input class="olivia-input" value="" ${offline || !leadSent || isLoading ? 'disabled' : ''} placeholder="${offline ? 'Offline — Add more credit' : escapeHtml(t.placeholder)}" />
+            <button type="button" class="olivia-send" ${offline || !leadSent || isLoading ? 'disabled' : ''} aria-label="${escapeHtml(t.send)}">&gt;</button>
           </div>
         </section>
         <div class="olivia-closed">
           ${isOpen ? '' : `
             <button type="button" class="olivia-teaser">
               <span class="olivia-avatar">O</span>
-              <span>${escapeHtml(t.teaser)}</span>
+              <span>${offline ? 'Offline — Add more credit' : escapeHtml(t.teaser)}</span>
             </button>
           `}
           <button type="button" class="olivia-toggle" aria-label="${escapeHtml(isOpen ? t.close : t.open)}">${isOpen ? 'x' : 'Olivia'}</button>
@@ -464,7 +467,7 @@ const siteCode = 'securyti';
 
     const submitLead = async (event) => {
       event.preventDefault();
-      if (isLoading) return;
+      if (offline || isLoading) return;
       saveLeadFields();
       if (!lead.firstName.trim() || !lead.lastName.trim() || !lead.email.trim() || !lead.phone.trim()) return;
 
@@ -498,6 +501,7 @@ const siteCode = 'securyti';
     };
 
     const sendMessage = async () => {
+      if (offline) return;
       const input = root.querySelector('.olivia-input');
       const message = input?.value?.trim() || '';
       if (!message || isLoading || !leadSent) return;
