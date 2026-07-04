@@ -396,7 +396,7 @@ const siteCode = 'securyti';
     let isLoading = false;
     let leadSent = false;
     let messages = offline
-      ? [{ role: 'assistant', content: 'Offline' }, { role: 'assistant', content: 'Add more credit' }]
+      ? [{ role: 'assistant', content: 'Offline' }]
       : [{ role: 'assistant', content: t.welcome }];
     let lead = { firstName: '', lastName: '', email: '', phone: '' };
 
@@ -419,7 +419,7 @@ const siteCode = 'securyti';
           <header class="olivia-header">
             <div>
               <p class="olivia-title">${escapeHtml(t.title)}</p>
-              <p class="olivia-status">${offline ? 'Offline · Add more credit' : `${escapeHtml(t.status)} · ${escapeHtml(t.online)}`}</p>
+              <p class="olivia-status">${offline ? 'Offline' : `${escapeHtml(t.status)} · ${escapeHtml(t.online)}`}</p>
             </div>
             <button type="button" class="olivia-close" aria-label="${escapeHtml(t.close)}">x</button>
           </header>
@@ -435,7 +435,7 @@ const siteCode = 'securyti';
             </form>
           `}
           <div class="olivia-composer">
-            <input class="olivia-input" value="" ${offline || !leadSent || isLoading ? 'disabled' : ''} placeholder="${offline ? 'Offline — Add more credit' : escapeHtml(t.placeholder)}" />
+            <input class="olivia-input" value="" ${offline || !leadSent || isLoading ? 'disabled' : ''} placeholder="${offline ? 'Offline' : escapeHtml(t.placeholder)}" />
             <button type="button" class="olivia-send" ${offline || !leadSent || isLoading ? 'disabled' : ''} aria-label="${escapeHtml(t.send)}">&gt;</button>
           </div>
         </section>
@@ -443,7 +443,7 @@ const siteCode = 'securyti';
           ${isOpen ? '' : `
             <button type="button" class="olivia-teaser">
               <span class="olivia-avatar">O</span>
-              <span>${offline ? 'Offline — Add more credit' : escapeHtml(t.teaser)}</span>
+              <span>${offline ? 'Offline' : escapeHtml(t.teaser)}</span>
             </button>
           `}
           <button type="button" class="olivia-toggle" aria-label="${escapeHtml(isOpen ? t.close : t.open)}">${isOpen ? 'x' : 'Olivia'}</button>
