@@ -136,6 +136,7 @@ const siteCode = 'securyti';
   }
 
   .olivia-lead input,
+  .olivia-lead textarea,
   .olivia-composer input {
     width: 100%;
     min-width: 0;
@@ -148,11 +149,19 @@ const siteCode = 'securyti';
     outline: none;
   }
 
-  .olivia-lead input {
+  .olivia-lead input,
+  .olivia-lead textarea {
     padding: 11px;
   }
 
+  .olivia-lead textarea {
+    grid-column: 1 / -1;
+    min-height: 74px;
+    resize: vertical;
+  }
+
   .olivia-lead input::placeholder,
+  .olivia-lead textarea::placeholder,
   .olivia-composer input::placeholder {
     color: rgba(255, 255, 255, 0.55);
   }
@@ -431,7 +440,7 @@ const siteCode = 'securyti';
               <input required name="lastName" placeholder="${escapeHtml(t.lastName)}" value="${escapeHtml(lead.lastName)}" />
               <input required type="email" name="email" placeholder="${escapeHtml(t.email)}" value="${escapeHtml(lead.email)}" />
               <input required type="tel" name="phone" placeholder="${escapeHtml(t.phone)}" value="${escapeHtml(lead.phone)}" />
-              <input required name="need" placeholder="${escapeHtml(t.need)}" value="${escapeHtml(lead.need)}" />
+              <textarea required name="need" rows="2" placeholder="${escapeHtml(t.need)}">${escapeHtml(lead.need)}</textarea>
               <button type="submit" ${isLoading ? 'disabled' : ''}>${escapeHtml(t.submitLead)}</button>
             </form>
           `}
