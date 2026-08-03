@@ -269,6 +269,7 @@ const siteCode = 'securyti';
         lastName: 'Apellido',
         email: 'Email',
         phone: 'Telefono',
+        need: 'Necesidad',
         submitLead: 'Enviar datos',
         leadThanks: 'Gracias. Tus datos fueron enviados y un asesor te contactara pronto.',
         placeholder: 'Escribe tu pregunta...',
@@ -288,6 +289,7 @@ const siteCode = 'securyti';
         lastName: 'Last name',
         email: 'Email',
         phone: 'Phone',
+        need: 'Need',
         submitLead: 'Send details',
         leadThanks: 'Thanks. Your details were sent and an advisor will contact you soon.',
         placeholder: 'Write your question...',
@@ -307,6 +309,7 @@ const siteCode = 'securyti';
         lastName: 'Nom',
         email: 'Email',
         phone: 'Telephone',
+        need: 'Besoin',
         submitLead: 'Envoyer',
         leadThanks: 'Merci. Vos coordonnees ont ete envoyees et un conseiller vous contactera rapidement.',
         placeholder: 'Ecrivez votre question...',
@@ -395,7 +398,7 @@ const siteCode = 'securyti';
     let isLoading = false;
     let leadSent = false;
     let messages = [{ role: 'assistant', content: t.welcome }];
-    let lead = { firstName: '', lastName: '', email: '', phone: '' };
+    let lead = { firstName: '', lastName: '', email: '', phone: '', need: '' };
 
     const transcript = () => messages.map((message) => `${message.role}: ${message.content}`).join('\n');
 
@@ -428,6 +431,7 @@ const siteCode = 'securyti';
               <input required name="lastName" placeholder="${escapeHtml(t.lastName)}" value="${escapeHtml(lead.lastName)}" />
               <input required type="email" name="email" placeholder="${escapeHtml(t.email)}" value="${escapeHtml(lead.email)}" />
               <input required type="tel" name="phone" placeholder="${escapeHtml(t.phone)}" value="${escapeHtml(lead.phone)}" />
+              <input required name="need" placeholder="${escapeHtml(t.need)}" value="${escapeHtml(lead.need)}" />
               <button type="submit" ${isLoading ? 'disabled' : ''}>${escapeHtml(t.submitLead)}</button>
             </form>
           `}
@@ -459,6 +463,7 @@ const siteCode = 'securyti';
         lastName: form.lastName?.value || lead.lastName,
         email: form.email?.value || lead.email,
         phone: form.phone?.value || lead.phone,
+        need: form.need?.value || lead.need,
       };
     };
 
@@ -466,7 +471,7 @@ const siteCode = 'securyti';
       event.preventDefault();
       if (isLoading) return;
       saveLeadFields();
-      if (!lead.firstName.trim() || !lead.lastName.trim() || !lead.email.trim() || !lead.phone.trim()) return;
+      if (!lead.firstName.trim() || !lead.lastName.trim() || !lead.email.trim() || !lead.phone.trim() || !lead.need.trim()) return;
 
       isLoading = true;
       render();
@@ -479,10 +484,12 @@ const siteCode = 'securyti';
             lastName: lead.lastName.trim(),
             email: lead.email.trim(),
             phone: lead.phone.trim(),
+            need: lead.need.trim(),
+            necesidad: lead.need.trim(),
             source: 'Chat Olivia SecuryTI',
             language: lang,
             siteCode,
-            message: `Lead Chat Olivia SecuryTI (${lang}, ${siteCode})\n\n${transcript()}`,
+            message: `Lead Chat Olivia SecuryTI (${lang}, ${siteCode})\nNecesidad/Need/Besoin: ${lead.need.trim()}\n\n${transcript()}`,
           }),
         });
         if (!response.ok) throw new Error('Lead delivery failed');
