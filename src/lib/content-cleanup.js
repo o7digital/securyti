@@ -1,7 +1,6 @@
 import { getLocalizedRoute, getRouteContext } from './site.js';
 
 const CONTACT_EMAIL = 'contacto@securyti.mx';
-const CONTACT_PHONE = '+52 1 55 6350 2870';
 const OFFICE_ADDRESS = 'Montes Urales 755, Lomas-Virreyes, Lomas de Chapultepec';
 
 const HOME_ROUTES = new Set(['/', '/en/', '/fr/']);
@@ -40,10 +39,20 @@ const UNIVERSAL_REPLACEMENTS = [
   [/\bagarcia@security\.mx\b/gi, CONTACT_EMAIL],
   [/\bcontacto@security\.mx\b/gi, CONTACT_EMAIL],
   [/\bcontact@cyberguard\.com\b/gi, CONTACT_EMAIL],
-  [/\+1 123 456 78/g, CONTACT_PHONE],
+  [/\+1 123 456 78/g, ''],
   [/\u00a0123 Cyber Street, Los Angeles, CA/g, OFFICE_ADDRESS],
   [/123 Cyber Street, Los Angeles, CA/g, OFFICE_ADDRESS],
 ];
+
+const CONTACT_PHONE_PATTERN = /\+?52\s+1\s+55\s+6350\s+2870/gi;
+const CONTACT_PHONE_LIST_ITEM_PATTERN =
+  /<li\b[^>]*>(?:(?!<\/li>)[\s\S])*?\+?52\s+1\s+55\s+6350\s+2870(?:(?!<\/li>)[\s\S])*?<\/li>\s*/gi;
+
+function stripContactPhone(html) {
+  return html
+    .replace(CONTACT_PHONE_LIST_ITEM_PATTERN, '')
+    .replace(CONTACT_PHONE_PATTERN, '');
+}
 
 const LOCALE_REPLACEMENTS = {
   es: [
@@ -410,6 +419,7 @@ export function cleanupMirrorBodyHtml(route, html) {
     }
   }
 
+  cleanedHtml = stripContactPhone(cleanedHtml);
   cleanedHtml = applyReplacements(cleanedHtml, UNIVERSAL_REPLACEMENTS);
   cleanedHtml = applyReplacements(cleanedHtml, LOCALE_REPLACEMENTS[locale] ?? []);
   cleanedHtml = rewriteLegacyAbsoluteUrls(locale, cleanedHtml);
