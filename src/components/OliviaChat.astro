@@ -405,7 +405,7 @@ const siteCode = 'securyti';
     const t = copy[lang] || copy.es;
     let isOpen = false;
     let isLoading = false;
-    let leadSent = false;
+    let leadSent = true;
     let messages = [{ role: 'assistant', content: t.welcome }];
     let lead = { firstName: '', lastName: '', email: '', phone: '', need: '' };
 
